@@ -1,2 +1,2 @@
 # Spring2019Notebooks
-Spring 2019 notebooks for Data Science courses at UMBC
+IPython Notebooks of Spring 2019 projects, done as part of Data Science courses at UMBC.
