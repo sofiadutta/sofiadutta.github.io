@@ -3,7 +3,9 @@
   <xsl:template match="/">
     <html>
       <body>
-        <h2>UMBC <xsl:value-of select="/schedule/@semester" />, <xsl:value-of select="/schedule/@year" /> Course Schedule</h2>
+        <h2>
+          UMBC <xsl:value-of select="/schedule/@semester" />, <xsl:value-of select="/schedule/@year" /> Course Schedule
+        </h2>
         <table>
           <xsl:for-each select="schedule/course">
             <tr bgcolor="#A569BD" align="center">

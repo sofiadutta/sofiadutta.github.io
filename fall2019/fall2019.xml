@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-16"?>
 <?xml-stylesheet type="text/xsl" href="https://sofiadutta.github.io/fall2019/schedule.xsl"?>
-<schedule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://sofiadutta.github.io/fall2019/schedule.xsd" year="2019" semester="Fall">
+<schedule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://sofiadutta.github.io/fall2019/schedule.xsd" 
+    year="2019"
+    semester="Fall">
     <course>
         <programIdentifier>CMSC</programIdentifier>
         <number>435</number>
