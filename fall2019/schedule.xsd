@@ -1,13 +1,24 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="schedule">
+        <!--
+            A schedule has
+            a year (e.g., 2019)
+            a semester (e.g., Fall)
+            one or more courses.
+          -->
         <xs:annotation>
             <xs:documentation>Schedule is the root element.</xs:documentation>
         </xs:annotation>
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="course" minOccurs="0" maxOccurs="unbounded">
+                <!--one or more courses-->
+                <xs:element name="course" minOccurs="1" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
+                            <!--
+                              a course has
+                              a program identifier (e.g., CMSC)
+                            -->
                             <xs:element name="programIdentifier">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
@@ -15,11 +26,13 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
+                            <!-- a number (e.g., 471) -->
                             <xs:element name="number">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:nonNegativeInteger" />
                                 </xs:simpleType>
                             </xs:element>
+                            <!-- a title (e.g., Introduction to Artificial Intelligence) -->
                             <xs:element name="title">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
@@ -27,11 +40,13 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
+                            <!-- a number of credits (e.g., 3) -->
                             <xs:element name="credit">
                                 <xs:simpleType>
 																	<xs:restriction base="xs:nonNegativeInteger" />
                                 </xs:simpleType>
                             </xs:element>
+                            <!-- zero or more prerequisite classes (e.g., CMSC341) -->
                             <xs:element name="prerequisite">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
@@ -39,6 +54,7 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
+                            <!-- a description (e.g., This course provides a broad...sections.) -->
                             <xs:element name="description">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
@@ -49,6 +65,10 @@
                             <xs:element name="section" minOccurs="1" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:sequence>
+                                      <!--
+                                          A section has
+                                          a section number (e.g., 01)
+                                        -->
                                         <xs:element name="sectionNumber">
                                             <xs:simpleType>
                                                 <xs:restriction base="xs:string">
@@ -56,6 +76,7 @@
                                                 </xs:restriction>
                                             </xs:simpleType>
                                         </xs:element>
+                                        <!-- an instructor (e.g., John Park) -->
                                         <xs:element name="instructor">
                                             <xs:simpleType>
                                                 <xs:restriction base="xs:string">
@@ -63,11 +84,13 @@
                                                 </xs:restriction>
                                             </xs:simpleType>
                                         </xs:element>
+                                        <!-- a classNumber (e.g., 1136) -->
                                         <xs:element name="classNumber">
                                             <xs:simpleType>
 																							<xs:restriction base="xs:nonNegativeInteger" />
                                             </xs:simpleType>
                                         </xs:element>
+                                        <!-- a room (e.g., Sherman Hall 013) -->
                                         <xs:element name="room">
                                             <xs:simpleType>
                                                 <xs:restriction base="xs:string">
@@ -75,6 +98,7 @@
                                                 </xs:restriction>
                                             </xs:simpleType>
                                         </xs:element>
+                                        <!-- a days (e.g., TuThr) -->
                                         <xs:element name="days">
                                             <xs:simpleType>
                                                 <xs:restriction base="xs:string">
@@ -82,6 +106,7 @@
                                                 </xs:restriction>
                                             </xs:simpleType>
                                         </xs:element>
+                                        <!-- a startTime (e.g., 10:00am) -->
                                         <xs:element name="startTime">
                                             <xs:simpleType>
                                                 <xs:restriction base="xs:string">
@@ -89,6 +114,7 @@
                                                 </xs:restriction>
                                             </xs:simpleType>
                                         </xs:element>
+                                        <!-- an endTime (e.g., 11:15am) -->
                                         <xs:element name="endTime">
                                             <xs:simpleType>
                                                 <xs:restriction base="xs:string">
@@ -96,6 +122,7 @@
                                                 </xs:restriction>
                                             </xs:simpleType>
                                         </xs:element>
+                                        <!-- a status (e.g., Open or Closed) -->
                                         <xs:element name="status">
                                             <xs:simpleType>
                                                 <xs:restriction base="xs:string">
@@ -110,8 +137,10 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-						<xs:attribute name="year" type="xs:gYear" use="required" />
-						<xs:attribute name="semester" type="xs:string" use="required" />
+            <!--a year (e.g., 2019)-->
+	    <xs:attribute name="year" type="xs:gYear" use="required" />
+            <!--a semester (e.g., Fall)-->
+	    <xs:attribute name="semester" type="xs:string" use="required" />
         </xs:complexType>
     </xs:element>
 </xs:schema>

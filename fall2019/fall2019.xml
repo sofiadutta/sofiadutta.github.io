@@ -24,7 +24,7 @@
         <number>471</number>
         <title>Introduction to Artificial Intelligence</title>
         <credit>3</credit>
-        <prerequisite>CMSC341</prerequisite>
+        <prerequisite>CMSC341 or CMSC341H</prerequisite>
         <description>This course provides a broad introduction to artificial intelligence, its sub-fields and their applications. Topics include problem-solving approaches, problem spaces and search, knowledge representation and reasoning, logic and deduction, planning, expert systems, handling uncertainty, learning and natural language understanding.</description>
         <section>
             <sectionNumber>01</sectionNumber>
