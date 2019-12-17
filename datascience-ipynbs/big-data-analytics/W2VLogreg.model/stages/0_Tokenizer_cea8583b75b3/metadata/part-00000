@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.Tokenizer","timestamp":1574465722265,"sparkVersion":"2.4.4","uid":"Tokenizer_cea8583b75b3","paramMap":{"outputCol":"tokenTweet","inputCol":"cleanTweetText"},"defaultParamMap":{"outputCol":"Tokenizer_cea8583b75b3__output"}}
