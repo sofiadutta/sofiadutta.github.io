@@ -807,6 +807,18 @@ body.offcanvas {
       background: #4054b2; }
     .progress-bar.color-6 span {
       color: #4054b2; }
+  .progress-bar.color-7 {
+    background: #adb499; }
+  .progress-bar.color-7:after {
+    background: #adb499; }
+  .progress-bar.color-7 span {
+    color: #adb499; }
+  .progress-bar.color-8 {
+    background: #BB6688; }
+  .progress-bar.color-8:after {
+    background: #BB6688; }
+  .progress-bar.color-8 span {
+    color: #BB6688; }
 
 .colorlib-feature {
   text-align: left;
