@@ -7,13 +7,7 @@ from tweepy.streaming import StreamListener
 
 WORDS = ['#bitcoin', '#cryptocurrency', '#crypto', '#litecoin', '#satoshi']
 
-'''
-Twitter Developer Account Credentials
-'''
-access_token = '62719235-H0l2xE6UFK9bEDoBFq2cxtRH4mjBDwH9CZouVPOV0'
-access_secret = 'm1OIcLNhYIFbPYz6qRRacdRVMfiMECulA4QOAvTDvLm0p'
-consumer_key = 'XIW6GCjwkVXTgzHS6fcc5sEy9'
-consumer_secret = 'wHTWvIF6vVKJJzAWy2z6r0tqkbwk3xF5lVhZLmqRdo3LZXPFSS'
+# Keys deleted, reach out to Sofia Dutta for access
 
 
 class TweetStreamListener(StreamListener):
