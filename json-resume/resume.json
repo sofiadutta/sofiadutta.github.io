@@ -7,7 +7,7 @@
     "email": "sofia.dutta17@gmail.com",
     "phone": "4435544170",
     "url": "https://www.youtube.com/watch?v=rOWJNGHVcHo",
-    "summary": "I am a Software/Data Engineer and Data Scientist. Currently working for NewWave as a Data Scientist Intern where I am part of a team working on Machine Learning problems in their Medicaid Data Quality Assistant (MDQA) project from the healthcare domain.\n\nI have worked on several Data Science, Machine Learning, and Deep Learning projects during my internship at NewWave and graduate studies at UMBC.\n\nPreviously, I used to work as a Software Developer and Data Analyst for Tata Consultancy Services from 2010 to 2018.",
+    "summary": "Sofia is a Data Scientist in-training with a seven-year-long career in Software Engineering. Currently, she is interning at NewWave Telecom & Technologies, Inc. where she is building Machine Learning solutions to improve the data quality of millions of healthcare records. Since 2019, she has been attending graduate school where she is developing her skills in the Data Science domain through various Deep Learning and Machine Learning projects. \n\nFrom 2010 to 2018, she worked as a Software Engineer at Tata Consultancy Services, leading teams of up to five engineers between 2013 and 2018. She was involved in every aspect of software development, including requirement gathering from clients, design, development, and testing of delivered code. She was instrumental in completing large-scale data migration activities for DHL UK, in 2015. This migration process involved more than a billion records transferred from one generation of Oracle Apps to the next generation of Oracle ERP suite. Due to her efforts, the process was completed on time and resulted in her receiving a certificate of appreciation from the clients stating that she is \"Most likely to slay a Dragon\".",
     "location": {
       "address": "Washington DC-Baltimore Area",
       "postalCode": "",
@@ -30,7 +30,7 @@
       "highlights": [],
       "position": "Data Scientist Intern",
       "startDate": "2020-05-31",
-      "summary": "Working on a Data Science project building rules-based machine learning error-detection models to carry out data quality analysis tasks on Centers for Medicare & Medicaid Services (CMS) healthcare claims data. Instrumental in building a data exploration platform using cloud-based tools like LookML, software from Looker. Created visualizations of customer data to provide the best actions when choosing a data quality improvement algorithm.",
+      "summary": "•\tBuilt a system for computation of quality analysis and data exploration in a record time of a month.\n•\tTrained a machine learning model using 3000 rules for quality computation metrics defined by domain experts.\n•\tImproved computation speed by 10-fold by deploying analysis workflow in Google Cloud Platform (GCP) clusters.\n•\tUsed Apache PySpark to perform computation in GCP and exported results to Looker for creating intuitive dashboards visualizations.\n•\tPerforming data quality analysis tasks on about half a million healthcare records from Centers for Medicare & Medicaid Services.",
       "url": "https://www.linkedin.com/company/991663"
     },
     {
@@ -39,7 +39,7 @@
       "highlights": [],
       "position": "Graduate Student Researcher",
       "startDate": "2019-09-30",
-      "summary": "Performed research in Semantic Web, Context-based Access Control in Smart Homes and published the following paper at IEEE Big Data Security 2020 conference:\nSofia Dutta et. al., “Context-Sensitive Access Control in Smart Home Environments”, InProceedings, 6th IEEE International Conference on Big Data Security on Cloud (BigDataSecurity 2020), May 26, 2020, Baltimore, MD, USA. doi: 10.1109/BigDataSecurity-HPSC-IDS49724.2020.00018",
+      "summary": "•\tAuthored an Ontology for Smart Home Access Control by extending earlier research in Semantic Web.\n•\tDeveloped an Android app for handling context-sensitive access control in a Smart Home Environment.\n•\tUploaded YouTube demos for presentation to the National Institute of Standards and Technology by the principal investigator of the project.\n•\tPublished a paper at the IEEE Big Data Security 2020 conference.",
       "url": ""
     },
     {
@@ -48,7 +48,7 @@
       "highlights": [],
       "position": "Software Developer and Data Analyst",
       "startDate": "2010-11-30",
-      "summary": "I was a team leader and software developer working on Oracle Apps, Oracle Databases and Oracle Fusion Human Capital Management functionalities. I performed software design, development and testing activities on several client projects for TCS. I carried out all tasks in the Software Development Life Cycle starting from requirement analysis to software testing and maintenance.",
+      "summary": "•\tLed the design, development and delivery management of several projects for clients of TCS.\n•\tCreated API interfaces using PL/SQL stored procedures for daily usage by clients.\n•\tHeld several meetings over the years to capture requirements from DHL UK, Staples USA, Hyatt USA, Kaiser-Permanente USA.\n•\tCarried out change based regression analysis and documented software functional specifications.\n•\tPrepared test plans and executed system integration testing and user-acceptance testing.\n•\tCompleted client data migration from legacy Oracle Apps (11i) to Oracle ERP Suite (R12).\n•\tImplemented scripts for managing customer data migration task of over a billion records while maintaining strict time frames.\n•\tEnsured client systems were up within four hours after migration activities saving millions of dollars in potential revenue lost.\n•\tFrom 2013 - 2018, managed continuous integration and continuous deployment in production environments.\n•\tGot certified in seven Oracle Apps competencies while working for client projects.",
       "url": "https://www.linkedin.com/company/1353"
     }
   ],
@@ -61,7 +61,12 @@
       "startDate": "2019-12-31",
       "endDate": "2020-12-31",
       "gpa": "4.0",
-      "courses": []
+      "courses": [
+        "DATA 690 - Practical Deep Learning",
+        "DATA 603 - Platforms for Big Data Processing",
+        "DATA 602 - Introduction to Data Analysis and Machine Learning",
+        "DATA 601 - Introduction to Data Science"
+      ]
     },
     {
       "institution": "West Bengal University of Technology, Kolkata",
