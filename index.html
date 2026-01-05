@@ -54,7 +54,7 @@
 	<body>
 	<div id="colorlib-page">
 		<div class="container-wrap">
-		<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
+		<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation"><i></i></a>
 		<aside id="colorlib-aside" role="complementary" class="border js-fullheight">
 			<div class="text-center">
 				<div class="author-img" style="background-image: url(images/about.jpg);"></div>
@@ -800,7 +800,8 @@
 										<div class="timeline-label">
 											<div class="embed-responsive embed-responsive-16by9">
 												<h2>Smart home controller app with rules demo</h2>
-												<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/DZq-oZ_Cv1g" allowfullscreen>
+												<!-- Performance: Added loading="lazy" to defer loading of iframe until it is near the viewport -->
+												<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/DZq-oZ_Cv1g" allowfullscreen loading="lazy">
 													Smart home controller app with rules demo
 												</iframe>
 											</div>
@@ -817,7 +818,8 @@
 
 										<div class="timeline-label">
 											<div class="embed-responsive embed-responsive-16by9">
-												<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/rOWJNGHVcHo" allowfullscreen>
+												<!-- Performance: Added loading="lazy" to defer loading of iframe until it is near the viewport -->
+												<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/rOWJNGHVcHo" allowfullscreen loading="lazy">
 													Smart home controller app demo
 												</iframe>
 											</div>
