@@ -254,7 +254,9 @@
 				$("#sticky_item").trigger("sticky_kit:detach");
 				$("#sticky_item").trigger("sticky_kit:unstick");
 
-				$("#sticky_item").stick_in_parent();
+				if ($.fn.stick_in_parent) {
+					$("#sticky_item").stick_in_parent();
+				}
 			}
 			
 
@@ -264,7 +266,9 @@
 
 		$('.sticky-parent').css('height', h);
 
-		$("#sticky_item").stick_in_parent();
+		if ($.fn.stick_in_parent) {
+			$("#sticky_item").stick_in_parent();
+		}
 
 	};
 
@@ -286,6 +290,30 @@
 		})
 	};
 
+	var lazyLoadBackgrounds = function() {
+		var lazyBackgrounds = [].slice.call(document.querySelectorAll("[data-bg]"));
+
+		if ("IntersectionObserver" in window) {
+			var lazyBackgroundObserver = new IntersectionObserver(function(entries, observer) {
+				entries.forEach(function(entry) {
+					if (entry.isIntersecting) {
+						entry.target.style.backgroundImage = "url('" + entry.target.getAttribute('data-bg') + "')";
+						lazyBackgroundObserver.unobserve(entry.target);
+					}
+				});
+			});
+
+			lazyBackgrounds.forEach(function(lazyBackground) {
+				lazyBackgroundObserver.observe(lazyBackground);
+			});
+		} else {
+			// Fallback for older browsers
+			lazyBackgrounds.forEach(function(lazyBackground) {
+				lazyBackground.style.backgroundImage = "url('" + lazyBackground.getAttribute('data-bg') + "')";
+			});
+		}
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -304,6 +332,7 @@
 		sliderMain();
 		stickyFunction();
 		owlCrouselFeatureSlide();
+		lazyLoadBackgrounds();
 	});
 
 
