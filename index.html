@@ -46,6 +46,8 @@
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
 
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; frame-src https://www.youtube.com; object-src 'none'; base-uri 'self';">
+
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 	<!-- FOR IE9 below -->
@@ -81,7 +83,7 @@
 			</nav>
 
 			<div class="colorlib-footer">
-				<p>&copy;Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</br><a href="https://www.linkedin.com/in/sofiadutta" target="_blank" rel="noopener noreferrer">@Sofia Dutta</a></span></br>
+				<p>&copy;Copyright &copy;<span id="copyright-year"></span> All rights reserved</br><a href="https://www.linkedin.com/in/sofiadutta" target="_blank" rel="noopener noreferrer">@Sofia Dutta</a></span></br>
 					<a href="https://www.linkedin.com/in/sofiadutta" target="_blank" rel="noopener noreferrer"><i class="icon-linkedin22"></i></a> |
 					<a href="https://github.com/sofiadutta" target="_blank" rel="noopener noreferrer"><i class="icon-github"></i></a> |
 					<a href="https://twitter.com/sofia_datasci" target="_blank" rel="noopener noreferrer"><i class="icon-twitter2"></i></a> |
@@ -802,7 +804,7 @@
 										<div class="timeline-label">
 											<div class="embed-responsive embed-responsive-16by9">
 												<h2>Smart home controller app with rules demo</h2>
-												<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/DZq-oZ_Cv1g" loading="lazy" allowfullscreen>
+												<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/DZq-oZ_Cv1g" loading="lazy" allowfullscreen title="Smart home controller app with rules demo">
 													Smart home controller app with rules demo
 												</iframe>
 											</div>
@@ -819,7 +821,7 @@
 
 										<div class="timeline-label">
 											<div class="embed-responsive embed-responsive-16by9">
-												<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/rOWJNGHVcHo" loading="lazy" allowfullscreen>
+												<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/rOWJNGHVcHo" loading="lazy" allowfullscreen title="Smart home controller app demo">
 													Smart home controller app demo
 												</iframe>
 											</div>
