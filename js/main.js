@@ -314,8 +314,10 @@
 		}
 	};
 
-	var updateYear = function() {
-		$('#copyright-year').text(new Date().getFullYear());
+	var updateCopyrightYear = function() {
+		if ($('#copyright-year').length > 0) {
+			$('#copyright-year').text(new Date().getFullYear());
+		}
 	};
 
 	// Document on load.
@@ -338,6 +340,7 @@
 		stickyFunction();
 		owlCrouselFeatureSlide();
 		lazyLoadBackgrounds();
+		updateCopyrightYear();
 	});
 
 
