@@ -314,11 +314,16 @@
 		}
 	};
 
+	var updateYear = function() {
+		$('#copyright-year').text(new Date().getFullYear());
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
 		counter();
 		counterWayPoint();
+		updateYear();
 		contentWayPoint();
 		burgerMenu();
 
