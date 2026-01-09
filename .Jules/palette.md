@@ -1,3 +1,7 @@
-## 2024-05-22 - Missing Skip Link
-**Learning:** Fixed sidebars create significant keyboard traps for users. Without a skip link, users must tab through the entire navigation menu (10+ items) to reach the main content.
-**Action:** Always verify "Skip to main content" exists on pages with persistent sidebars or large headers.
+## 2024-05-23 - [Icon-Only Buttons and "Ghost" Sources]
+**Learning:** Found a repository where `package.json` scripts referred to a missing `src` directory, implying the `index.html` at the root was the intended "source of truth" for this simplified version. This is a common pattern in "starter" templates where the advanced build setup is stripped out but configuration files remain.
+**Action:** Always verify if build scripts actually correspond to the file structure before relying on them. When `src` is missing in a simple web project, edit the root HTML directly.
+
+## 2024-05-23 - [Accessible Background Images and Skip Links]
+**Learning:** Found critical content implemented as background images (profile photo). This pattern is invisible to screen readers unless explicitly marked with `role="img"` and `aria-label`. Also, single-page layouts like this desperately need "Skip to Content" links to allow keyboard users to bypass long navigation menus.
+**Action:** When auditing legacy themes, check all `data-bg` or `background-image` inline styles for meaningful content and add ARIA attributes. Always ensure a skip link exists for sidebars.
