@@ -59,6 +59,7 @@
 	<![endif]-->
 	</head>
 	<body>
+	<a href="#colorlib-main" class="sr-only sr-only-focusable">Skip to main content</a>
 	<div id="colorlib-page">
 		<div class="container-wrap">
 		<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation"><i></i></a>
@@ -86,7 +87,7 @@
 			</nav>
 
 			<div class="colorlib-footer">
-				<p>&copy;Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</br><a href="https://www.linkedin.com/in/sofiadutta" target="_blank" rel="noopener noreferrer">@Sofia Dutta</a></span></br>
+				<p>&copy;Copyright &copy;<span id="copyright-year"></span> All rights reserved</br><a href="https://www.linkedin.com/in/sofiadutta" target="_blank" rel="noopener noreferrer">@Sofia Dutta</a></span></br>
 					<a href="https://www.linkedin.com/in/sofiadutta" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile"><i class="icon-linkedin22"></i></a> |
 					<a href="https://github.com/sofiadutta" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile"><i class="icon-github"></i></a> |
 					<a href="https://twitter.com/sofia_datasci" target="_blank" rel="noopener noreferrer" aria-label="Twitter Profile"><i class="icon-twitter2"></i></a> |
@@ -97,7 +98,7 @@
 
 		</aside>
 
-		<div id="colorlib-main">
+		<div id="colorlib-main" tabindex="-1">
 			<section id="colorlib-hero" class="js-fullheight" data-section="home">
 				<div class="flexslider js-fullheight">
 					<ul class="slides">
