@@ -48,7 +48,7 @@
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
 
-	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; frame-src https://www.youtube.com; object-src 'none'; base-uri 'self';">
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; frame-src https://www.youtube.com; object-src 'none'; base-uri 'self'; upgrade-insecure-requests;">
 
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
@@ -304,9 +304,9 @@
 					<div class="row">
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
 							<div class="progress-wrap">
-								<h3>Python</h3>
+								<h3 id="skill-python">Python</h3>
 								<div class="progress">
-								 	<div class="progress-bar color-1" role="progressbar" aria-valuenow="95"
+									<div class="progress-bar color-1" aria-labelledby="skill-python" role="progressbar" aria-valuenow="95"
 								  	aria-valuemin="0" aria-valuemax="100" style="width:95%">
 								    <span>95%</span>
 								  	</div>
@@ -315,9 +315,9 @@
 						</div>
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
 							<div class="progress-wrap">
-								<h3>Java</h3>
+								<h3 id="skill-java">Java</h3>
 								<div class="progress">
-									<div class="progress-bar color-2" role="progressbar" aria-valuenow="80"
+									<div class="progress-bar color-2" aria-labelledby="skill-java" role="progressbar" aria-valuenow="80"
 										 aria-valuemin="0" aria-valuemax="100" style="width:80%">
 										<span>80%</span>
 									</div>
@@ -326,9 +326,9 @@
 						</div>
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
 							<div class="progress-wrap">
-								<h3>PyTorch</h3>
+								<h3 id="skill-pytorch">PyTorch</h3>
 								<div class="progress">
-								 	<div class="progress-bar color-5" role="progressbar" aria-valuenow="90"
+									<div class="progress-bar color-5" aria-labelledby="skill-pytorch" role="progressbar" aria-valuenow="90"
 								  	aria-valuemin="0" aria-valuemax="100" style="width:90%">
 								    <span>90%</span>
 								  	</div>
@@ -337,9 +337,9 @@
 						</div>
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
 							<div class="progress-wrap">
-								<h3>Sci-kit Learn, MLlib, OpenCV</h3>
+								<h3 id="skill-sci-kit-learn-mllib-opencv">Sci-kit Learn, MLlib, OpenCV</h3>
 								<div class="progress">
-								 	<div class="progress-bar color-4" role="progressbar" aria-valuenow="85"
+									<div class="progress-bar color-4" aria-labelledby="skill-sci-kit-learn-mllib-opencv" role="progressbar" aria-valuenow="85"
 								  	aria-valuemin="0" aria-valuemax="100" style="width:85%">
 								    <span>85%</span>
 								  	</div>
@@ -348,9 +348,9 @@
 						</div>
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
 							<div class="progress-wrap">
-								<h3>Keras</h3>
+								<h3 id="skill-keras">Keras</h3>
 								<div class="progress">
-								 	<div class="progress-bar color-3" role="progressbar" aria-valuenow="80"
+									<div class="progress-bar color-3" aria-labelledby="skill-keras" role="progressbar" aria-valuenow="80"
 								  	aria-valuemin="0" aria-valuemax="100" style="width:80%">
 								    <span>80%</span>
 								  	</div>
@@ -359,9 +359,9 @@
 						</div>
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
 							<div class="progress-wrap">
-								<h3>Tensorflow</h3>
+								<h3 id="skill-tensorflow">Tensorflow</h3>
 								<div class="progress">
-									<div class="progress-bar color-6" role="progressbar" aria-valuenow="80"
+									<div class="progress-bar color-6" aria-labelledby="skill-tensorflow" role="progressbar" aria-valuenow="80"
 										 aria-valuemin="0" aria-valuemax="100" style="width:80%">
 										<span>80%</span>
 									</div>
@@ -370,9 +370,9 @@
 						</div>
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
 							<div class="progress-wrap">
-								<h3>Apache Airflow</h3>
+								<h3 id="skill-apache-airflow">Apache Airflow</h3>
 								<div class="progress">
-								 	<div class="progress-bar color-7" role="progressbar" aria-valuenow="80"
+									<div class="progress-bar color-7" aria-labelledby="skill-apache-airflow" role="progressbar" aria-valuenow="80"
 								  	aria-valuemin="0" aria-valuemax="100" style="width:80%">
 								    <span>80%</span>
 								  	</div>
@@ -381,9 +381,9 @@
 						</div>
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
 							<div class="progress-wrap">
-								<h3>PySpark</h3>
+								<h3 id="skill-pyspark">PySpark</h3>
 								<div class="progress">
-									<div class="progress-bar color-8" role="progressbar" aria-valuenow="90"
+									<div class="progress-bar color-8" aria-labelledby="skill-pyspark" role="progressbar" aria-valuenow="90"
 										 aria-valuemin="0" aria-valuemax="100" style="width:90%">
 										<span>90%</span>
 									</div>
@@ -392,9 +392,9 @@
 						</div>
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
 							<div class="progress-wrap">
-								<h3>TSQL, Oracle SQL, PL/SQL</h3>
+								<h3 id="skill-tsql-oracle-sql-pl-sql">TSQL, Oracle SQL, PL/SQL</h3>
 								<div class="progress">
-									<div class="progress-bar color-9" role="progressbar" aria-valuenow="95"
+									<div class="progress-bar color-9" aria-labelledby="skill-tsql-oracle-sql-pl-sql" role="progressbar" aria-valuenow="95"
 										 aria-valuemin="0" aria-valuemax="100" style="width:95%">
 										<span>95%</span>
 									</div>
@@ -403,9 +403,9 @@
 						</div>
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
 							<div class="progress-wrap">
-								<h3>Oracle Apps, Oracle Fusion</h3>
+								<h3 id="skill-oracle-apps-oracle-fusion">Oracle Apps, Oracle Fusion</h3>
 								<div class="progress">
-								 	<div class="progress-bar color-10" role="progressbar" aria-valuenow="90"
+									<div class="progress-bar color-10" aria-labelledby="skill-oracle-apps-oracle-fusion" role="progressbar" aria-valuenow="90"
 								  	aria-valuemin="0" aria-valuemax="100" style="width:90%">
 								    <span>90%</span>
 								  	</div>
@@ -414,9 +414,9 @@
 						</div>
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
 							<div class="progress-wrap">
-								<h3>Google Cloud</h3>
+								<h3 id="skill-google-cloud">Google Cloud</h3>
 								<div class="progress">
-									<div class="progress-bar color-11" role="progressbar" aria-valuenow="80"
+									<div class="progress-bar color-11" aria-labelledby="skill-google-cloud" role="progressbar" aria-valuenow="80"
 										 aria-valuemin="0" aria-valuemax="100" style="width:80%">
 										<span>80%</span>
 									</div>
@@ -425,9 +425,9 @@
 						</div>
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
 							<div class="progress-wrap">
-								<h3>AWS S3</h3>
+								<h3 id="skill-aws-s3">AWS S3</h3>
 								<div class="progress">
-									<div class="progress-bar color-12" role="progressbar" aria-valuenow="80"
+									<div class="progress-bar color-12" aria-labelledby="skill-aws-s3" role="progressbar" aria-valuenow="80"
 										 aria-valuemin="0" aria-valuemax="100" style="width:80%">
 										<span>80%</span>
 									</div>
@@ -436,9 +436,9 @@
 						</div>
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
 							<div class="progress-wrap">
-								<h3>LookML, Looker</h3>
+								<h3 id="skill-lookml-looker">LookML, Looker</h3>
 								<div class="progress">
-									<div class="progress-bar color-13" role="progressbar" aria-valuenow="85"
+									<div class="progress-bar color-13" aria-labelledby="skill-lookml-looker" role="progressbar" aria-valuenow="85"
 										 aria-valuemin="0" aria-valuemax="100" style="width:85%">
 										<span>85%</span>
 									</div>
@@ -447,9 +447,9 @@
 						</div>
 						<div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
 							<div class="progress-wrap">
-								<h3>Knowledge Graph, OWL, SPARQL</h3>
+								<h3 id="skill-knowledge-graph-owl-sparql">Knowledge Graph, OWL, SPARQL</h3>
 								<div class="progress">
-									<div class="progress-bar color-7" role="progressbar" aria-valuenow="75"
+									<div class="progress-bar color-7" aria-labelledby="skill-knowledge-graph-owl-sparql" role="progressbar" aria-valuenow="75"
 										 aria-valuemin="0" aria-valuemax="100" style="width:75%">
 										<span>75%</span>
 									</div>
