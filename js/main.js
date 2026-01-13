@@ -307,7 +307,7 @@
 		fullHeight();
 		counter();
 		counterWayPoint();
-		updateYear();
+		// updateYear();
 		contentWayPoint();
 		burgerMenu();
 
