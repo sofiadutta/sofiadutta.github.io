@@ -25,7 +25,7 @@
 		}
 	};
 
-	// Debounce utility to optimize resize events
+	// Helper: Debounce function to limit the rate at which a function can fire.
 	var debounce = function(func, wait, immediate) {
 		var timeout;
 		return function() {
@@ -45,6 +45,7 @@
 
 		if ( !isMobile.any() ) {
 			$('.js-fullheight').css('height', $(window).height());
+			// Optimization: Debounce resize event to reduce layout thrashing
 			$(window).resize(debounce(function(){
 				$('.js-fullheight').css('height', $(window).height());
 			}, 250));
@@ -258,6 +259,7 @@
 			$("#sticky_item").trigger("sticky_kit:unstick");
 		}
 
+		// Optimization: Debounce resize event
 		$(window).resize(debounce(function(){
 			var h = $('.image-content').outerHeight();
 			$('.sticky-parent').css('height', h);
