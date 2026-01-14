@@ -323,7 +323,6 @@
 		fullHeight();
 		counter();
 		counterWayPoint();
-		// Removed undefined updateYear() call that was crashing execution
 		contentWayPoint();
 		burgerMenu();
 
