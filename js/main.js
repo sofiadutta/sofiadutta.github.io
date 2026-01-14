@@ -25,13 +25,29 @@
 		}
 	};
 
+	// Debounce utility to optimize resize events
+	var debounce = function(func, wait, immediate) {
+		var timeout;
+		return function() {
+			var context = this, args = arguments;
+			var later = function() {
+				timeout = null;
+				if (!immediate) func.apply(context, args);
+			};
+			var callNow = immediate && !timeout;
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+			if (callNow) func.apply(context, args);
+		};
+	};
+
 	var fullHeight = function() {
 
 		if ( !isMobile.any() ) {
 			$('.js-fullheight').css('height', $(window).height());
-			$(window).resize(function(){
+			$(window).resize(debounce(function(){
 				$('.js-fullheight').css('height', $(window).height());
-			});
+			}, 250));
 		}
 
 	};
@@ -242,7 +258,7 @@
 			$("#sticky_item").trigger("sticky_kit:unstick");
 		}
 
-		$(window).resize(function(){
+		$(window).resize(debounce(function(){
 			var h = $('.image-content').outerHeight();
 			$('.sticky-parent').css('height', h);
 
@@ -262,7 +278,7 @@
 
 			
 
-		});
+		}, 250));
 
 		$('.sticky-parent').css('height', h);
 
