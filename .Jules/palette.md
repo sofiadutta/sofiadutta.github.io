@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2026-01-14 - [Scroll to Top Pattern]
+**Learning:** Single-page portfolios with long vertical content can disorient users. A "Return to Top" button that appears after scrolling provides a consistent escape hatch.
+**Action:** For single-page layouts > 2 screens height, always implement a fixed-position scroll-to-top button that toggles visibility based on scroll position.
