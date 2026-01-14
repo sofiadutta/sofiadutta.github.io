@@ -320,6 +320,24 @@
 		}
 	};
 
+	var scrollToTop = function() {
+		var $window = $(window);
+		var $button = $('#return-to-top');
+
+		$window.scroll(function() {
+			if ($window.scrollTop() > 200) {
+				$button.addClass('visible');
+			} else {
+				$button.removeClass('visible');
+			}
+		});
+
+		$button.on('click', function(e) {
+			e.preventDefault();
+			$('html, body').animate({scrollTop: 0}, 500);
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +357,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		scrollToTop();
 	});
 
 
