@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [Legacy Bootstrap Icons]
+**Learning:** Legacy Bootstrap themes often use empty `<i>` tags for icons (e.g. `icon-pen2`) which are announced as "empty" or "graphic" by screen readers unless hidden.
+**Action:** Always audit `<i>` tags in legacy themes for `aria-hidden="true"` or `aria-label`.
