@@ -113,6 +113,13 @@
 	};
 
 
+	var mobileMenuClose = function() {
+		$('body').removeClass('offcanvas');
+		$('.js-colorlib-nav-toggle').removeClass('active');
+		// Optimization: Remove scroll listener when menu closes
+		$(window).off('scroll', mobileMenuClose);
+	};
+
 	var burgerMenu = function() {
 
 		$('.js-colorlib-nav-toggle').on('click', function(event){
@@ -120,15 +127,14 @@
 			var $this = $(this);
 
 			if ($('body').hasClass('offcanvas')) {
-				$this.removeClass('active');
-				$('body').removeClass('offcanvas');	
+				mobileMenuClose();
 			} else {
 				$this.addClass('active');
-				$('body').addClass('offcanvas');	
+				$('body').addClass('offcanvas');
+				// Optimization: Only attach scroll listener when menu is open
+				$(window).on('scroll', mobileMenuClose);
 			}
 		});
-
-
 
 	};
 
@@ -140,22 +146,10 @@
 	    if (!container.is(e.target) && container.has(e.target).length === 0) {
 
 	    	if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
+				mobileMenuClose();
 	    	}
 	    	
 	    }
-		});
-
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
 		});
 
 	};
