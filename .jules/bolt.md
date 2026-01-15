@@ -7,3 +7,7 @@
 ## 2025-01-08 - LCP Optimization for Background Images
 **Learning:** Background images defined in CSS (or inline styles) are often discovered late by the browser. Preloading them via `<link rel="preload">` significantly aids LCP.
 **Action:** Always check for critical background images in Hero sections and add preloads for them, especially when image optimization tools are unavailable to reduce their size.
+
+## 2025-01-08 - Persistent Event Listeners & CSP
+**Learning:** The mobile menu implementation attached a permanent `scroll` listener to `window` to close the menu on scroll. This ran on every frame of scrolling even when the menu was closed. Also, Playwright's `wait_for_function` fails on pages with strict CSP (`unsafe-eval` blocked), requiring the use of selectors or other wait strategies.
+**Action:** When auditing legacy jQuery/JS, check for global event listeners attached in initialization that check state; refactor them to be dynamically attached/detached. For verification, avoid `wait_for_function` with string arguments if CSP is strict.
