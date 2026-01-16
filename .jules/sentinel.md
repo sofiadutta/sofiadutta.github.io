@@ -1,9 +1,4 @@
-## 2024-05-22 - Legacy JS Blocking Security Fixes
-**Vulnerability:** Hidden runtime errors in legacy JavaScript (`$(...).stick_in_parent is not a function`).
-**Learning:** Security refactoring (moving inline scripts to external files) can expose pre-existing dormant bugs. In this case, a missing jQuery plugin caused the entire `main.js` to crash, making it look like the security fix failed.
-**Prevention:** When refactoring legacy frontend code, wrap plugin calls in existence checks (e.g., `if ($.fn.plugin)`) and verify the baseline console state before starting work.
-
-## 2025-02-19 - CSP Violation Fix for Inline Script
-**Vulnerability:** Inline `document.write` script in `index.html` was blocked by the existing Content Security Policy (CSP) which correctly restricts `script-src` to `self` and specific domains, without allowing `unsafe-inline`.
-**Learning:** Even "harmless" inline scripts like printing the current year are security violations under strict CSPs. The existing code was actually broken (script blocked) because of the security policy.
-**Prevention:** Avoid inline JavaScript entirely. Move all logic to external `.js` files or use DOM manipulation from existing scripts.
+## 2025-02-12 - jQuery Upgrade 3.x
+**Vulnerability:** jQuery 2.1.4 contained known XSS vulnerabilities (e.g., in `parseHTML`) and lacked modern security fixes.
+**Learning:** Upgrading to jQuery 3.x (3.7.1) introduces breaking changes like the removal of `$(window).load()`, `.bind()`, and `.delegate()`. However, static analysis of `js/main.js` and `js/google_map.js` in this specific project showed no usage of these deprecated methods, allowing a clean drop-in replacement without `jquery-migrate`.
+**Prevention:** When upgrading legacy libraries, always grep for deprecated method signatures in application code before committing.
