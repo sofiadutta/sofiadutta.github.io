@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-24 - [Decorative Font Icons]
+**Learning:** Confirmed that legacy font icons (e.g., `icon-pen2`, `icon-lightbulb`) were implemented as `<i>` tags without `aria-hidden="true"`. This forces screen readers to attempt interpreting the PUA characters, creating a noisy experience.
+**Action:** Systematically audit all `<i>` tags with `icon-*` classes. If they are decorative (next to text), strictly apply `aria-hidden="true"`.
