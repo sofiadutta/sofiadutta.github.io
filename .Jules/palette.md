@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [Decorative Icons vs Content Italics]
+**Learning:** The `<i>` tag is often used for icons (e.g., `icomoon`), but valid HTML also uses it for idiomatic text (italics). A blanket find-and-replace to hide all `<i>` tags (`aria-hidden="true"`) for accessibility risks hiding actual text content.
+**Action:** When hiding decorative icons, filter strictly by class names (e.g., `class="icon-*"`) to distinguish them from semantic italics.
