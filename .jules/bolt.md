@@ -7,3 +7,7 @@
 ## 2025-01-08 - LCP Optimization for Background Images
 **Learning:** Background images defined in CSS (or inline styles) are often discovered late by the browser. Preloading them via `<link rel="preload">` significantly aids LCP.
 **Action:** Always check for critical background images in Hero sections and add preloads for them, especially when image optimization tools are unavailable to reduce their size.
+
+## 2025-01-08 - Preload Trap: Massive Assets
+**Learning:** Preloading `images/about.jpg` (2.9MB) actively degraded performance by saturating bandwidth during the critical initial load phase, competing with the actual LCP candidate (`images/img_bg_2.jpg`). Preload is not a magic fix; it must be reserved for critical, optimized assets.
+**Action:** Always audit `preload` tags for file size and render priority. If an asset is >500KB or not in the initial viewport, remove the preload.
