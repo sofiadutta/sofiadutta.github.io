@@ -36,6 +36,26 @@ def verify(page):
     else:
         print("FAIL: Icon aria-hidden incorrect")
 
+    # Check decorative icons in Timeline
+    timeline_icon = page.locator(".timeline-icon").first.locator("i")
+    aria_hidden_timeline = timeline_icon.get_attribute("aria-hidden")
+    print(f"Timeline icon aria-hidden: {aria_hidden_timeline}")
+
+    if aria_hidden_timeline == "true":
+        print("PASS: Timeline icon aria-hidden correct")
+    else:
+        print("FAIL: Timeline icon aria-hidden incorrect")
+
+    # Check decorative icons in Services (About)
+    services_icon = page.locator(".services .icon2 i").first
+    aria_hidden_services = services_icon.get_attribute("aria-hidden")
+    print(f"Services icon aria-hidden: {aria_hidden_services}")
+
+    if aria_hidden_services == "true":
+        print("PASS: Services icon aria-hidden correct")
+    else:
+        print("FAIL: Services icon aria-hidden incorrect")
+
     # Take screenshot of footer
     # Use JS scroll because scroll_into_view_if_needed can be flaky in some envs
     page.evaluate("document.querySelector('.colorlib-footer').scrollIntoView()")
