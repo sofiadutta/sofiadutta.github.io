@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [External Link Indicators and Mailto UX]
+**Learning:** In the 'icomoon' icon set used by this theme, `icon-export` serves as a suitable visual indicator for external links (box with arrow). Also, found `target="_blank"` on `mailto:` links, which causes an empty browser tab to flash open before the mail client launches—a disruptive UX pattern.
+**Action:** Use `icon-export` with `aria-hidden="true"` for external link indicators. Ensure `mailto:` links never have `target="_blank"`.
