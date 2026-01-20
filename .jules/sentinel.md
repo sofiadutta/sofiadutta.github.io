@@ -7,3 +7,8 @@
 **Vulnerability:** Inline `document.write` script in `index.html` was blocked by the existing Content Security Policy (CSP) which correctly restricts `script-src` to `self` and specific domains, without allowing `unsafe-inline`.
 **Learning:** Even "harmless" inline scripts like printing the current year are security violations under strict CSPs. The existing code was actually broken (script blocked) because of the security policy.
 **Prevention:** Avoid inline JavaScript entirely. Move all logic to external `.js` files or use DOM manipulation from existing scripts.
+
+## 2026-01-20 - Attack Surface Reduction via Dead Code Removal
+**Vulnerability:** Unused JavaScript files (`js/google_map.js`, `js/scripts.js`) containing insecure patterns (missing API keys) and incompatible code (Bootstrap 5 logic in Bootstrap 3 app).
+**Learning:** Legacy projects often accumulate "ghost" files that are not referenced but present a risk if mistakenly used or indexed. `js/scripts.js` was actively misleading by containing valid-looking but incompatible code.
+**Prevention:** Regularly audit the codebase for unreferenced files and remove them to prevent confusion and accidental inclusion of vulnerable code.
