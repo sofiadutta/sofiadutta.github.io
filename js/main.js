@@ -320,6 +320,45 @@
 		}
 	};
 
+	var copyEmail = function() {
+		$('#btn-copy-email').on('click', function(event) {
+			event.preventDefault();
+			var email = "sofia.dutta17@gmail.com";
+			var $btn = $(this);
+			var originalHtml = '<i class="icon-clipboard3" aria-hidden="true"></i> Copy';
+
+			function success() {
+				$btn.html('<i class="icon-check" aria-hidden="true"></i> Copied!');
+				$btn.addClass('btn-success').removeClass('btn-primary btn-outline');
+				setTimeout(function() {
+					$btn.html(originalHtml);
+					$btn.removeClass('btn-success').addClass('btn-primary btn-outline');
+				}, 2000);
+			}
+
+			function fallback(text) {
+				var textArea = document.createElement("textarea");
+				textArea.value = text;
+				document.body.appendChild(textArea);
+				textArea.select();
+				try {
+					document.execCommand('copy') ? success() : prompt("Copy email:", text);
+				} catch (err) {
+					prompt("Copy email:", text);
+				}
+				document.body.removeChild(textArea);
+			}
+
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(email).then(success).catch(function() {
+					fallback(email);
+				});
+			} else {
+				fallback(email);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +378,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		copyEmail();
 	});
 
 
