@@ -113,6 +113,28 @@
 	};
 
 
+	var closeMenu = function() {
+		$('body').removeClass('offcanvas');
+		$('.js-colorlib-nav-toggle').removeClass('active');
+		$(window).off('scroll', menuScrollListener);
+		$(document).off('click', menuOutsideClickListener);
+	};
+
+	var menuScrollListener = function() {
+		if ($('body').hasClass('offcanvas')) {
+			closeMenu();
+		}
+	};
+
+	var menuOutsideClickListener = function(e) {
+		var container = $("#colorlib-aside, .js-colorlib-nav-toggle");
+		if (!container.is(e.target) && container.has(e.target).length === 0) {
+			if ($('body').hasClass('offcanvas')) {
+				closeMenu();
+			}
+		}
+	};
+
 	var burgerMenu = function() {
 
 		$('.js-colorlib-nav-toggle').on('click', function(event){
@@ -120,44 +142,20 @@
 			var $this = $(this);
 
 			if ($('body').hasClass('offcanvas')) {
-				$this.removeClass('active');
-				$('body').removeClass('offcanvas');	
+				closeMenu();
 			} else {
 				$this.addClass('active');
-				$('body').addClass('offcanvas');	
+				$('body').addClass('offcanvas');
+				$(window).on('scroll', menuScrollListener);
+				$(document).on('click', menuOutsideClickListener);
 			}
 		});
-
-
 
 	};
 
 	// Click outside of offcanvass
 	var mobileMenuOutsideClick = function() {
-
-		$(document).click(function (e) {
-	    var container = $("#colorlib-aside, .js-colorlib-nav-toggle");
-	    if (!container.is(e.target) && container.has(e.target).length === 0) {
-
-	    	if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
-	    	
-	    }
-		});
-
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
-		});
-
+		// Optimized: Listeners are now dynamically attached in burgerMenu
 	};
 
 	var clickMenu = function() {
