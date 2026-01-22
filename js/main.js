@@ -113,6 +113,22 @@
 	};
 
 
+	// Optimization: Helper functions to manage menu state and listeners dynamically
+	// This prevents global scroll/click listeners from running constantly
+	var closeMenu = function() {
+		$('body').removeClass('offcanvas');
+		$('.js-colorlib-nav-toggle').removeClass('active');
+		$(window).off('scroll', closeMenu);
+		$(document).off('click', closeMenuOutside);
+	};
+
+	var closeMenuOutside = function(e) {
+		var container = $("#colorlib-aside, .js-colorlib-nav-toggle");
+		if (!container.is(e.target) && container.has(e.target).length === 0) {
+			closeMenu();
+		}
+	};
+
 	var burgerMenu = function() {
 
 		$('.js-colorlib-nav-toggle').on('click', function(event){
@@ -120,42 +136,14 @@
 			var $this = $(this);
 
 			if ($('body').hasClass('offcanvas')) {
-				$this.removeClass('active');
-				$('body').removeClass('offcanvas');	
+				closeMenu();
 			} else {
 				$this.addClass('active');
-				$('body').addClass('offcanvas');	
+				$('body').addClass('offcanvas');
+				// Optimization: Only attach listeners when menu is open
+				$(window).on('scroll', closeMenu);
+				$(document).on('click', closeMenuOutside);
 			}
-		});
-
-
-
-	};
-
-	// Click outside of offcanvass
-	var mobileMenuOutsideClick = function() {
-
-		$(document).click(function (e) {
-	    var container = $("#colorlib-aside, .js-colorlib-nav-toggle");
-	    if (!container.is(e.target) && container.has(e.target).length === 0) {
-
-	    	if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
-	    	
-	    }
-		});
-
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
 		});
 
 	};
@@ -334,7 +322,6 @@
 		// windowScroll();
 
 
-		mobileMenuOutsideClick();
 		sliderMain();
 		stickyFunction();
 		lazyLoadBackgrounds();
