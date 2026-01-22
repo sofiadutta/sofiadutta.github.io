@@ -320,6 +320,32 @@
 		}
 	};
 
+	var setupEmailCopy = function() {
+		$('#btn-copy-email').on('click', function(e) {
+			e.preventDefault();
+			var email = "sofia.dutta17@gmail.com";
+			var $btn = $(this);
+			var $icon = $btn.find('i');
+			var originalIconClass = "icon-clipboard3";
+
+			// Use temporary textarea for broader compatibility (including headless)
+			var $temp = $("<textarea>");
+			$("body").append($temp);
+			$temp.val(email).select();
+
+			try {
+				document.execCommand("copy");
+				$icon.removeClass(originalIconClass).addClass("icon-tick");
+				setTimeout(function() {
+					$icon.removeClass("icon-tick").addClass(originalIconClass);
+				}, 2000);
+			} catch (err) {
+				console.error("Failed to copy email", err);
+			}
+			$temp.remove();
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +365,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		setupEmailCopy();
 	});
 
 
