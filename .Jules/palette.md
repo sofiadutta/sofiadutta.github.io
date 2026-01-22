@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [Clipboard Copying in Headless Environments]
+**Learning:** Using `navigator.clipboard.writeText` is standard but often fails in headless testing environments or specific browser security contexts (like non-secure origins). The older `document.execCommand('copy')` method, while deprecated, is more robust for these specific constraints when paired with a temporary invisible textarea.
+**Action:** For simple static sites that might be run locally or in restrictive environments, implement a fallback to `execCommand('copy')` to ensure functionality.
