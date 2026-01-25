@@ -320,6 +320,39 @@
 		}
 	};
 
+	var copyEmail = function() {
+		$('#btn-copy-email').on('click', function(event) {
+			event.preventDefault();
+			var $btn = $(this);
+			var emailText = $('#email-display').text();
+			var email = emailText.replace(/ DOT /g, ".").replace(/ AT /g, "@").replace(/\s/g, '');
+
+			var $temp = $("<textarea>");
+			$("body").append($temp);
+			$temp.css({
+				"position": "absolute",
+				"left": "-9999px"
+			});
+			$temp.val(email).select();
+
+			try {
+				document.execCommand("copy");
+				var originalHtml = $btn.html();
+				$btn.html('<i class="icon-tick" aria-hidden="true"></i> Copied!');
+				$btn.removeClass('btn-outline').addClass('btn-success');
+
+				setTimeout(function() {
+					$btn.html(originalHtml);
+					$btn.removeClass('btn-success').addClass('btn-outline');
+				}, 2000);
+			} catch (err) {
+				console.error('Failed to copy email', err);
+			} finally {
+				$temp.remove();
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +372,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		copyEmail();
 	});
 
 
