@@ -320,6 +320,37 @@
 		}
 	};
 
+	var copyEmail = function() {
+		$('#btn-copy-email').on('click', function(e) {
+			e.preventDefault();
+			var email = "sofia.dutta17@gmail.com";
+			var $btn = $(this);
+
+			// Create a temporary textarea to copy text
+			var $temp = $("<textarea>");
+			$temp.css({position: 'absolute', left: '-9999px'});
+			$("body").append($temp);
+			$temp.val(email).select();
+
+			try {
+				document.execCommand("copy");
+
+				// Visual feedback
+				$btn.find('i').attr('class', 'icon-tick');
+				$btn.attr('title', 'Copied!');
+
+				setTimeout(function() {
+					$btn.find('i').attr('class', 'icon-clipboard3');
+					$btn.attr('title', 'Copy email address');
+				}, 2000);
+			} catch (err) {
+				console.error('Failed to copy email', err);
+			} finally {
+				$temp.remove();
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +370,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		copyEmail();
 	});
 
 
