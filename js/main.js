@@ -320,6 +320,28 @@
 		}
 	};
 
+	var setupCopyEmail = function() {
+		var $btn = $('#btn-copy-email');
+		var originalContent = $btn.html();
+
+		$btn.on('click', function(event) {
+			event.preventDefault();
+			var email = "sofia.dutta17@gmail.com";
+
+			var $temp = $("<input>");
+			$("body").append($temp);
+			$temp.val(email).select();
+			document.execCommand("copy");
+			$temp.remove();
+
+			$btn.html('<i class="icon-tick" aria-hidden="true"></i> Copied!');
+
+			setTimeout(function() {
+				$btn.html(originalContent);
+			}, 2000);
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +361,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		setupCopyEmail();
 	});
 
 
