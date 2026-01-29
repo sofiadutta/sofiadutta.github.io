@@ -320,6 +320,15 @@
 		}
 	};
 
+	var emailProtection = function() {
+		$('.email-obfuscated').on('click', function(e) {
+			e.preventDefault();
+			var user = $(this).data('user');
+			var domain = $(this).data('domain');
+			window.location.href = 'mailto:' + user + '@' + domain;
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +348,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailProtection();
 	});
 
 
