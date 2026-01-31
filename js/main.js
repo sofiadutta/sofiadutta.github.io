@@ -320,6 +320,48 @@
 		}
 	};
 
+	var copyEmail = function() {
+		$('.js-copy-email').on('click', function(event) {
+			event.preventDefault();
+			var $btn = $(this);
+			var $icon = $btn.find('i');
+			var $text = $btn.find('.btn-text');
+
+			// Reconstruct email
+			var rawText = $('#email-text').text();
+			var email = rawText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s+/g, '');
+
+			// Copy logic
+			var $temp = $("<input>");
+			$("body").append($temp);
+			$temp.css({position: 'absolute', left: '-9999px', top: '0'});
+			$temp.val(email).select();
+			document.execCommand("copy");
+			$temp.remove();
+
+			// Visual feedback
+			var originalIcon = "icon-clipboard3";
+			var successIcon = "icon-tick";
+
+			$icon.removeClass(originalIcon).addClass(successIcon);
+			$text.text("Copied!");
+			$btn.attr('aria-label', 'Email copied');
+
+			// Reset after 2 seconds
+			if ($btn.data('timeout')) {
+				clearTimeout($btn.data('timeout'));
+			}
+
+			var timeout = setTimeout(function() {
+				$icon.removeClass(successIcon).addClass(originalIcon);
+				$text.text("Copy");
+				$btn.attr('aria-label', 'Copy email address');
+			}, 2000);
+
+			$btn.data('timeout', timeout);
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +381,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		copyEmail();
 	});
 
 
