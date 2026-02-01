@@ -320,6 +320,22 @@
 		}
 	};
 
+	// Security: Email obfuscation
+	document.addEventListener('click', function(e) {
+		var target = e.target;
+		// Handle click on the icon inside the anchor as well
+		while (target && target !== document) {
+			if (target.matches && target.matches('.email-obfuscated')) {
+				e.preventDefault();
+				var user = target.getAttribute('data-user');
+				var domain = target.getAttribute('data-domain');
+				window.location.href = 'mailto:' + encodeURIComponent(user) + '@' + encodeURIComponent(domain);
+				break;
+			}
+			target = target.parentNode;
+		}
+	});
+
 	// Document on load.
 	$(function(){
 		fullHeight();
