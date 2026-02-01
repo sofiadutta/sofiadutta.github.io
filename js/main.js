@@ -329,7 +329,7 @@
 				e.preventDefault();
 				var user = target.getAttribute('data-user');
 				var domain = target.getAttribute('data-domain');
-				window.location.href = 'mailto:' + user + '@' + domain;
+				window.location.href = 'mailto:' + encodeURIComponent(user) + '@' + encodeURIComponent(domain);
 				break;
 			}
 			target = target.parentNode;
