@@ -12,3 +12,8 @@
 **Vulnerability:** Raw `mailto:` links and plaintext emails are easily scraped by spam bots.
 **Learning:** Legacy projects (jQuery/Bootstrap 3) often lack modern build steps for obfuscation. Client-side reconstruction using data attributes (`data-user`, `data-domain`) is a robust, low-tech solution that works within CSP limits.
 **Prevention:** Replace all raw emails with `<span class="email-text" data-user="..." data-domain="...">` and use a centralized JS function to render them and handle clipboard actions.
+
+## 2025-02-20 - GitHub Hosted Runner Flakes
+**Vulnerability:** CI/CD pipeline reliability (Availability). CodeQL jobs failed with "job not acquired by Runner of type hosted".
+**Learning:** `ubuntu-latest` is an alias that can sometimes face allocation issues or point to an unstable/rolling version in the GitHub Actions pool.
+**Prevention:** Pinning the runner version (e.g., `ubuntu-24.04`) instead of `ubuntu-latest` improves stability and predictability for critical security scanning workflows.
