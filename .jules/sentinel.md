@@ -7,3 +7,8 @@
 **Vulnerability:** Inline `document.write` script in `index.html` was blocked by the existing Content Security Policy (CSP) which correctly restricts `script-src` to `self` and specific domains, without allowing `unsafe-inline`.
 **Learning:** Even "harmless" inline scripts like printing the current year are security violations under strict CSPs. The existing code was actually broken (script blocked) because of the security policy.
 **Prevention:** Avoid inline JavaScript entirely. Move all logic to external `.js` files or use DOM manipulation from existing scripts.
+
+## 2025-02-20 - Secure Email Display Pattern
+**Vulnerability:** Raw `mailto:` links and plaintext emails are easily scraped by spam bots.
+**Learning:** Legacy projects (jQuery/Bootstrap 3) often lack modern build steps for obfuscation. Client-side reconstruction using data attributes (`data-user`, `data-domain`) is a robust, low-tech solution that works within CSP limits.
+**Prevention:** Replace all raw emails with `<span class="email-text" data-user="..." data-domain="...">` and use a centralized JS function to render them and handle clipboard actions.
