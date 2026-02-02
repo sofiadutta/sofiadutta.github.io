@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-24 - [Copy-to-Clipboard Feedback Pattern]
+**Learning:** For "Copy" actions, immediate visual feedback is crucial. Changing the button icon (e.g., to a checkmark) and text (e.g., to "Copied!") for a short duration (2s) provides excellent confirmation without requiring a toast or modal.
+**Action:** Reuse this pattern for any copy actions: on click, swap icon/text state, set a timeout to revert, and ensure timeout is cleared on subsequent clicks to prevent race conditions.
