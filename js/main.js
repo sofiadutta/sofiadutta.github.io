@@ -320,6 +320,58 @@
 		}
 	};
 
+	var setupEmailCopy = function() {
+		$('.js-copy-email').on('click', function(event) {
+			event.preventDefault();
+			var $btn = $(this);
+			var $emailContainer = $btn.prev('.email-text');
+
+			// Construct email from attributes
+			var user = $emailContainer.data('user');
+			var domain = $emailContainer.data('domain');
+			var email = user + '@' + domain;
+
+			if (!user || !domain) {
+				// Fallback if data attributes are missing
+				email = "sofia.dutta17@gmail.com";
+			}
+
+			// Copy to clipboard logic
+			var $temp = $("<input>");
+			$("body").append($temp);
+			$temp.val(email).select();
+
+			try {
+				document.execCommand("copy");
+
+				// Clear any existing timeout
+				var existingTimeout = $btn.data('timeout');
+				if (existingTimeout) {
+					clearTimeout(existingTimeout);
+				}
+
+				// Feedback
+				var originalHtml = '<i class="icon-clipboard3" aria-hidden="true"></i> Copy';
+				$btn.html('<i class="icon-tick" aria-hidden="true"></i> Copied!');
+				$btn.removeClass('btn-primary btn-outline').addClass('btn-success');
+
+				var timeoutId = setTimeout(function() {
+					$btn.html(originalHtml);
+					$btn.removeClass('btn-success').addClass('btn-primary btn-outline');
+					$btn.data('timeout', null);
+				}, 2000);
+
+				$btn.data('timeout', timeoutId);
+
+			} catch (err) {
+				console.error('Failed to copy', err);
+				$btn.text('Error');
+			}
+
+			$temp.remove();
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +391,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		setupEmailCopy();
 	});
 
 
