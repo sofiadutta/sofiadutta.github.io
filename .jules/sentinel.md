@@ -7,3 +7,8 @@
 **Vulnerability:** Inline `document.write` script in `index.html` was blocked by the existing Content Security Policy (CSP) which correctly restricts `script-src` to `self` and specific domains, without allowing `unsafe-inline`.
 **Learning:** Even "harmless" inline scripts like printing the current year are security violations under strict CSPs. The existing code was actually broken (script blocked) because of the security policy.
 **Prevention:** Avoid inline JavaScript entirely. Move all logic to external `.js` files or use DOM manipulation from existing scripts.
+
+## 2025-05-20 - Email Obfuscation and Clipboard API
+**Vulnerability:** Raw `mailto:` links expose email addresses to automated scrapers.
+**Learning:** `navigator.clipboard` requires a secure context (HTTPS/localhost). In environments like local file access (`file://`) or older browsers, `document.execCommand('copy')` is a necessary fallback. Also, Playwright's text assertions respect CSS `text-transform`, requiring case-insensitive checks.
+**Prevention:** Use a dual-strategy (Clipboard API + fallback) for copy features and replace static `mailto:` links with dynamic, user-initiated actions.

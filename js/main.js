@@ -320,6 +320,78 @@
 		}
 	};
 
+	var initEmailProtection = function() {
+		$('.js-copy-email').on('click', function(e) {
+			e.preventDefault();
+			var $this = $(this);
+			var user = $this.data('user');
+			var domain = $this.data('domain');
+			var email = user + '@' + domain;
+
+			// Clipboard API with fallback
+			if (navigator.clipboard && window.isSecureContext) {
+				navigator.clipboard.writeText(email).then(function() {
+					showFeedback($this);
+				}, function(err) {
+					fallbackCopyTextToClipboard(email, $this);
+				});
+			} else {
+				fallbackCopyTextToClipboard(email, $this);
+			}
+		});
+	};
+
+	var fallbackCopyTextToClipboard = function(text, $btn) {
+		var textArea = document.createElement("textarea");
+		textArea.value = text;
+
+		// Ensure it's not visible but part of DOM
+		textArea.style.position = "fixed";
+		textArea.style.left = "-9999px";
+		textArea.style.top = "0";
+
+		document.body.appendChild(textArea);
+		textArea.focus();
+		textArea.select();
+
+		try {
+			var successful = document.execCommand('copy');
+			if (successful) {
+				showFeedback($btn);
+			}
+		} catch (err) {
+			console.error('Fallback: Oops, unable to copy', err);
+		}
+
+		document.body.removeChild(textArea);
+	};
+
+	var showFeedback = function($btn) {
+		var originalHtml = $btn.html();
+		// Check if we are already showing feedback to avoid race conditions
+		if ($btn.data('timeout')) {
+			clearTimeout($btn.data('timeout'));
+			$btn.html($btn.data('original-html')); // Restore immediately to start fresh
+		} else {
+			$btn.data('original-html', originalHtml);
+		}
+
+		// Change icon to checkmark and text
+		if ($btn.hasClass('btn-hire')) {
+			$btn.html('Copied! <i class="icon-tick"></i>');
+		} else {
+			$btn.html('<i class="icon-tick"></i>');
+		}
+
+		var timeoutId = setTimeout(function() {
+			$btn.html($btn.data('original-html'));
+			$btn.removeData('timeout');
+			$btn.removeData('original-html');
+		}, 2000);
+
+		$btn.data('timeout', timeoutId);
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +411,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		initEmailProtection();
 	});
 
 
