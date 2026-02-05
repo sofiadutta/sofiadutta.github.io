@@ -290,6 +290,16 @@
 
 	};
 
+	var secureEmail = function() {
+		$('.js-email-protect').on('click', function(e) {
+			e.preventDefault();
+			var user = $(this).data('user');
+			var domain = $(this).data('domain');
+			var email = user + '@' + domain;
+			window.location.href = 'mailto:' + email;
+		});
+	};
+
 	var lazyLoadBackgrounds = function() {
 		var lazyBackgrounds = [].slice.call(document.querySelectorAll("[data-bg]"));
 
@@ -339,6 +349,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		secureEmail();
 	});
 
 
