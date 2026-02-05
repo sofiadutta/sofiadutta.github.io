@@ -320,6 +320,76 @@
 		}
 	};
 
+	var copyEmail = function() {
+		$('.js-copy-email').click(function(e) {
+			e.preventDefault();
+			var $this = $(this);
+			var $emailSpan = $this.siblings('.email-text');
+			var email = $emailSpan.data('user') + '@' + $emailSpan.data('domain');
+
+			var fallbackCopy = function(text) {
+				var textArea = document.createElement("textarea");
+				textArea.value = text;
+				textArea.style.position = "fixed";
+				textArea.style.left = "-9999px";
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+				try {
+					var successful = document.execCommand('copy');
+					document.body.removeChild(textArea);
+					if (successful) {
+						return Promise.resolve();
+					} else {
+						return Promise.reject(new Error("execCommand returned false"));
+					}
+				} catch (err) {
+					document.body.removeChild(textArea);
+					return Promise.reject(err);
+				}
+			};
+
+			var copyToClipboard = function(text) {
+				if (navigator.clipboard && window.isSecureContext) {
+					return navigator.clipboard.writeText(text).catch(function(err) {
+						console.log("Clipboard API failed, trying fallback", err);
+						return fallbackCopy(text);
+					});
+				} else {
+					return fallbackCopy(text);
+				}
+			};
+
+			copyToClipboard(email).then(function() {
+				var $icon = $this.find('i');
+				var $text = $this.find('.btn-text');
+
+				// Store original state if not stored
+				if (!$this.data('original-text')) {
+					$this.data('original-text', $text.text());
+					$this.data('original-icon', $icon.attr('class'));
+				}
+
+				// Clear existing timeout
+				if ($this.data('timeout')) {
+					clearTimeout($this.data('timeout'));
+				}
+
+				$icon.removeClass().addClass('icon-tick');
+				$text.text('Copied!');
+
+				var timeoutId = setTimeout(function() {
+					$icon.removeClass().addClass($this.data('original-icon'));
+					$text.text($this.data('original-text'));
+				}, 2000);
+
+				$this.data('timeout', timeoutId);
+			}).catch(function(err) {
+				console.error("Failed to copy email", err);
+			});
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +409,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		copyEmail();
 	});
 
 
