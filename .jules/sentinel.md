@@ -7,3 +7,8 @@
 **Vulnerability:** Inline `document.write` script in `index.html` was blocked by the existing Content Security Policy (CSP) which correctly restricts `script-src` to `self` and specific domains, without allowing `unsafe-inline`.
 **Learning:** Even "harmless" inline scripts like printing the current year are security violations under strict CSPs. The existing code was actually broken (script blocked) because of the security policy.
 **Prevention:** Avoid inline JavaScript entirely. Move all logic to external `.js` files or use DOM manipulation from existing scripts.
+
+## 2025-02-23 - Email Obfuscation on Static Site
+**Vulnerability:** Email harvesting via plain-text `mailto:` links on static HTML pages.
+**Learning:** Static sites lack server-side protections, so any exposed PII is vulnerable. Simple obfuscation using `data-` attributes and JS reconstruction is a lightweight defense that doesn't require backend changes.
+**Prevention:** Avoid `mailto:` links in raw HTML for public-facing emails. Use data attributes or contact forms.
