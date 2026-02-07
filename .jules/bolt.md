@@ -7,3 +7,7 @@
 ## 2025-01-08 - LCP Optimization for Background Images
 **Learning:** Background images defined in CSS (or inline styles) are often discovered late by the browser. Preloading them via `<link rel="preload">` significantly aids LCP.
 **Action:** Always check for critical background images in Hero sections and add preloads for them, especially when image optimization tools are unavailable to reduce their size.
+
+## 2025-01-08 - CSP Compliance vs Performance
+**Learning:** `Content-Security-Policy: script-src 'self'` blocks inline scripts, which are usually the fastest way to implement tiny optimizations (like class toggling) without a network request.
+**Action:** When CSP is strict, use a tiny external script (e.g., `js/init.js`) instead of an inline script. While it incurs a network request, it respects security boundaries. Ensure the file is small (< 1KB) to minimize latency.
