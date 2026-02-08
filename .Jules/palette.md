@@ -13,3 +13,11 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [Text-Transform CSS vs DOM Verification]
+**Learning:** UX verification scripts relying on `inner_text` can be misled by CSS `text-transform: uppercase`, which renders `Copied!` as `COPIED!`. DOM `text_content` holds the original case, while visual assertions must account for CSS.
+**Action:** When asserting button text in themes, check both rendered text (case-insensitive or expected case) and DOM content to ensure accessibility and visual correctness.
+
+## 2024-05-23 - [Clipboard API Fallback for Local Files]
+**Learning:** `navigator.clipboard.writeText` requires a secure context (HTTPS/localhost) and often fails when testing via `file://` protocol. A fallback using `document.execCommand('copy')` is essential for robustness in local testing environments.
+**Action:** Implement `document.execCommand('copy')` fallback when adding copy-to-clipboard features if local file testing is expected.
