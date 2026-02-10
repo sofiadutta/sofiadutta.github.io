@@ -314,6 +314,49 @@
 		}
 	};
 
+	var copyEmail = function() {
+		$('.js-copy-email').click(function(event) {
+			event.preventDefault();
+			var $this = $(this);
+			var email = $this.data('email');
+
+			var copyTextToClipboard = function(text) {
+				var textArea = document.createElement("textarea");
+				textArea.value = text;
+				textArea.style.position = "fixed";
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+				try {
+					document.execCommand('copy');
+				} catch (err) {}
+				document.body.removeChild(textArea);
+			};
+
+			if (navigator.clipboard && window.isSecureContext) {
+				navigator.clipboard.writeText(email).then(function() {}, function() {
+					copyTextToClipboard(email);
+				});
+			} else {
+				copyTextToClipboard(email);
+			}
+
+			var originalHtml = $this.html();
+			$this.html('<i class="icon-tick"></i> Copied!');
+			$this.removeClass('btn-outline');
+
+			if ($this.data('timeout')) {
+				clearTimeout($this.data('timeout'));
+			}
+
+			var timeoutId = setTimeout(function() {
+				$this.html(originalHtml);
+				$this.addClass('btn-outline');
+			}, 2000);
+			$this.data('timeout', timeoutId);
+		});
+	};
+
 	var updateCopyrightYear = function() {
 		if ($('#copyright-year').length > 0) {
 			$('#copyright-year').text(new Date().getFullYear());
@@ -339,6 +382,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		copyEmail();
 	});
 
 
