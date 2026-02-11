@@ -7,3 +7,7 @@
 ## 2025-01-08 - LCP Optimization for Background Images
 **Learning:** Background images defined in CSS (or inline styles) are often discovered late by the browser. Preloading them via `<link rel="preload">` significantly aids LCP.
 **Action:** Always check for critical background images in Hero sections and add preloads for them, especially when image optimization tools are unavailable to reduce their size.
+
+## 2026-02-11 - Preload Optimization with Media Queries
+**Learning:** For large assets hidden on mobile via `transform: translateX(...)` (like the sidebar image), using `<link rel="preload" ... media="(min-width: 769px)">` is a critical optimization. It prevents the browser from downloading the asset during initial load on mobile, saving significant bandwidth (3MB in this case), while `IntersectionObserver` ensures it loads correctly when the sidebar is revealed.
+**Action:** Always scope preloads for large, non-critical mobile assets with media queries to avoid bandwidth waste on smaller viewports.
