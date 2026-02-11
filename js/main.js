@@ -320,6 +320,59 @@
 		}
 	};
 
+	var copyEmail = function() {
+		$('.js-copy-email').on('click', function(e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var email = $btn.data('email');
+
+			// Clear any existing timeout to prevent state race conditions
+			var existingTimeout = $btn.data('copy-timeout');
+			if (existingTimeout) {
+				clearTimeout(existingTimeout);
+			}
+
+			var showSuccess = function() {
+				$btn.html('<i class="icon-tick"></i> Copied!');
+				$btn.addClass('btn-success').removeClass('btn-primary');
+
+				var timeoutId = setTimeout(function() {
+					$btn.html('<i class="icon-clipboard3"></i> Copy');
+					$btn.addClass('btn-primary').removeClass('btn-success');
+					$btn.removeData('copy-timeout');
+				}, 2000);
+
+				$btn.data('copy-timeout', timeoutId);
+			};
+
+			var fallbackCopy = function(text) {
+				// Fallback for older browsers
+				var textArea = document.createElement("textarea");
+				textArea.value = text;
+				textArea.style.position = "fixed"; // Avoid scrolling to bottom
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+				try {
+					document.execCommand('copy');
+					showSuccess();
+				} catch (err) {
+					console.error('Fallback: Oops, unable to copy', err);
+				}
+				document.body.removeChild(textArea);
+			};
+
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(email).then(showSuccess).catch(function(err) {
+					console.error('Clipboard API failed, trying fallback: ', err);
+					fallbackCopy(email);
+				});
+			} else {
+				fallbackCopy(email);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +392,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		copyEmail();
 	});
 
 
