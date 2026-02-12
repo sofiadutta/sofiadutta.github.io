@@ -7,3 +7,7 @@
 ## 2025-01-08 - LCP Optimization for Background Images
 **Learning:** Background images defined in CSS (or inline styles) are often discovered late by the browser. Preloading them via `<link rel="preload">` significantly aids LCP.
 **Action:** Always check for critical background images in Hero sections and add preloads for them, especially when image optimization tools are unavailable to reduce their size.
+
+## 2025-01-08 - Conditional Preloading for Large Sidebar Image
+**Learning:** `images/about.jpg` (2.9MB) was being preloaded unconditionally, wasting bandwidth on mobile where the sidebar is hidden.
+**Action:** Added `media="(min-width: 769px)"` to the `<link rel="preload">` tag. This ensures the asset is only preloaded on devices where it is likely to be visible (desktop), significantly improving initial load performance on mobile.
