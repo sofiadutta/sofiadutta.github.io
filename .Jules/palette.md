@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [Clipboard Access in Static Sites]
+**Learning:** Found that `navigator.clipboard.writeText` requires secure context (HTTPS) and permissions, which fails in local file viewing or simple HTTP hosting. The legacy `document.execCommand('copy')` with a temporary textarea remains a robust, cross-browser fallback for these scenarios.
+**Action:** Always implement a fallback for clipboard operations in static sites, and ensure Playwright tests explicitly grant clipboard permissions.
