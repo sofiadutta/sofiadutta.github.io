@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [Clipboard API Fallback]
+**Learning:** Copying text to clipboard reliably across environments (secure/insecure context) requires checking `navigator.clipboard` first and falling back to `document.execCommand('copy')`.
+**Action:** Always wrap clipboard operations in a feature detection block and provide a robust fallback for legacy or local file environments.
