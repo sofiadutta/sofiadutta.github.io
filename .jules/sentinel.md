@@ -7,3 +7,8 @@
 **Vulnerability:** Inline `document.write` script in `index.html` was blocked by the existing Content Security Policy (CSP) which correctly restricts `script-src` to `self` and specific domains, without allowing `unsafe-inline`.
 **Learning:** Even "harmless" inline scripts like printing the current year are security violations under strict CSPs. The existing code was actually broken (script blocked) because of the security policy.
 **Prevention:** Avoid inline JavaScript entirely. Move all logic to external `.js` files or use DOM manipulation from existing scripts.
+
+## 2025-02-23 - Email Harvesting Prevention
+**Vulnerability:** Static analysis tools and scrapers can easily extract email addresses from `mailto:` links and plaintext obfuscation (e.g., "DOT com").
+**Learning:** Using `data-attributes` and dynamic JS construction effectively prevents static harvesting while maintaining usability (opening default mail client or copying to clipboard).
+**Prevention:** Replace all `mailto:` links with `href="#"` and `data-user/data-domain` attributes, handled by a global event listener.
