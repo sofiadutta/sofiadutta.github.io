@@ -320,6 +320,51 @@
 		}
 	};
 
+	var emailProtection = function() {
+		$(document).on('click', '.js-email-protect', function(e) {
+			e.preventDefault();
+			var user = $(this).data('user');
+			var domain = $(this).data('domain');
+			window.location.href = 'mailto:' + user + '@' + domain;
+		});
+
+		$(document).on('click', '.js-copy-email', function(e) {
+			e.preventDefault();
+			var email = $(this).data('email');
+			var $this = $(this);
+			var originalHtml = $this.html();
+
+			// Use fallback if navigator.clipboard is not supported
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(email).then(function() {
+					$this.html('<i class="icon-tick"></i> Copied!');
+					setTimeout(function() {
+						$this.html(originalHtml);
+					}, 2000);
+				}).catch(function(err) {
+					console.error('Async: Could not copy text: ', err);
+				});
+			} else {
+				// Fallback
+				var textArea = document.createElement("textarea");
+				textArea.value = email;
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+				try {
+					document.execCommand('copy');
+					$this.html('<i class="icon-tick"></i> Copied!');
+					setTimeout(function() {
+						$this.html(originalHtml);
+					}, 2000);
+				} catch (err) {
+					console.error('Fallback: Oops, unable to copy', err);
+				}
+				document.body.removeChild(textArea);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +384,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailProtection();
 	});
 
 
