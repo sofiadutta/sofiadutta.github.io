@@ -320,6 +320,55 @@
 		}
 	};
 
+	var copyEmail = function() {
+		$('.js-copy-email').on('click', function(event) {
+			event.preventDefault();
+			var $this = $(this);
+
+			// Prevent multiple clicks if already copied
+			if ($this.hasClass('btn-success')) return;
+
+			var email = $this.data('email');
+
+			var copyText = function() {
+				$this.html('<i class="icon-tick"></i> Copied!');
+				$this.addClass('btn-success').removeClass('btn-primary btn-outline');
+
+				setTimeout(function() {
+					$this.html('<i class="icon-clipboard3" aria-hidden="true"></i> Copy');
+					$this.removeClass('btn-success').addClass('btn-primary btn-outline');
+				}, 2000);
+			};
+
+			var fallbackCopy = function(text, successCallback) {
+				var textArea = document.createElement("textarea");
+				textArea.value = text;
+				textArea.style.position = "fixed";
+				textArea.style.left = "-9999px";
+				textArea.style.opacity = "0";
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+				try {
+					var successful = document.execCommand('copy');
+					if (successful) successCallback();
+				} catch (err) {
+					console.error('Fallback: Oops, unable to copy', err);
+				}
+				document.body.removeChild(textArea);
+			};
+
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(email).then(copyText, function(err) {
+					// Fallback if promise rejects (e.g. non-secure context)
+					fallbackCopy(email, copyText);
+				});
+			} else {
+				fallbackCopy(email, copyText);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +388,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		copyEmail();
 	});
 
 
