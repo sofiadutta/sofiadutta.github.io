@@ -314,6 +314,15 @@
 		}
 	};
 
+	var emailProtect = function() {
+		$('.js-email-protect').on('click', function(e){
+			e.preventDefault();
+			var user = $(this).data('user');
+			var domain = $(this).data('domain');
+			window.location.href = 'mailto:' + user + '@' + domain;
+		});
+	};
+
 	var updateCopyrightYear = function() {
 		if ($('#copyright-year').length > 0) {
 			$('#copyright-year').text(new Date().getFullYear());
@@ -338,6 +347,7 @@
 		sliderMain();
 		stickyFunction();
 		lazyLoadBackgrounds();
+		emailProtect();
 		updateCopyrightYear();
 	});
 
