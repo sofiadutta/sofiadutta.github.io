@@ -320,6 +320,87 @@
 		}
 	};
 
+	var emailProtection = function() {
+		// Protect mailto links
+		$('.js-email-protect').on('click', function(e) {
+			e.preventDefault();
+			var user = $(this).data('user');
+			var domain = $(this).data('domain');
+			if (user && domain) {
+				window.location.href = 'mailto:' + user + '@' + domain;
+			}
+		});
+
+		// Copy email to clipboard
+		$('.js-copy-email').on('click', function(e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var email = $btn.data('email');
+
+			if (email) {
+				copyTextToClipboard(email, $btn);
+			}
+		});
+	};
+
+	var copyTextToClipboard = function(text, $btn) {
+		if (navigator.clipboard && window.isSecureContext) {
+			navigator.clipboard.writeText(text).then(function() {
+				showCopiedFeedback($btn);
+			}, function(err) {
+				fallbackCopyTextToClipboard(text, $btn);
+			});
+		} else {
+			fallbackCopyTextToClipboard(text, $btn);
+		}
+	};
+
+	var fallbackCopyTextToClipboard = function(text, $btn) {
+		var textArea = document.createElement("textarea");
+		textArea.value = text;
+		textArea.style.top = "0";
+		textArea.style.left = "0";
+		textArea.style.position = "fixed";
+		document.body.appendChild(textArea);
+		textArea.focus();
+		textArea.select();
+
+		try {
+			var successful = document.execCommand('copy');
+			if (successful) {
+				showCopiedFeedback($btn);
+			}
+		} catch (err) {
+			console.error('Fallback: Oops, unable to copy', err);
+		}
+
+		document.body.removeChild(textArea);
+	};
+
+	var showCopiedFeedback = function($btn) {
+		// Only change if not already changed to avoid race conditions
+		if ($btn.data('copy-timeout')) {
+			clearTimeout($btn.data('copy-timeout'));
+		}
+
+		if (!$btn.data('original-text')) {
+			$btn.data('original-text', $btn.html());
+		}
+
+		var originalText = $btn.data('original-text');
+
+		$btn.html('<i class="icon-tick"></i> Copied!');
+		$btn.removeClass('btn-primary').addClass('btn-success');
+
+		var timeoutId = setTimeout(function() {
+			$btn.html(originalText);
+			$btn.removeClass('btn-success').addClass('btn-primary');
+			$btn.removeData('copy-timeout');
+		}, 2000);
+
+		$btn.data('copy-timeout', timeoutId);
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +420,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailProtection();
 	});
 
 
