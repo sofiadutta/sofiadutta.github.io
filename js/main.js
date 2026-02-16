@@ -320,6 +320,75 @@
 		}
 	};
 
+	var copyEmail = function() {
+		$('.js-copy-email').on('click', function(e) {
+			e.preventDefault();
+			var $this = $(this);
+			var email = $this.data('email').replace(/ DOT /g, '.').replace(/ AT /g, '@');
+
+			if (navigator.clipboard && window.isSecureContext) {
+				navigator.clipboard.writeText(email).then(function() {
+					successFeedback($this);
+				}, function(err) {
+					console.error('Async: Could not copy text: ', err);
+					fallbackCopy(email, $this);
+				});
+			} else {
+				fallbackCopy(email, $this);
+			}
+		});
+
+		function fallbackCopy(text, $btn) {
+			var textArea = document.createElement("textarea");
+			textArea.value = text;
+
+			// Avoid scrolling to bottom
+			textArea.style.top = "0";
+			textArea.style.left = "0";
+			textArea.style.position = "fixed";
+
+			document.body.appendChild(textArea);
+			textArea.focus();
+			textArea.select();
+
+			try {
+				var successful = document.execCommand('copy');
+				if (successful) {
+					successFeedback($btn);
+				} else {
+					console.error('Fallback: Copy command was unsuccessful');
+				}
+			} catch (err) {
+				console.error('Fallback: Oops, unable to copy', err);
+			}
+
+			document.body.removeChild(textArea);
+		}
+
+		function successFeedback($btn) {
+			var originalWidth = $btn.outerWidth();
+
+			// Fix width to prevent jumping
+			$btn.css('width', originalWidth);
+
+			$btn.html('<i class="icon-tick"></i> Copied!');
+			$btn.removeClass('btn-primary btn-outline').addClass('btn-success');
+
+			// Clear any existing timeout
+			if ($btn.data('timeout')) {
+				clearTimeout($btn.data('timeout'));
+			}
+
+			var timeout = setTimeout(function() {
+				$btn.html('<i class="icon-clipboard3"></i> Copy');
+				$btn.removeClass('btn-success').addClass('btn-primary btn-outline');
+				$btn.css('width', ''); // Reset width
+			}, 2000);
+
+			$btn.data('timeout', timeout);
+		}
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +408,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		copyEmail();
 	});
 
 
