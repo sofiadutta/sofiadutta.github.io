@@ -1481,3 +1481,7 @@ body.offcanvas {
 
 .js .animate-box {
   opacity: 0; }
+
+.js-copy-email {
+  margin-left: 10px;
+}
