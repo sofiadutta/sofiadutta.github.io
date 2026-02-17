@@ -320,6 +320,71 @@
 		}
 	};
 
+	var emailCopy = function() {
+		$('.js-email-copy').on('click', function(event) {
+			event.preventDefault();
+			var $this = $(this);
+			var email = $this.data('email');
+
+			// Clear existing timeout
+			var timeout = $this.data('timeout');
+			if (timeout) {
+				clearTimeout(timeout);
+			}
+
+			var copySuccess = function() {
+				$this.removeClass('btn-primary btn-outline').addClass('btn-success');
+				$this.html('<i class="icon-tick"></i> Copied!');
+
+				var newTimeout = setTimeout(function() {
+					$this.removeClass('btn-success').addClass('btn-primary btn-outline');
+					$this.html('<i class="icon-clipboard3"></i> Copy');
+					$this.data('timeout', null);
+				}, 2000);
+
+				$this.data('timeout', newTimeout);
+			};
+
+			var copyFail = function(err) {
+				 console.error('Failed to copy: ', err);
+			};
+
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(email).then(copySuccess).catch(function(err) {
+					// Fallback
+					fallbackCopy(email);
+				});
+			} else {
+				fallbackCopy(email);
+			}
+
+			function fallbackCopy(text) {
+				var textArea = document.createElement("textarea");
+				textArea.value = text;
+
+				// Ensure it's not visible but part of DOM
+				textArea.style.position = "fixed";
+				textArea.style.left = "-9999px";
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+
+				try {
+					var successful = document.execCommand('copy');
+					if (successful) {
+						copySuccess();
+					} else {
+						copyFail('execCommand failed');
+					}
+				} catch (err) {
+					copyFail(err);
+				}
+
+				document.body.removeChild(textArea);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +404,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailCopy();
 	});
 
 
