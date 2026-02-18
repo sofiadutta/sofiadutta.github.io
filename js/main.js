@@ -320,6 +320,85 @@
 		}
 	};
 
+	var initCopyEmail = function() {
+		function fallbackCopyTextToClipboard(text, onSuccess, onError) {
+			var textArea = document.createElement("textarea");
+			textArea.value = text;
+			textArea.style.position = "fixed";  // Avoid scrolling to bottom
+			document.body.appendChild(textArea);
+			textArea.focus();
+			textArea.select();
+
+			try {
+				var successful = document.execCommand('copy');
+				if (successful) {
+					onSuccess();
+				} else {
+					onError(new Error('Copy command failed'));
+				}
+			} catch (err) {
+				onError(err);
+			}
+			document.body.removeChild(textArea);
+		}
+
+		function copyTextToClipboard(text, onSuccess, onError) {
+			if (!navigator.clipboard) {
+				fallbackCopyTextToClipboard(text, onSuccess, onError);
+				return;
+			}
+			navigator.clipboard.writeText(text).then(function() {
+				onSuccess();
+			}, function(err) {
+				// Fallback if async copy fails
+				fallbackCopyTextToClipboard(text, onSuccess, onError);
+			});
+		}
+
+		function showCopySuccess($btn) {
+			var $icon = $btn.find('i');
+			var $text = $btn.find('.btn-text');
+			// Store original state if not already stored
+			if (!$btn.data('original-icon')) {
+				$btn.data('original-icon', $icon.attr('class'));
+				$btn.data('original-text', $text.text());
+			}
+
+			// Clear any existing timeout to prevent race conditions
+			if ($btn.data('timeout')) {
+				clearTimeout($btn.data('timeout'));
+			}
+
+			$icon.removeClass().addClass('icon-tick');
+			$text.text('Copied!');
+			$btn.removeClass('btn-primary').addClass('btn-success');
+
+			// Revert after 2 seconds
+			var timeoutId = setTimeout(function() {
+				$icon.removeClass().addClass($btn.data('original-icon'));
+				$text.text($btn.data('original-text'));
+				$btn.removeClass('btn-success').addClass('btn-primary');
+				$btn.removeData('timeout');
+			}, 2000);
+
+			$btn.data('timeout', timeoutId);
+		}
+
+		$('.js-email-copy-btn').on('click', function(e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var user = $btn.data('user');
+			var domain = $btn.data('domain');
+			var email = user + '@' + domain;
+
+			copyTextToClipboard(email, function() {
+				showCopySuccess($btn);
+			}, function(err) {
+				console.error('Could not copy text: ', err);
+			});
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +418,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		initCopyEmail();
 	});
 
 
