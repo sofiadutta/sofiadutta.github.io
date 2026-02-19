@@ -320,6 +320,68 @@
 		}
 	};
 
+	var copyEmail = function() {
+		$('.btn-copy-email').on('click', function(e) {
+			e.preventDefault();
+			var $this = $(this);
+			var email = $this.data('email');
+
+			navigator.clipboard.writeText(email).then(function() {
+				$this.html('<i class="icon-tick"></i> Copied!');
+				$this.addClass('btn-success').removeClass('btn-primary btn-outline');
+
+				// Store timeout id to clear it if clicked again rapidly
+				if ($this.data('timeout')) {
+					clearTimeout($this.data('timeout'));
+				}
+
+				var timeoutId = setTimeout(function() {
+					$this.html('<i class="icon-clipboard3"></i> Copy');
+					$this.removeClass('btn-success').addClass('btn-primary btn-outline');
+				}, 2000);
+
+				$this.data('timeout', timeoutId);
+
+			}, function(err) {
+				console.error('Could not copy text: ', err);
+				// Fallback to execCommand if clipboard API fails (e.g. non-secure context)
+				var textArea = document.createElement("textarea");
+				textArea.value = email;
+
+				// Avoid scrolling to bottom
+				textArea.style.top = "0";
+				textArea.style.left = "0";
+				textArea.style.position = "fixed";
+
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+
+				try {
+					var successful = document.execCommand('copy');
+					if(successful) {
+						$this.html('<i class="icon-tick"></i> Copied!');
+						$this.addClass('btn-success').removeClass('btn-primary btn-outline');
+
+						if ($this.data('timeout')) {
+							clearTimeout($this.data('timeout'));
+						}
+
+						var timeoutId = setTimeout(function() {
+							$this.html('<i class="icon-clipboard3"></i> Copy');
+							$this.removeClass('btn-success').addClass('btn-primary btn-outline');
+						}, 2000);
+						$this.data('timeout', timeoutId);
+					}
+				} catch (err) {
+					console.error('Fallback: Oops, unable to copy', err);
+				}
+
+				document.body.removeChild(textArea);
+			});
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +401,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		copyEmail();
 	});
 
 
