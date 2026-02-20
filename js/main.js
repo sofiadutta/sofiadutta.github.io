@@ -320,6 +320,63 @@
 		}
 	};
 
+	var emailCopy = function() {
+		$('.btn-copy-email').on('click', function(event) {
+			event.preventDefault();
+			var $this = $(this);
+			var email = $this.data('email');
+			var originalText = 'Copy'; // Hardcoded to avoid reading current state if clicked rapidly
+			var originalIcon = 'icon-clipboard3';
+
+			var onSuccess = function() {
+				$this.find('.btn-text').text('Copied!');
+				$this.find('i').attr('class', 'icon-tick');
+				$this.addClass('btn-success').removeClass('btn-primary btn-outline');
+
+				var timeoutId = $this.data('timeout');
+				if (timeoutId) clearTimeout(timeoutId);
+
+				timeoutId = setTimeout(function() {
+					$this.find('.btn-text').text(originalText);
+					$this.find('i').attr('class', originalIcon);
+					$this.addClass('btn-primary btn-outline').removeClass('btn-success');
+				}, 2000);
+
+				$this.data('timeout', timeoutId);
+			};
+
+			var onError = function(err) {
+				console.error('Could not copy text: ', err);
+			};
+
+			var fallbackCopy = function(text) {
+				var textArea = document.createElement("textarea");
+				textArea.value = text;
+				textArea.style.position = "fixed";
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+
+				try {
+					var successful = document.execCommand('copy');
+					if (successful) onSuccess();
+					else onError('execCommand copy failed');
+				} catch (err) {
+					onError(err);
+				}
+				document.body.removeChild(textArea);
+			};
+
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(email).then(onSuccess).catch(function() {
+					fallbackCopy(email);
+				});
+			} else {
+				fallbackCopy(email);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +396,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailCopy();
 	});
 
 
