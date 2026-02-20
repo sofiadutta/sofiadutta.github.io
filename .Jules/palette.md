@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [Clipboard API Fallbacks and Race Conditions]
+**Learning:** The modern `navigator.clipboard` API is reliable but can fail in non-secure contexts (HTTP) or headless environments. A robust UX must include a `document.execCommand('copy')` fallback. Also, when providing temporary visual feedback (like a "Copied!" state reverting after 2s), distinct `setTimeout` IDs must be stored on the element to prevent race conditions from rapid clicks.
+**Action:** Always implement a `try-catch` fallback for clipboard actions and clear pending timeouts before setting new ones for UI reversions.
