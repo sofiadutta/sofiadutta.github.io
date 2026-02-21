@@ -320,6 +320,69 @@
 		}
 	};
 
+	var emailCopy = function() {
+		$('.btn-copy-email').click(function(event){
+			event.preventDefault();
+			var $this = $(this);
+			var user = $this.data('user');
+			var domain = $this.data('domain');
+			var email = user + '@' + domain;
+
+			// Clear any existing timeout to avoid race conditions
+			var existingTimeout = $this.data('timeout');
+			if (existingTimeout) {
+				clearTimeout(existingTimeout);
+			}
+
+			var successCallback = function() {
+				$this.html('<i class="icon-tick" aria-hidden="true"></i> Copied!');
+
+				var timeoutId = setTimeout(function(){
+					$this.html('<i class="icon-clipboard3" aria-hidden="true"></i> Copy');
+				}, 2000);
+
+				$this.data('timeout', timeoutId);
+			};
+
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(email).then(successCallback).catch(function(err) {
+					console.error('Async: Could not copy text: ', err);
+					// Fallback
+					fallbackCopyTextToClipboard(email);
+				});
+			} else {
+				fallbackCopyTextToClipboard(email);
+			}
+
+			function fallbackCopyTextToClipboard(text) {
+				var textArea = document.createElement("textarea");
+				textArea.value = text;
+
+				// Ensure textarea is not visible but part of DOM
+				textArea.style.position = "fixed";
+				textArea.style.left = "-9999px";
+				textArea.style.top = "0";
+
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+
+				try {
+					var successful = document.execCommand('copy');
+					if (successful) {
+						successCallback();
+					} else {
+						console.error('Fallback: Copying text command was unsuccessful');
+					}
+				} catch (err) {
+					console.error('Fallback: Oops, unable to copy', err);
+				}
+
+				document.body.removeChild(textArea);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +402,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailCopy();
 	});
 
 
