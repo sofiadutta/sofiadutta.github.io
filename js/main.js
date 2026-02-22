@@ -320,6 +320,75 @@
 		}
 	};
 
+	var emailCopy = function() {
+		$('.btn-copy-email').on('click', function(event) {
+			event.preventDefault();
+			var $this = $(this);
+			var user = $this.data('user');
+			var domain = $this.data('domain');
+			var email = user + '@' + domain;
+
+			var copyText = function(text) {
+				if (navigator.clipboard && navigator.clipboard.writeText) {
+					return navigator.clipboard.writeText(text);
+				} else {
+					// Fallback
+					var textArea = document.createElement("textarea");
+					textArea.value = text;
+
+					// Ensure it's not visible but part of DOM
+					textArea.style.position = "fixed";
+					textArea.style.left = "-9999px";
+					textArea.style.top = "0";
+					document.body.appendChild(textArea);
+
+					textArea.focus();
+					textArea.select();
+
+					return new Promise(function(resolve, reject) {
+						try {
+							var successful = document.execCommand('copy');
+							document.body.removeChild(textArea);
+							if (successful) resolve();
+							else reject();
+						} catch (err) {
+							document.body.removeChild(textArea);
+							reject(err);
+						}
+					});
+				}
+			};
+
+			copyText(email).then(function() {
+				// Success feedback
+				if (!$this.data('original-html')) {
+					$this.data('original-html', $this.html());
+				}
+
+				// Clear existing timeout if any
+				var timeoutId = $this.data('timeout');
+				if (timeoutId) {
+					clearTimeout(timeoutId);
+				}
+
+				$this.html('<i class="icon-tick"></i> Copied!');
+				$this.removeClass('btn-primary btn-outline').addClass('btn-success');
+
+				// Revert after 2 seconds
+				timeoutId = setTimeout(function() {
+					$this.html($this.data('original-html'));
+					$this.removeClass('btn-success').addClass('btn-primary btn-outline');
+					$this.removeData('timeout'); // Clean up
+				}, 2000);
+
+				$this.data('timeout', timeoutId);
+
+			}).catch(function(err) {
+				console.error('Failed to copy: ', err);
+			});
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +408,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailCopy();
 	});
 
 
