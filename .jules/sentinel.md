@@ -7,3 +7,8 @@
 **Vulnerability:** Inline `document.write` script in `index.html` was blocked by the existing Content Security Policy (CSP) which correctly restricts `script-src` to `self` and specific domains, without allowing `unsafe-inline`.
 **Learning:** Even "harmless" inline scripts like printing the current year are security violations under strict CSPs. The existing code was actually broken (script blocked) because of the security policy.
 **Prevention:** Avoid inline JavaScript entirely. Move all logic to external `.js` files or use DOM manipulation from existing scripts.
+
+## 2025-02-23 - Email Scraping Protection in Static Site
+**Vulnerability:** Hardcoded `mailto:` links and email text in static HTML are trivially harvested by scrapers, leading to spam.
+**Learning:** Modern Clipboard API (`navigator.clipboard.writeText`) requires a secure context (HTTPS) and may fail in local/dev environments or older browsers. For maximum compatibility in a legacy static site template, `document.execCommand('copy')` with a temporary textarea remains the robust fallback.
+**Prevention:** Replace static `mailto:` links with `data-*` attributes and dynamic JS construction. Use a dual-strategy (Clipboard API with fallback) or robust fallback-only approach for copy functionality in insecure contexts.

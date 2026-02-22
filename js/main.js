@@ -320,6 +320,64 @@
 		}
 	};
 
+	var emailProtect = function() {
+		$('.js-email-protect').on('click', function(event){
+			event.preventDefault();
+			var user = $(this).data('user');
+			var domain = $(this).data('domain');
+			if (user && domain) {
+				window.location.href = 'mailto:' + user + '@' + domain;
+			}
+		});
+	};
+
+	var emailCopy = function() {
+		$('.btn-copy-email').on('click', function(event){
+			event.preventDefault();
+			var $this = $(this);
+			var user = $this.data('user');
+			var domain = $this.data('domain');
+			if (user && domain) {
+				var email = user + '@' + domain;
+
+				var textArea = document.createElement("textarea");
+				textArea.value = email;
+				textArea.style.top = "0";
+				textArea.style.left = "0";
+				textArea.style.position = "fixed";
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+
+				try {
+					var successful = document.execCommand('copy');
+					if (successful) {
+						if (!$this.data('original-text')) {
+							$this.data('original-text', $this.html());
+						}
+						var originalContent = $this.data('original-text');
+
+						$this.html('<i class="icon-tick" aria-hidden="true"></i> Copied!');
+						$this.addClass('btn-success').removeClass('btn-primary btn-outline');
+
+						var timeoutId = $this.data('timeout');
+						if (timeoutId) clearTimeout(timeoutId);
+
+						timeoutId = setTimeout(function(){
+							$this.html(originalContent);
+							$this.removeClass('btn-success').addClass('btn-primary btn-outline');
+						}, 2000);
+						$this.data('timeout', timeoutId);
+					}
+				} catch (err) {
+					// Fail silently or log
+				}
+
+				document.body.removeChild(textArea);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +397,8 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailProtect();
+		emailCopy();
 	});
 
 
