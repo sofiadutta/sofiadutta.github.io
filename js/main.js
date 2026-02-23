@@ -320,6 +320,43 @@
 		}
 	};
 
+	var emailCopy = function() {
+		$('.js-email-copy').click(function(event) {
+			event.preventDefault();
+			var $this = $(this);
+			var user = $this.data('user');
+			var domain = $this.data('domain');
+			var email = user + '@' + domain;
+
+			// Copy using temporary textarea
+			var $temp = $("<textarea>");
+			$("body").append($temp);
+			$temp.val(email).select();
+			document.execCommand("copy");
+			$temp.remove();
+
+			// Visual feedback
+			$this.removeClass('btn-primary').addClass('btn-success');
+			$this.find('i').removeClass('icon-clipboard3').addClass('icon-tick');
+			$this.find('.btn-text').text('Copied!');
+
+			// Clear existing timeout if any
+			var timeout = $this.data('timeout');
+			if (timeout) {
+				clearTimeout(timeout);
+			}
+
+			// Revert after 2 seconds
+			timeout = setTimeout(function() {
+				$this.removeClass('btn-success').addClass('btn-primary');
+				$this.find('i').removeClass('icon-tick').addClass('icon-clipboard3');
+				$this.find('.btn-text').text('Copy');
+			}, 2000);
+
+			$this.data('timeout', timeout);
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +376,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailCopy();
 	});
 
 
