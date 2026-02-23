@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2026-02-23 - Legacy Clipboard Copy Pattern
+**Learning:** In legacy environments (jQuery, HTTP) lacking `navigator.clipboard`, `document.execCommand('copy')` with a temporary textarea remains the most robust solution. Visual feedback requires explicit class swapping (`.btn-primary` <-> `.btn-success`) and icon toggling (`.icon-clipboard3` <-> `.icon-tick`) due to CSS specificity issues in Bootstrap 3 themes.
+**Action:** Use the `emailCopy` implementation as a template for future copy-to-clipboard features, ensuring `aria-hidden` is preserved on icons and timeout handlers are cleared to prevent race conditions.
