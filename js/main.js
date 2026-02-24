@@ -320,6 +320,47 @@
 		}
 	};
 
+	var emailCopy = function() {
+		$('.js-email-copy').click(function(event){
+			event.preventDefault();
+			var $btn = $(this);
+			var user = $btn.data('user');
+			var domain = $btn.data('domain');
+			var email = user + '@' + domain;
+
+			var $temp = $("<textarea>");
+			$("body").append($temp);
+			$temp.val(email).select();
+			document.execCommand("copy");
+			$temp.remove();
+
+			$btn.html('<i class="icon-tick"></i> Copied!');
+			$btn.removeClass('btn-primary btn-outline').addClass('btn-success');
+
+			if ($btn.data('timeout')) {
+				clearTimeout($btn.data('timeout'));
+			}
+
+			var timeoutId = setTimeout(function(){
+				$btn.html('<i class="icon-clipboard"></i> Copy');
+				$btn.removeClass('btn-success').addClass('btn-primary btn-outline');
+				$btn.data('timeout', null);
+			}, 2000);
+
+			$btn.data('timeout', timeoutId);
+		});
+	};
+
+	var emailProtect = function() {
+		$('.js-email-protect').click(function(event){
+			event.preventDefault();
+			var user = $(this).data('user');
+			var domain = $(this).data('domain');
+			var email = user + '@' + domain;
+			window.location.href = 'mailto:' + email;
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +380,8 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailCopy();
+		emailProtect();
 	});
 
 
