@@ -25,7 +25,8 @@
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<link rel="shortcut icon" href="favicon.ico">
 
-	<link rel="preload" as="image" href="images/about.jpg">
+	<!-- Preload sidebar image only on desktop/tablet where it is visible -->
+	<link rel="preload" as="image" href="images/about.jpg" media="(min-width: 769px)">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
