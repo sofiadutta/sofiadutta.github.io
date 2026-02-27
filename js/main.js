@@ -328,20 +328,23 @@
 			var domain = $btn.data('domain');
 			var email = user + '@' + domain;
 
-			var $temp = $("<textarea>");
-			$("body").append($temp);
+			var $temp = $('<textarea>');
+			$temp.css({
+				'position': 'absolute',
+				'left': '-9999px',
+				'top': '-9999px'
+			});
+			$('body').append($temp);
 			$temp.val(email).select();
-			document.execCommand("copy");
+			document.execCommand('copy');
 			$temp.remove();
 
-			if (!$btn.attr('data-original-text')) {
-				$btn.attr('data-original-text', $btn.html());
-			}
-
 			$btn.html('<i class="icon-check" aria-hidden="true"></i> Copied!');
+			$btn.attr('aria-label', 'Email address copied to clipboard');
 
 			setTimeout(function() {
-				$btn.html($btn.attr('data-original-text'));
+				$btn.html('<i class="icon-clipboard3" aria-hidden="true"></i> Copy');
+				$btn.attr('aria-label', 'Copy email address');
 			}, 2000);
 		});
 	};
