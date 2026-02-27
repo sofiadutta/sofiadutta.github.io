@@ -149,13 +149,24 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
+		// Optimize scroll handler: Cache the body and nav toggle elements outside the scroll event.
+		// Use requestAnimationFrame or a simple throttle instead of debounce to ensure instant UX feedback
+		// without completely blocking the main thread during heavy scrolling.
+		var $body = $('body');
+		var $navToggle = $('.js-colorlib-nav-toggle');
+		var ticking = false;
 
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+		$(window).scroll(function() {
+			if (!ticking) {
+				window.requestAnimationFrame(function() {
+					if ( $body.hasClass('offcanvas') ) {
+						$body.removeClass('offcanvas');
+						$navToggle.removeClass('active');
+					}
+					ticking = false;
+				});
+				ticking = true;
+			}
 		});
 
 	};
@@ -190,9 +201,7 @@
 
 		var $el = $('#navbar > ul');
 		$el.find('li').removeClass('active');
-		$el.each(function(){
-			$(this).find('a[data-nav-section="'+section+'"]').closest('li').addClass('active');
-		});
+		$el.find('a[data-nav-section="'+section+'"]').closest('li').addClass('active');
 
 	};
 
