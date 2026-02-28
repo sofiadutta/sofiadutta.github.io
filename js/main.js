@@ -134,28 +134,38 @@
 
 	// Click outside of offcanvass
 	var mobileMenuOutsideClick = function() {
+		// Optimization: Cache DOM lookups to prevent redundant queries during events
+		var $body = $('body');
+		var $navToggle = $('.js-colorlib-nav-toggle');
 
 		$(document).click(function (e) {
 	    var container = $("#colorlib-aside, .js-colorlib-nav-toggle");
 	    if (!container.is(e.target) && container.has(e.target).length === 0) {
 
-	    	if ( $('body').hasClass('offcanvas') ) {
+		if ( $body.hasClass('offcanvas') ) {
 
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
+			$body.removeClass('offcanvas');
+			$navToggle.removeClass('active');
 			
 	    	}
 	    	
 	    }
 		});
 
+		// Optimization: Use requestAnimationFrame and a ticking flag for scroll events
+		// to prevent main thread blocking and layout thrashing (Expected impact: smooth 60fps scrolling)
+		var ticking = false;
 		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+			if (!ticking) {
+				window.requestAnimationFrame(function() {
+					if ( $body.hasClass('offcanvas') ) {
+						$body.removeClass('offcanvas');
+						$navToggle.removeClass('active');
+					}
+					ticking = false;
+				});
+				ticking = true;
+			}
 		});
 
 	};
