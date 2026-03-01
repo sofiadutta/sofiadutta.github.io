@@ -135,27 +135,37 @@
 	// Click outside of offcanvass
 	var mobileMenuOutsideClick = function() {
 
+		var $body = $('body'); // Cache body selector
+		var $navToggle = $('.js-colorlib-nav-toggle'); // Cache nav toggle selector
+
 		$(document).click(function (e) {
 	    var container = $("#colorlib-aside, .js-colorlib-nav-toggle");
 	    if (!container.is(e.target) && container.has(e.target).length === 0) {
 
-	    	if ( $('body').hasClass('offcanvas') ) {
+		if ( $body.hasClass('offcanvas') ) {
 
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
+			$body.removeClass('offcanvas');
+			$navToggle.removeClass('active');
 			
 	    	}
 	    	
 	    }
 		});
 
+		// Optimization: Use requestAnimationFrame and ticking flag for scroll events
+		// Expected impact: Prevents layout thrashing and blocking the main thread during heavy scrolling.
+		var ticking = false;
 		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+			if (!ticking) {
+				window.requestAnimationFrame(function() {
+					if ( $body.hasClass('offcanvas') ) {
+						$body.removeClass('offcanvas');
+						$navToggle.removeClass('active');
+					}
+					ticking = false;
+				});
+				ticking = true;
+			}
 		});
 
 	};
