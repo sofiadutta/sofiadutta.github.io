@@ -321,7 +321,7 @@
 			var user = $(this).attr('data-user');
 			var domain = $(this).attr('data-domain');
 			if (user && domain) {
-				window.location.href = 'mailto:' + user + '@' + domain;
+				window.location.href = 'mailto:' + encodeURIComponent(user) + '@' + encodeURIComponent(domain);
 			}
 		});
 	};
