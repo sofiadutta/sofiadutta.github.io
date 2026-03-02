@@ -149,13 +149,22 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
+		// Optimization: Use requestAnimationFrame for scroll event and cache selectors
+		var $body = $('body');
+		var $navToggle = $('.js-colorlib-nav-toggle');
+		var ticking = false;
 
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+		$(window).scroll(function(){
+			if (!ticking) {
+				window.requestAnimationFrame(function() {
+					if ( $body.hasClass('offcanvas') ) {
+						$body.removeClass('offcanvas');
+						$navToggle.removeClass('active');
+					}
+					ticking = false;
+				});
+				ticking = true;
+			}
 		});
 
 	};
