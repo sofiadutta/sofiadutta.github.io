@@ -320,6 +320,44 @@
 		}
 	};
 
+	var emailCopy = function() {
+		$('.js-email-copy').on('click', function(e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var user = $btn.attr('data-user');
+			var domain = $btn.attr('data-domain');
+			var email = user + '@' + domain;
+
+			var setCopiedState = function() {
+				$btn.find('.js-email-copy-icon').hide();
+				$btn.find('.js-email-copy-text').text('Copied!');
+				setTimeout(function() {
+					$btn.find('.js-email-copy-icon').show();
+					$btn.find('.js-email-copy-text').text(' Copy');
+				}, 2000);
+			};
+
+			if (navigator.clipboard && window.isSecureContext) {
+				navigator.clipboard.writeText(email).then(setCopiedState);
+			} else {
+				var textArea = document.createElement("textarea");
+				textArea.value = email;
+				textArea.style.position = "absolute";
+				textArea.style.left = "-9999px";
+				textArea.style.top = "-9999px";
+				document.body.appendChild(textArea);
+				textArea.select();
+				try {
+					document.execCommand('copy');
+					setCopiedState();
+				} catch (err) {
+					console.error('Fallback: Oops, unable to copy', err);
+				}
+				document.body.removeChild(textArea);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +377,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailCopy();
 	});
 
 

@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [Visual Feedback for Copy Actions]
+**Learning:** Providing real-time visual feedback ("Copied!") when clicking a copy button significantly improves UX for all users by giving them confidence the action occurred. However, dynamically restoring the button's HTML content after a timeout can introduce security risks if not done carefully.
+**Action:** Temporarily changing the button text (with a timeout) when a user performs a specific action such as copying a URL/email is a great pattern. However, do not use jQuery's `.html()` to restore the original button state to avoid XSS vulnerabilities or creating accessibility regressions. Instead, use `.text()` on specific text nodes or hide/show existing child elements (like icons) safely.
