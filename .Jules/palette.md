@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2026-01-13 - [Secure Copy-to-Clipboard Fallbacks]
+**Learning:** When implementing temporary UI feedback (like changing an icon or text to "Copied!") for copy-to-clipboard functionality, it's critical to avoid using jQuery's `.html()` or `innerHTML` to store and restore original DOM states (e.g., using `data-original-text`). This is frequently flagged by security tools like CodeQL as a high-severity XSS vulnerability if the content is not sanitized.
+**Action:** When creating temporary button states, manipulate specific attributes (like `class` for icons or `title` for tooltips) or use hardcoded safe HTML strings rather than storing and injecting original generic HTML back into the DOM. Always use the modern `navigator.clipboard.writeText` API with a safe `textarea` fallback for legacy browsers.
