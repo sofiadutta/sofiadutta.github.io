@@ -320,6 +320,45 @@
 		}
 	};
 
+	var emailCopy = function() {
+		$('#copy-email-btn').on('click', function(e) {
+			e.preventDefault();
+			var obfuscated = $('#obfuscated-email').text();
+			var deobfuscated = obfuscated.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s/g, '');
+			var $btn = $(this);
+
+			function setSuccessState() {
+				var successHtml = '<i class="icon-check" aria-hidden="true"></i> Copied!';
+				var originalHtml = '<i class="icon-clipboard3" aria-hidden="true"></i>';
+				$btn[0].innerHTML = successHtml;
+				setTimeout(function() {
+					$btn[0].innerHTML = originalHtml;
+				}, 2000);
+			}
+
+			if (navigator.clipboard && window.isSecureContext) {
+				navigator.clipboard.writeText(deobfuscated).then(setSuccessState).catch(function(err) {
+					console.error('Failed to copy email: ', err);
+				});
+			} else {
+				var textarea = document.createElement('textarea');
+				textarea.value = deobfuscated;
+				textarea.style.position = 'absolute';
+				textarea.style.left = '-9999px';
+				textarea.style.top = '-9999px';
+				document.body.appendChild(textarea);
+				textarea.select();
+				try {
+					document.execCommand('copy');
+					setSuccessState();
+				} catch (err) {
+					console.error('Fallback: Oops, unable to copy', err);
+				}
+				document.body.removeChild(textarea);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +378,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailCopy();
 	});
 
 
