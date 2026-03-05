@@ -7,3 +7,7 @@
 ## 2025-01-08 - LCP Optimization for Background Images
 **Learning:** Background images defined in CSS (or inline styles) are often discovered late by the browser. Preloading them via `<link rel="preload">` significantly aids LCP.
 **Action:** Always check for critical background images in Hero sections and add preloads for them, especially when image optimization tools are unavailable to reduce their size.
+
+## 2025-01-08 - Main Thread Blocking on Scroll Events
+**Learning:** `$(window).scroll` handlers that manipulate the DOM directly without throttling or requestAnimationFrame can cause significant layout thrashing and main thread blocking, specifically on heavy operations or when class toggles trigger repaints.
+**Action:** Use a `requestAnimationFrame` wrapped with a `ticking` boolean flag to process scroll event logic synchronously with the browser's render cycle, achieving instant UX feedback with minimal performance overhead.
