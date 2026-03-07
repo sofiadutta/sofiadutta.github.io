@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2026-03-07 - [Securely Copying Obfuscated Data]
+**Learning:** When dealing with intentionally obfuscated data (like anti-spam email addresses displaying as 'DOT' and 'AT'), adding a one-click copy button improves UX, but putting the raw de-obfuscated string in a 'data-*' attribute defeats the obfuscation purpose. Furthermore, providing UI feedback by temporarily swapping button HTML must be done carefully using hardcoded strings instead of dynamically storing and restoring via jQuery's '.html()' due to potential XSS vulnerabilities flagged by security tools like CodeQL.
+**Action:** Always read the obfuscated text dynamically from the DOM and de-obfuscate it client-side inside the event listener. Use hardcoded safe HTML strings for state toggles rather than dynamic DOM caching.
