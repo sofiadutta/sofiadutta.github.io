@@ -320,6 +320,52 @@
 		}
 	};
 
+	var emailCopy = function() {
+		$('#copy-email-btn').on('click', function(e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var rawText = $('#obfuscated-email').text();
+
+			// De-obfuscate the email address dynamically
+			var email = rawText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/ /g, '').trim();
+
+			var onSuccess = function() {
+				// Prevent XSS warning (CodeQL): Avoid .html() with data attributes
+				var originalHTML = '<i class="icon-clipboard3" aria-hidden="true"></i> Copy';
+				var successHTML = '<i class="icon-check" aria-hidden="true"></i> Copied!';
+
+				$btn.html(successHTML);
+				setTimeout(function() {
+					$btn.html(originalHTML);
+				}, 2000);
+			};
+
+			if (navigator.clipboard && window.isSecureContext) {
+				navigator.clipboard.writeText(email).then(onSuccess).catch(function(err) {
+					console.error('Failed to copy text: ', err);
+				});
+			} else {
+				// Fallback for older browsers
+				var textArea = document.createElement("textarea");
+				textArea.value = email;
+				// Prevent unwanted scrolling when focusing the textarea
+				textArea.style.position = "absolute";
+				textArea.style.left = "-9999px";
+				textArea.style.top = "-9999px";
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+				try {
+					document.execCommand('copy');
+					onSuccess();
+				} catch (err) {
+					console.error('Fallback: Oops, unable to copy', err);
+				}
+				document.body.removeChild(textArea);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +385,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailCopy();
 	});
 
 
