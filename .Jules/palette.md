@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [Obfuscated Data Copying and Temporary Button States]
+**Learning:** When dealing with obfuscated data (like "user AT domain DOT com") that needs to be copied, it's a security/privacy anti-pattern to store the de-obfuscated string in a DOM attribute (like `data-clipboard-text`). Similarly, when temporarily updating button HTML (e.g. to show a "Copied!" state), using jQuery's `.html()` with content from `data-original-text` is flagged as a high-severity XSS vulnerability by CodeQL.
+**Action:** Always de-obfuscate data dynamically within the JS click handler. For temporary button states, use hardcoded safe HTML strings instead of storing and retrieving markup via DOM attributes.
