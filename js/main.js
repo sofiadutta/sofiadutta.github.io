@@ -320,6 +320,49 @@
 		}
 	};
 
+	var emailCopy = function() {
+		$('.js-copy-email').on('click', function(e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var originalHtml = '<i class="icon-clipboard" aria-hidden="true"></i> Copy';
+			var successHtml = '<i class="icon-check" aria-hidden="true"></i> Copied!';
+
+			// Deobfuscate email from DOM text
+			var obfuscatedText = $('.obfuscated-email').text();
+			var realEmail = obfuscatedText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s/g, '').trim();
+
+			var copyFallback = function(text) {
+				var $temp = $("<textarea>");
+				$("body").append($temp);
+				$temp.css({position: 'absolute', left: '-9999px', top: '-9999px'}).val(text).select();
+				try {
+					document.execCommand("copy");
+					$btn.html(successHtml);
+					setTimeout(function() {
+						$btn.html(originalHtml);
+					}, 2000);
+				} catch (err) {
+					console.error("Fallback: Oops, unable to copy", err);
+				}
+				$temp.remove();
+			};
+
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(realEmail).then(function() {
+					$btn.html(successHtml);
+					setTimeout(function() {
+						$btn.html(originalHtml);
+					}, 2000);
+				}, function(err) {
+					console.error("Async: Could not copy text: ", err);
+					copyFallback(realEmail);
+				});
+			} else {
+				copyFallback(realEmail);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +382,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailCopy();
 	});
 
 
