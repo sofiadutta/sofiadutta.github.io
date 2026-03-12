@@ -2,7 +2,7 @@ from playwright.sync_api import sync_playwright
 
 def verify(page):
     print("Navigating to file:///app/index.html")
-    page.goto("file:///app/index.html")
+    page.goto(f"file://{__import__('os').getcwd()}/index.html")
 
     # Check Copyright
     footer = page.locator(".colorlib-footer")
