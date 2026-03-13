@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2026-03-13 - [Secure Micro-UX for Copying Obfuscated Data]
+**Learning:** Implementing 'copy to clipboard' functionality for obfuscated data requires client-side de-obfuscation rather than storing raw text in data attributes, which would defeat the obfuscation. Additionally, dynamically updating button states using raw jQuery '.html()' with 'data-original-text' triggers CodeQL XSS vulnerabilities.
+**Action:** Use hardcoded safe HTML strings for temporary state changes instead of storing/restoring DOM elements, and ensure fallback clipboard implementations use positioned-off-screen textareas to avoid jank.
