@@ -149,13 +149,22 @@
 	    }
 		});
 
+		// ⚡ Bolt: Optimize scroll event listener with requestAnimationFrame
+		// Why: Scroll events fire at a high rate. Checking DOM classes on every scroll event blocks the main thread.
+		// Impact: Significantly reduces main thread work during scrolling, especially on mobile.
+		// Measurement: Verified with test_scroll_perf.py showing stable performance over rapid scroll events.
+		var ticking = false;
 		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+			if (!ticking) {
+				window.requestAnimationFrame(function() {
+					if ( $('body').hasClass('offcanvas') ) {
+						$('body').removeClass('offcanvas');
+						$('.js-colorlib-nav-toggle').removeClass('active');
+					}
+					ticking = false;
+				});
+				ticking = true;
+			}
 		});
 
 	};
