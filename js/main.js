@@ -149,13 +149,19 @@
 	    }
 		});
 
+		// Optimization: Throttle scroll event to prevent layout thrashing
+		var ticking = false;
 		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+			if (!ticking) {
+				window.requestAnimationFrame(function() {
+					if ( $('body').hasClass('offcanvas') ) {
+						$('body').removeClass('offcanvas');
+						$('.js-colorlib-nav-toggle').removeClass('active');
+					}
+					ticking = false;
+				});
+				ticking = true;
+			}
 		});
 
 	};
