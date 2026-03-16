@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2026-03-16 - [De-obfuscating Text for Copy to Clipboard]
+**Learning:** Obfuscating emails for anti-spam is good, but forces users to manually re-type them, which is poor UX. Adding a copy button that de-obfuscates the text client-side solves this. It's important to strip all whitespace during de-obfuscation so the copied text is valid. Also, do not use '.html()' to restore temporary button states, as it can be an XSS risk; manipulate text and classes directly.
+**Action:** When obfuscating text, always provide a copy-to-clipboard button that de-obfuscates the data.
