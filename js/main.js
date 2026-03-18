@@ -320,6 +320,46 @@
 		}
 	};
 
+	var emailCopy = function() {
+		$('#copy-email-btn').on('click', function(e) {
+			e.preventDefault();
+			var obfuscated = $('#obfuscated-email').text();
+			var deobfuscated = obfuscated.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s/g, '');
+
+			var btn = $(this);
+			var originalHTML = 'Copy <i class="icon-clipboard3" aria-hidden="true"></i>';
+			var successHTML = 'Copied! <i class="icon-check" aria-hidden="true"></i>';
+
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(deobfuscated).then(function() {
+					btn.html(successHTML);
+					setTimeout(function() {
+						btn.html(originalHTML);
+					}, 2000);
+				});
+			} else {
+				// Legacy fallback
+				var tempInput = document.createElement("textarea");
+				tempInput.style.position = 'absolute';
+				tempInput.style.left = '-9999px';
+				tempInput.style.top = '-9999px';
+				tempInput.value = deobfuscated;
+				document.body.appendChild(tempInput);
+				tempInput.select();
+				try {
+					document.execCommand("copy");
+					btn.html(successHTML);
+					setTimeout(function() {
+						btn.html(originalHTML);
+					}, 2000);
+				} catch (err) {
+					console.error('Failed to copy text: ', err);
+				}
+				document.body.removeChild(tempInput);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +379,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailCopy();
 	});
 
 
