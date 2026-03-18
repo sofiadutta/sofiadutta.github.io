@@ -7,3 +7,8 @@
 **Vulnerability:** Inline `document.write` script in `index.html` was blocked by the existing Content Security Policy (CSP) which correctly restricts `script-src` to `self` and specific domains, without allowing `unsafe-inline`.
 **Learning:** Even "harmless" inline scripts like printing the current year are security violations under strict CSPs. The existing code was actually broken (script blocked) because of the security policy.
 **Prevention:** Avoid inline JavaScript entirely. Move all logic to external `.js` files or use DOM manipulation from existing scripts.
+
+## 2026-03-18 - Defense-in-depth for Third-Party Iframes
+**Vulnerability:** Third-party iframes lacking sandbox attributes allow potential XSS breakouts or unauthorized top-level navigation.
+**Learning:** Even trusted third-party content (like YouTube videos) should be embedded securely. Without a restrictive sandbox, a compromised third party could take over the parent page.
+**Prevention:** Always enforce defense-in-depth security by adding restrictive `sandbox` attributes (e.g., `allow-scripts allow-same-origin allow-presentation allow-popups`) when embedding third-party content via `iframe`.
