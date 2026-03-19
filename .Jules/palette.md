@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [Obfuscated Email Copying]
+**Learning:** For intentionally obfuscated data, putting the raw string in a `data-*` attribute defeats the obfuscation. Furthermore, when using jQuery's `.html()` to restore original text after a state change, CodeQL flags it as an XSS vulnerability.
+**Action:** Read the obfuscated text dynamically from the DOM and de-obfuscate it client-side. Use hardcoded safe HTML strings for temporary state changes instead of storing original HTML.
