@@ -1,8 +1,11 @@
 from playwright.sync_api import sync_playwright
 
+import os
+
 def verify(page):
-    print("Navigating to file:///app/index.html")
-    page.goto("file:///app/index.html")
+    filepath = f"file://{os.getcwd()}/index.html"
+    print(f"Navigating to {filepath}")
+    page.goto(filepath)
 
     # Check Copyright
     footer = page.locator(".colorlib-footer")
@@ -39,7 +42,7 @@ def verify(page):
     # Take screenshot of footer
     # Use JS scroll because scroll_into_view_if_needed can be flaky in some envs
     page.evaluate("document.querySelector('.colorlib-footer').scrollIntoView()")
-    page.screenshot(path="/app/verification_footer.png")
+    page.screenshot(path=f"{os.getcwd()}/verification_footer.png")
 
 if __name__ == "__main__":
     with sync_playwright() as p:
