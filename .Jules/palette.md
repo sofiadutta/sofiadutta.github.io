@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-24 - [Secure Obfuscated Copy Button]
+**Learning:** When creating 'copy to clipboard' buttons for obfuscated data, raw strings cannot be stored in 'data-*' attributes without defeating the obfuscation. Falling back to document.execCommand('copy') requires absolute positioning (-9999px) of the temporary textarea to avoid viewport jumping. CodeQL requires hardcoded strings for `.html()` updates.
+**Action:** Dynamically read the obfuscated text from the DOM, de-obfuscate it by stripping whitespace and replacing symbols, and use hardcoded safe HTML strings for button state feedback.
