@@ -320,8 +320,61 @@
 		}
 	};
 
+	var copyEmailToClipboard = function() {
+		$('#copy-email-btn').on('click', function(e) {
+			e.preventDefault();
+			var obfuscatedEmail = $('#obfuscated-email').text();
+			var realEmail = obfuscatedEmail.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s/g, '');
+			// Handle "sofia DOT dutta" specifically, as replacing DOT and spaces turns it into sofia.dutta
+			realEmail = realEmail.replace('sofia.dutta', 'sofiadutta');
+
+			var copySuccess = function() {
+				var $btn = $('#copy-email-btn');
+				var originalHtml = '<i class="icon-clipboard"></i>';
+				$btn.html('<i class="icon-check"></i> Copied!');
+				setTimeout(function() {
+					$btn.html(originalHtml);
+				}, 2000);
+			};
+
+			if (navigator.clipboard && window.isSecureContext) {
+				navigator.clipboard.writeText(realEmail).then(copySuccess, function() {
+					fallbackCopyTextToClipboard(realEmail);
+				});
+			} else {
+				fallbackCopyTextToClipboard(realEmail);
+			}
+
+			function fallbackCopyTextToClipboard(text) {
+				var textArea = document.createElement("textarea");
+				textArea.value = text;
+
+				// Avoid scrolling to bottom
+				textArea.style.top = "-9999px";
+				textArea.style.left = "-9999px";
+				textArea.style.position = "absolute";
+
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+
+				try {
+					var successful = document.execCommand('copy');
+					if (successful) {
+						copySuccess();
+					}
+				} catch (err) {
+					console.error('Fallback: Oops, unable to copy', err);
+				}
+
+				document.body.removeChild(textArea);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
+		copyEmailToClipboard();
 		fullHeight();
 		counter();
 		counterWayPoint();
