@@ -149,13 +149,22 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
+		// Optimization: Cache DOM queries and throttle scroll event using requestAnimationFrame
+		var $body = $('body');
+		var $navToggle = $('.js-colorlib-nav-toggle');
+		var isTicking = false;
 
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+		$(window).scroll(function(){
+			if (!isTicking) {
+				window.requestAnimationFrame(function() {
+					if ( $body.hasClass('offcanvas') ) {
+						$body.removeClass('offcanvas');
+						$navToggle.removeClass('active');
+					}
+					isTicking = false;
+				});
+				isTicking = true;
+			}
 		});
 
 	};
