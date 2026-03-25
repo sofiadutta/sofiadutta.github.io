@@ -314,6 +314,62 @@
 		}
 	};
 
+
+	var copyEmailToClipboard = function() {
+		var copyBtn = document.getElementById('copy-email-btn');
+		var obfuscatedEmailElement = document.getElementById('obfuscated-email');
+
+		if (copyBtn && obfuscatedEmailElement) {
+			copyBtn.addEventListener('click', function(e) {
+				e.preventDefault();
+
+				var obfuscatedText = obfuscatedEmailElement.innerText || obfuscatedEmailElement.textContent;
+				var realEmail = obfuscatedText.replace(/DOT/g, '.').replace(/AT/g, '@').replace(/\s/g, '');
+
+				var copyToClipboard = function(text) {
+					if (navigator.clipboard && window.isSecureContext) {
+						return navigator.clipboard.writeText(text);
+					} else {
+						var textArea = document.createElement("textarea");
+						textArea.value = text;
+						textArea.style.position = "absolute";
+						textArea.style.left = "-9999px";
+						textArea.style.top = "-9999px";
+						document.body.appendChild(textArea);
+						textArea.focus();
+						textArea.select();
+						try {
+							document.execCommand('copy');
+							textArea.remove();
+							return Promise.resolve();
+						} catch (err) {
+							textArea.remove();
+							return Promise.reject(err);
+						}
+					}
+				};
+
+				copyBtn.disabled = true;
+				var originalHtml = '<i class="icon-clipboard" aria-hidden="true"></i> Copy';
+
+				copyToClipboard(realEmail).then(function() {
+					copyBtn.innerHTML = '<i class="icon-check" aria-hidden="true"></i> Copied!';
+					setTimeout(function() {
+						copyBtn.innerHTML = originalHtml;
+						copyBtn.disabled = false;
+					}, 2000);
+				}).catch(function(err) {
+					console.error('Failed to copy: ', err);
+					copyBtn.innerHTML = 'Failed';
+					setTimeout(function() {
+						copyBtn.innerHTML = originalHtml;
+						copyBtn.disabled = false;
+					}, 2000);
+				});
+			});
+		}
+	};
+
 	var updateCopyrightYear = function() {
 		if ($('#copyright-year').length > 0) {
 			$('#copyright-year').text(new Date().getFullYear());
@@ -339,6 +395,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		copyEmailToClipboard();
 	});
 
 
