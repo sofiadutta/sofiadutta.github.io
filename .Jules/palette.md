@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2026-03-26 - [Secure Client-Side De-obfuscation]
+**Learning:** When de-obfuscating anti-spam email addresses client-side for clipboard copying, raw text cannot be stored in `data-*` attributes as it defeats the obfuscation. Also, all whitespace must be stripped. Additionally, using `.html()` with `data-original-text` attributes to store and restore original HTML for temporary state changes is flagged as a high-severity XSS vulnerability by CodeQL.
+**Action:** Dynamically read the obfuscated text from the DOM and de-obfuscate it inside the event listener, stripping whitespace. Use hardcoded safe HTML strings for temporary state changes instead of storing and restoring raw HTML from data attributes.
