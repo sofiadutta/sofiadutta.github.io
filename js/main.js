@@ -149,13 +149,21 @@
 	    }
 		});
 
+		// Optimization: Use requestAnimationFrame for global scroll event to prevent main thread blocking
+		var ticking = false;
 		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
+			if (!ticking) {
+				window.requestAnimationFrame(function() {
+					if ( $('body').hasClass('offcanvas') ) {
 
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+						$('body').removeClass('offcanvas');
+						$('.js-colorlib-nav-toggle').removeClass('active');
+
+					}
+					ticking = false;
+				});
+				ticking = true;
+			}
 		});
 
 	};
