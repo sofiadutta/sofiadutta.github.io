@@ -13,3 +13,6 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+## 2026-03-31 - [Secure Button State Updates]
+**Learning:** Using jQuery's `.html()` to temporarily store and restore button content can introduce XSS vulnerabilities if `data-*` attributes are misused. Furthermore, explicitly stripping all whitespace from client-side obfuscated text is crucial for generating valid clipboard data.
+**Action:** Use hardcoded safe HTML strings or strict DOM text manipulation for temporary button states to maintain security.
