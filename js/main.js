@@ -149,13 +149,20 @@
 	    }
 		});
 
+		var isScrolling = false;
+		// ⚡ Bolt: Throttled scroll event with requestAnimationFrame to prevent layout thrashing and high CPU usage from synchronous DOM queries.
+		// Impact: Significantly reduces function calls per second during scroll, keeping the main thread free and preventing frame drops.
 		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+			if (!isScrolling) {
+				window.requestAnimationFrame(function() {
+					if ( $('body').hasClass('offcanvas') ) {
+						$('body').removeClass('offcanvas');
+						$('.js-colorlib-nav-toggle').removeClass('active');
+					}
+					isScrolling = false;
+				});
+				isScrolling = true;
+			}
 		});
 
 	};
