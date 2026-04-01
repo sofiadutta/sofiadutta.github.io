@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [De-obfuscating Anti-Spam Emails Client-Side for UX]
+**Learning:** Obfuscated email addresses (like `name DOT last AT domain DOT com`) stop bots but create terrible UX for legitimate users who must manually retype them. Wrapping them in a "Copy" button that dynamically de-obfuscates (via regex replacements for text and whitespace) inside the click event listener allows us to maintain spam protection while providing a one-click native clipboard experience.
+**Action:** When encountering obfuscated text, do not put the raw string in `data-*` attributes. Read it from the DOM dynamically upon interaction, clean it up, and copy it to the user's clipboard while providing visual confirmation (like "Copied!").
