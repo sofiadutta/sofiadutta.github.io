@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-04-02 - Client-side Obfuscated Data Copy
+**Learning:** For intentionally obfuscated data (like anti-spam email addresses), do not put the raw string in a data-* attribute. Instead, read the obfuscated text dynamically from the DOM and de-obfuscate it client-side. Also, ensure clipboard fallback textareas have position: absolute; left: -9999px; top: -9999px; to prevent viewport scrolling.
+**Action:** Always read from the DOM, replace text patterns including whitespace, and verify secure contexts before using navigator.clipboard, providing a non-scrolling textarea fallback.
