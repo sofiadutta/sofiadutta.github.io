@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [De-obfuscating Anti-Spam Emails for Clipboard]
+**Learning:** When dealing with anti-spam obfuscated email text, storing the real email in a data attribute defeats the purpose of the obfuscation. Furthermore, when replacing substrings like 'DOT', using the string replacement method only replaces the first occurrence.
+**Action:** Extract the string from the DOM element's text and parse it within the client-side event listener (e.g. `replace(/\s/g, '').replace(/DOT/g, '.').replace(/AT/g, '@')`). Ensure to use the global regex flag (`/g`) so that all occurrences of the obfuscation strings are replaced, not just the first one. Ensure to disable the button during the temporary visual feedback phase so rapid clicks don't overwrite the stored initial button state.

@@ -320,6 +320,53 @@
 		}
 	};
 
+	var copyEmailToClipboard = function() {
+		var btn = document.getElementById('copy-email-btn');
+		var emailEl = document.getElementById('contact-email');
+		if (btn && emailEl) {
+			btn.addEventListener('click', function() {
+				var obfuscatedEmail = emailEl.innerText;
+				var email = obfuscatedEmail.replace(/\s/g, '').replace(/DOT/g, '.').replace(/AT/g, '@');
+
+				var doCopyFallback = function(text) {
+					var textArea = document.createElement("textarea");
+					textArea.value = text;
+					textArea.style.position = "absolute";
+					textArea.style.left = "-9999px";
+					textArea.style.top = "-9999px";
+					document.body.appendChild(textArea);
+					textArea.select();
+					try {
+						document.execCommand('copy');
+					} catch (err) {
+						console.error('Fallback: Oops, unable to copy', err);
+					}
+					document.body.removeChild(textArea);
+				};
+
+				var copySuccess = function() {
+					var originalHTML = btn.innerHTML;
+					btn.disabled = true;
+					btn.innerHTML = '<i class="icon-check" aria-hidden="true"></i> Copied!';
+					setTimeout(function() {
+						btn.innerHTML = originalHTML;
+						btn.disabled = false;
+					}, 2000);
+				};
+
+				if (navigator.clipboard && window.isSecureContext) {
+					navigator.clipboard.writeText(email).then(copySuccess, function(err) {
+						doCopyFallback(email);
+						copySuccess();
+					});
+				} else {
+					doCopyFallback(email);
+					copySuccess();
+				}
+			});
+		}
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +386,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		copyEmailToClipboard();
 	});
 
 
