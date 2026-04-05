@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-04-05 - Safe De-obfuscation Copy Feedback
+**Learning:** Plain text obfuscated emails cause high friction. When adding a direct copy button, it is critical to deobfuscate dynamically within the click event instead of using data attributes to preserve anti-spam, and to temporarily disable the button during visual feedback to prevent state overwriting.
+**Action:** Always process anti-spam transformations client-side directly from text content in the event listener, block button interactions during feedback windows, and include a legacy textarea fallback for local `file://` execution.
