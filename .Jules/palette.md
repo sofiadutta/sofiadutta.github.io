@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-24 - [Anti-Spam Copy to Clipboard]
+**Learning:** Obfuscated text like "name AT domain DOT com" provides spam protection but hurts UX. Adding a copy-to-clipboard button that de-obfuscates the string client-side directly from the DOM text, rather than from a hidden data attribute, preserves the anti-spam benefits while greatly improving usability.
+**Action:** When implementing copy-to-clipboard for obfuscated data, read from the DOM, clean the string via regex (e.g. removing all spaces and replacing keywords), use the modern clipboard API with a legacy fallback, and provide temporary visual feedback.
