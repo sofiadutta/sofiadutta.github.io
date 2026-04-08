@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [De-obfuscating Anti-Spam Emails for Copying]
+**Learning:** The project relies on string obfuscation (e.g., `sofia DOT dutta 17 AT gmail DOT com`) to protect email addresses from scrapers. Attempting to store the de-obfuscated email string in HTML data-attributes (like `data-email`) undermines the protection. Sighted users find it tedious to manually copy and edit the obfuscated text.
+**Action:** When implementing interactions for obfuscated data, never store the clean string in HTML attributes. Read the obfuscated text from the DOM and dynamically de-obfuscate it client-side within the event listener using string replacement. Provide a legacy clipboard fallback to support Playwright testing over `file://`. Disable the button during visual feedback to prevent rapid clicks from overwriting stored HTML states.
