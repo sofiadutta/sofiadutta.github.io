@@ -148,14 +148,23 @@
 	    	
 	    }
 		});
+	// Optimization: Throttle scroll event to reduce layout thrashing
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+		var scrollLock = false;
+		window.addEventListener('scroll', function() {
+			if (!scrollLock) {
+				window.requestAnimationFrame(function() {
+					if (document.body.classList.contains('offcanvas')) {
+						document.body.classList.remove('offcanvas');
+						var navToggles = document.querySelectorAll('.js-colorlib-nav-toggle');
+						for (var i = 0; i < navToggles.length; i++) {
+							navToggles[i].classList.remove('active');
+						}
+					}
+					scrollLock = false;
+				});
+				scrollLock = true;
+			}
 		});
 
 	};
