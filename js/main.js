@@ -149,13 +149,25 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+		// ⚡ Bolt: Optimize scroll performance
+		// Replaced unthrottled jQuery scroll listener with vanilla JS and requestAnimationFrame.
+		// Expected impact: Reduces synchronous layout updates on mobile scrolling,
+		// preventing main thread blocking and layout thrashing.
+		var scrollTicking = false;
+		window.addEventListener('scroll', function() {
+			if (!scrollTicking) {
+				window.requestAnimationFrame(function() {
+					if (document.body.classList.contains('offcanvas')) {
+						document.body.classList.remove('offcanvas');
+						var toggles = document.querySelectorAll('.js-colorlib-nav-toggle');
+						for (var i = 0; i < toggles.length; i++) {
+							toggles[i].classList.remove('active');
+						}
+					}
+					scrollTicking = false;
+				});
+				scrollTicking = true;
+			}
 		});
 
 	};
