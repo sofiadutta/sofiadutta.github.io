@@ -149,13 +149,20 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+		// Optimization: Replace unthrottled jQuery scroll with native listener and rAF for performance
+		var scrollTicking = false;
+		window.addEventListener('scroll', function() {
+			if (!scrollTicking) {
+				window.requestAnimationFrame(function() {
+					if (document.body.classList.contains('offcanvas')) {
+						document.body.classList.remove('offcanvas');
+						var toggle = document.querySelector('.js-colorlib-nav-toggle');
+						if (toggle) toggle.classList.remove('active');
+					}
+					scrollTicking = false;
+				});
+				scrollTicking = true;
+			}
 		});
 
 	};
