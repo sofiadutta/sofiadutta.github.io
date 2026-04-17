@@ -149,13 +149,23 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+		// Optimization: Throttle DOM updates on scroll using native events and requestAnimationFrame
+		// to avoid layout thrashing and main thread blocking common with unthrottled jQuery scroll listeners.
+		var isScrolling = false;
+		window.addEventListener('scroll', function(){
+			if (!isScrolling) {
+				window.requestAnimationFrame(function() {
+					if ( document.body.classList.contains('offcanvas') ) {
+						document.body.classList.remove('offcanvas');
+						var toggles = document.querySelectorAll('.js-colorlib-nav-toggle');
+						for (var i = 0; i < toggles.length; i++) {
+							toggles[i].classList.remove('active');
+						}
+					}
+					isScrolling = false;
+				});
+				isScrolling = true;
+			}
 		});
 
 	};
