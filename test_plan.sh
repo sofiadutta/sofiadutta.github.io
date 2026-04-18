@@ -1,0 +1,1 @@
+sed -i 's|<p>sofia DOT dutta 17 AT gmail DOT com</p>|<p><span id="contact-email">sofia DOT dutta 17 AT gmail DOT com</span> <button id="copy-email-btn" class="btn btn-primary btn-xs" aria-label="Copy email address" title="Copy email address"><i class="icon-clipboard" aria-hidden="true"></i> Copy</button></p>|' index.html
