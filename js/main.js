@@ -149,14 +149,24 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
-		});
+		// ⚡ Bolt Optimization: Use native scroll with requestAnimationFrame to prevent layout thrashing
+		var isScrolling = false;
+		window.addEventListener('scroll', function() {
+			if (!isScrolling) {
+				window.requestAnimationFrame(function() {
+					var body = document.querySelector('body');
+					if (body && body.classList.contains('offcanvas')) {
+						body.classList.remove('offcanvas');
+						var toggle = document.querySelector('.js-colorlib-nav-toggle');
+						if (toggle) {
+							toggle.classList.remove('active');
+						}
+					}
+					isScrolling = false;
+				});
+				isScrolling = true;
+			}
+		}, { passive: true });
 
 	};
 
