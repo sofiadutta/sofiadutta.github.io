@@ -13,3 +13,6 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+## 2024-05-24 - Secure context fallback and obfuscated data handling
+**Learning:** When testing clipboard APIs locally with Playwright via `file://`, they are not considered secure contexts, meaning `navigator.clipboard` is often unavailable. Also, when adding interactions for obfuscated data (like anti-spam emails), storing the de-obfuscated string in HTML attributes defeats the anti-spam protection.
+**Action:** Always provide a legacy fallback (like `document.execCommand('copy')`) wrapped in a secure context check (`window.isSecureContext`) for modern APIs. Read obfuscated text directly from the DOM and de-obfuscate client-side within the event listener to preserve security.
