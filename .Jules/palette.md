@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-24 - [Secure Context Check for Clipboard API]
+**Learning:** When using modern APIs like `navigator.clipboard.writeText`, it requires a secure context (HTTPS) to work. It will fail silently or throw errors when testing locally via `file://` protocol or in environments without HTTPS, which is especially problematic for verification scripts like Playwright.
+**Action:** Always wrap `navigator.clipboard` calls in `if (navigator.clipboard && window.isSecureContext)` and provide a legacy `document.execCommand('copy')` fallback using a hidden textarea to ensure it works in all environments, including local testing.
