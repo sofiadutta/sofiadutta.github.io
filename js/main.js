@@ -149,13 +149,21 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
+		var isScrolling = false;
+		window.addEventListener('scroll', function() {
+			if (!isScrolling) {
+				window.requestAnimationFrame(function() {
+					if (document.body.classList.contains('offcanvas')) {
+						document.body.classList.remove('offcanvas');
+						var toggles = document.querySelectorAll('.js-colorlib-nav-toggle');
+						toggles.forEach(function(toggle) {
+							toggle.classList.remove('active');
+						});
+					}
+					isScrolling = false;
+				});
+				isScrolling = true;
+			}
 		});
 
 	};
