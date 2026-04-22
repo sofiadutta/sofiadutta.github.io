@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-24 - [De-obfuscating Anti-Spam Data Client-Side]
+**Learning:** Storing de-obfuscated anti-spam data (like emails) in HTML attributes (e.g., `data-email`) exposes it to basic scrapers, defeating the purpose of obfuscation. Additionally, `navigator.clipboard.writeText` requires a secure context (`https://` or `localhost`), making fallback methods (`document.execCommand('copy')`) necessary for local development (`file://` protocols) and older browsers.
+**Action:** Always read the obfuscated string directly from the DOM and de-obfuscate it dynamically inside the event listener. Implement both `navigator.clipboard` and a fallback copy mechanism, checking `window.isSecureContext` to prevent errors.
