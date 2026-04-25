@@ -7,3 +7,6 @@
 ## 2025-01-08 - LCP Optimization for Background Images
 **Learning:** Background images defined in CSS (or inline styles) are often discovered late by the browser. Preloading them via `<link rel="preload">` significantly aids LCP.
 **Action:** Always check for critical background images in Hero sections and add preloads for them, especially when image optimization tools are unavailable to reduce their size.
+## 2025-01-08 - Layout Thrashing with Unthrottled Scroll
+**Learning:** This template previously bound heavy DOM operations to unthrottled `$(window).scroll` handlers. This blocks the main thread and can drastically lower frame rates.
+**Action:** When handling frequent events like `scroll` or `resize`, always use native event listeners with `{ passive: true }` and throttle DOM reads/writes using `requestAnimationFrame` with a boolean lock variable.
