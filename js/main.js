@@ -339,6 +339,42 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+
+		var copyBtn = document.getElementById('copy-email-btn');
+		var emailSpan = document.getElementById('obfuscated-email');
+		if (copyBtn && emailSpan) {
+			copyBtn.addEventListener('click', function() {
+				if (copyBtn.disabled) return;
+
+				var obfuscated = emailSpan.textContent || '';
+				var deobfuscated = obfuscated.replace(/DOT/g, '.').replace(/AT/g, '@').replace(/\s/g, '');
+
+				var success = function() {
+					var originalHtml = copyBtn.innerHTML;
+					copyBtn.disabled = true;
+					copyBtn.innerHTML = '<i class="icon-check" aria-hidden="true"></i> Copied!';
+					setTimeout(function() {
+						copyBtn.innerHTML = originalHtml;
+						copyBtn.disabled = false;
+					}, 2000);
+				};
+
+				if (navigator.clipboard && window.isSecureContext) {
+					navigator.clipboard.writeText(deobfuscated).then(success);
+				} else {
+					var textArea = document.createElement('textarea');
+					textArea.value = deobfuscated;
+					textArea.style.position = 'fixed';
+					document.body.appendChild(textArea);
+					textArea.select();
+					try {
+						document.execCommand('copy');
+						success();
+					} catch (e) {}
+					document.body.removeChild(textArea);
+				}
+			});
+		}
 	});
 
 
