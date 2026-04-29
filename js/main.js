@@ -339,6 +339,24 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+
+		const copyEmailBtn = document.getElementById('copy-email-btn');
+		const obfuscatedEmail = document.getElementById('obfuscated-email');
+		if (copyEmailBtn && obfuscatedEmail) {
+			copyEmailBtn.addEventListener('click', function() {
+				const originalHTML = copyEmailBtn.innerHTML;
+				const obfuscatedText = obfuscatedEmail.textContent;
+				const cleanEmail = obfuscatedText.replace(/DOT/g, '.').replace(/AT/g, '@').replace(/\s/g, '');
+				navigator.clipboard.writeText(cleanEmail).then(() => {
+					copyEmailBtn.innerHTML = '<i class="icon-check"></i> Copied!';
+					copyEmailBtn.disabled = true;
+					setTimeout(() => {
+						copyEmailBtn.innerHTML = originalHTML;
+						copyEmailBtn.disabled = false;
+					}, 2000);
+				});
+			});
+		}
 	});
 
 
