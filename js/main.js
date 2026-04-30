@@ -314,6 +314,41 @@
 		}
 	};
 
+	var handleCopyEmail = function() {
+		var copyBtn = document.getElementById('copy-email-btn');
+		var emailSpan = document.getElementById('contact-email');
+		if (copyBtn && emailSpan) {
+			copyBtn.addEventListener('click', function() {
+				var obfuscated = emailSpan.textContent || emailSpan.innerText;
+				var deobfuscated = obfuscated.replace(/\s/g, '').replace(/DOT/g, '').replace(/AT/g, '@');
+				// If there are dots in the actual domain, we need to handle them. "sofia DOT dutta 17 AT gmail DOT com"
+				// The intended email is sofiadutta17@gmail.com. Let's do a basic fix.
+				if (deobfuscated === "sofiadutta17@gmailcom") { // since second DOT is also removed
+				    deobfuscated = "sofiadutta17@gmail.com";
+				} else {
+					// general logic: remove "DOT" before "AT", replace "DOT" after "AT" with "."
+					var parts = obfuscated.replace(/\s/g, '').split('AT');
+					if (parts.length === 2) {
+						var user = parts[0].replace(/DOT/g, '');
+						var domain = parts[1].replace(/DOT/g, '.');
+						deobfuscated = user + '@' + domain;
+					} else {
+						deobfuscated = obfuscated.replace(/\s/g, '').replace(/DOT/g, '.').replace(/AT/g, '@');
+					}
+				}
+				navigator.clipboard.writeText(deobfuscated).then(function() {
+					var originalHTML = copyBtn.innerHTML;
+					copyBtn.innerHTML = '<i class="icon-check" aria-hidden="true"></i> Copied!';
+					copyBtn.disabled = true;
+					setTimeout(function() {
+						copyBtn.innerHTML = originalHTML;
+						copyBtn.disabled = false;
+					}, 2000);
+				});
+			});
+		}
+	};
+
 	var updateCopyrightYear = function() {
 		if ($('#copyright-year').length > 0) {
 			$('#copyright-year').text(new Date().getFullYear());
@@ -339,6 +374,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		handleCopyEmail();
 	});
 
 
