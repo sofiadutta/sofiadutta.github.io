@@ -149,14 +149,23 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
-		});
+		// Optimization: Use native event listener with rAF throttling and passive flag
+		var scrollTicking = false;
+		window.addEventListener('scroll', function() {
+			if (!scrollTicking) {
+				window.requestAnimationFrame(function() {
+					if (document.body.classList.contains('offcanvas')) {
+						document.body.classList.remove('offcanvas');
+						var toggles = [].slice.call(document.querySelectorAll('.js-colorlib-nav-toggle'));
+						toggles.forEach(function(el) {
+							el.classList.remove('active');
+						});
+					}
+					scrollTicking = false;
+				});
+				scrollTicking = true;
+			}
+		}, { passive: true });
 
 	};
 
