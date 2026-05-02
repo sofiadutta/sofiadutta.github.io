@@ -339,6 +339,35 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+
+		var copyBtn = document.getElementById('copy-email-btn');
+		var emailTextContainer = document.getElementById('obfuscated-email');
+		if (copyBtn && emailTextContainer) {
+			copyBtn.addEventListener('click', function() {
+				var textSpan = emailTextContainer.querySelector('span');
+				if (textSpan) {
+					var textToDeobfuscate = textSpan.textContent || textSpan.innerText;
+					var deobfuscated = textToDeobfuscate.replace(/\s/g, '').replace(/DOT/g, '.').replace(/AT/g, '@');
+					navigator.clipboard.writeText(deobfuscated).then(function() {
+						var icon = copyBtn.querySelector('i');
+						if (icon) {
+							icon.className = 'icon-check';
+							copyBtn.disabled = true;
+							copyBtn.setAttribute('title', 'Copied!');
+							copyBtn.setAttribute('aria-label', 'Copied!');
+							setTimeout(function() {
+								icon.className = 'icon-clipboard';
+								copyBtn.disabled = false;
+								copyBtn.setAttribute('title', 'Copy email address');
+								copyBtn.setAttribute('aria-label', 'Copy email address');
+							}, 2000);
+						}
+					}).catch(function(err) {
+						console.error('Failed to copy text: ', err);
+					});
+				}
+			});
+		}
 	});
 
 
