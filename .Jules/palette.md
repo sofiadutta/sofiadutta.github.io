@@ -13,3 +13,6 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+## 2024-05-04 - Local Clipboard Testing Limitations
+**Learning:** Testing `navigator.clipboard` interactions with Playwright using `file:///` URLs fails due to browser security restrictions on local files.
+**Action:** Always start a local web server (e.g., `pnpm dlx http-server`) and navigate Playwright to the `http://localhost:...` URL when testing clipboard reads/writes in the future.
