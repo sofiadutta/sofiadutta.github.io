@@ -149,14 +149,24 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
-		});
+		// Optimization: Use native passive scroll listener with requestAnimationFrame
+		// to prevent main thread blocking and layout thrashing. Use native DOM APIs
+		// to avoid continuous jQuery object instantiation and GC overhead.
+		var isScrolling = false;
+		window.addEventListener('scroll', function() {
+			if (!isScrolling) {
+				window.requestAnimationFrame(function() {
+					if (document.body.classList.contains('offcanvas')) {
+						document.body.classList.remove('offcanvas');
+						document.querySelectorAll('.js-colorlib-nav-toggle').forEach(function(el) {
+							el.classList.remove('active');
+						});
+					}
+					isScrolling = false;
+				});
+				isScrolling = true;
+			}
+		}, { passive: true });
 
 	};
 
