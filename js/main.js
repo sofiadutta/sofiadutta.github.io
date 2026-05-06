@@ -339,6 +339,21 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+
+		$('.copy-email-btn').on('click', function(e) {
+			e.preventDefault();
+			var btn = $(this);
+			var originalHTML = btn.html();
+			var emailText = $('#contact-email-text').text();
+			navigator.clipboard.writeText(emailText).then(function() {
+				btn.prop('disabled', true);
+				btn.text('Copied!');
+				setTimeout(function() {
+					btn.html(originalHTML);
+					btn.prop('disabled', false);
+				}, 2000);
+			});
+		});
 	});
 
 

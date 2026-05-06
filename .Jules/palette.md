@@ -13,3 +13,6 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+## 2024-05-06 - Interactive elements wrapped by animate-box
+**Learning:** In this template, elements wrapped in `.animate-box` classes are hidden (opacity: 0, visibility: hidden) until scrolled into view, which breaks Playwright tests trying to interact with them before the animation completes.
+**Action:** When writing Playwright verification scripts for elements hidden by the template's scroll-triggered animations, explicitly force their visibility before taking screenshots or interacting with them. Use `page.evaluate("document.querySelectorAll('.animate-box').forEach(el => { el.classList.remove('animate-box'); el.style.opacity = '1'; el.style.visibility = 'visible'; })")`.
