@@ -320,8 +320,33 @@
 		}
 	};
 
+	var initCopyEmail = function() {
+		var copyBtns = document.querySelectorAll('.js-copy-email');
+		copyBtns.forEach(function(btn) {
+			btn.addEventListener('click', function(e) {
+				e.preventDefault();
+				var parent = btn.parentElement;
+				var span = parent.querySelector('span.obfuscated-email');
+				if (span) {
+					var text = span.textContent;
+					var email = text.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/ /g, '');
+					navigator.clipboard.writeText(email).then(function() {
+						var originalHtml = btn.innerHTML;
+						btn.innerHTML = 'Copied!';
+						btn.disabled = true;
+						setTimeout(function() {
+							btn.innerHTML = originalHtml;
+							btn.disabled = false;
+						}, 2000);
+					});
+				}
+			});
+		});
+	};
+
 	// Document on load.
 	$(function(){
+		initCopyEmail();
 		fullHeight();
 		counter();
 		counterWayPoint();

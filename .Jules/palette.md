@@ -13,3 +13,6 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+## 2024-05-24 - [Client-side copying of obfuscated data]
+**Learning:** When implementing "Copy" functionality for obfuscated text (like an email to deter scrapers), wrapping the text in a span allows the JavaScript to cleanly extract and un-obfuscate the content before writing to the clipboard, providing a seamless user experience while maintaining the bot protection.
+**Action:** Always use a combination of span wrappers and targeted regex replacements to format obfuscated contact details for clipboard interactions.
