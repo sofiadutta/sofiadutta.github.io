@@ -7,3 +7,7 @@
 ## 2025-01-08 - LCP Optimization for Background Images
 **Learning:** Background images defined in CSS (or inline styles) are often discovered late by the browser. Preloading them via `<link rel="preload">` significantly aids LCP.
 **Action:** Always check for critical background images in Hero sections and add preloads for them, especially when image optimization tools are unavailable to reduce their size.
+
+## 2025-01-08 - Unthrottled jQuery Scroll Listener Anti-Pattern
+**Learning:** The codebase relies on unthrottled jQuery `$(window).scroll()` event handlers combined with `$('body').hasClass()` checks. This causes severe main thread blocking and layout thrashing as a new jQuery object is continuously instantiated and evaluated during high-frequency scroll events.
+**Action:** Always replace unthrottled jQuery scroll listeners with native `window.addEventListener('scroll', ...)`, use `{ passive: true }` to unblock scrolling, replace jQuery DOM queries with native equivalents like `document.body.classList.contains()`, and throttle DOM updates with `requestAnimationFrame` and a boolean lock.
