@@ -320,6 +320,29 @@
 		}
 	};
 
+	var initCopyEmail = function() {
+		var copyBtn = document.getElementById('copy-email-btn');
+		var emailContainer = document.getElementById('email-container');
+		if (copyBtn && emailContainer) {
+			var emailSpan = emailContainer.querySelector('span');
+			if (emailSpan) {
+				copyBtn.addEventListener('click', function() {
+					var rawText = emailSpan.textContent;
+					var realEmail = rawText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/ /g, '');
+					navigator.clipboard.writeText(realEmail).then(function() {
+						var originalHTML = copyBtn.innerHTML;
+						copyBtn.innerHTML = '<i class="icon-check"></i> Copied!';
+						copyBtn.disabled = true;
+						setTimeout(function() {
+							copyBtn.innerHTML = originalHTML;
+							copyBtn.disabled = false;
+						}, 2000);
+					});
+				});
+			}
+		}
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +362,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		initCopyEmail();
 	});
 
 
