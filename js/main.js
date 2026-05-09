@@ -339,6 +339,34 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+
+		var copyBtn = document.querySelector('.copy-btn');
+		if (copyBtn) {
+			copyBtn.addEventListener('click', function() {
+				var emailSpan = this.previousElementSibling;
+				if (emailSpan) {
+					var obfuscatedText = emailSpan.textContent;
+					var decodedEmail = obfuscatedText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s/g, '');
+					navigator.clipboard.writeText(decodedEmail).then(function() {
+						var originalHTML = copyBtn.innerHTML;
+						var originalAria = copyBtn.getAttribute('aria-label');
+						var originalTitle = copyBtn.getAttribute('title');
+
+						copyBtn.disabled = true;
+						copyBtn.innerHTML = 'Copied!';
+						copyBtn.setAttribute('aria-label', 'Email copied');
+						copyBtn.setAttribute('title', 'Email copied');
+
+						setTimeout(function() {
+							copyBtn.disabled = false;
+							copyBtn.innerHTML = originalHTML;
+							copyBtn.setAttribute('aria-label', originalAria);
+							copyBtn.setAttribute('title', originalTitle);
+						}, 2000);
+					});
+				}
+			});
+		}
 	});
 
 
