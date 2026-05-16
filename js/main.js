@@ -339,7 +339,35 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		initCopyEmail();
 	});
 
+	var initCopyEmail = function() {
+		var copyBtn = document.getElementById('copy-email-btn');
+		var emailSpan = document.getElementById('obfuscated-email');
+
+		if (copyBtn && emailSpan) {
+			copyBtn.addEventListener('click', function() {
+				var obfuscated = emailSpan.textContent;
+				// Replace all occurrences of ' DOT ' with '.' by using a global regex
+				var decoded = obfuscated.replace(/ DOT /g, '.').replace(' AT ', '@');
+				// Remove any remaining spaces if the user obfuscated with spaces between the names. The text is "sofia DOT dutta 17 AT gmail DOT com" so we want "sofia.dutta17@gmail.com"
+				decoded = decoded.replace(/\s+/g, '');
+
+				navigator.clipboard.writeText(decoded).then(function() {
+					var originalHTML = copyBtn.innerHTML;
+					copyBtn.innerHTML = 'Copied!';
+					copyBtn.disabled = true;
+					copyBtn.setAttribute('aria-label', 'Email copied');
+
+					setTimeout(function() {
+						copyBtn.innerHTML = originalHTML;
+						copyBtn.disabled = false;
+						copyBtn.setAttribute('aria-label', 'Copy email');
+					}, 2000);
+				});
+			});
+		}
+	};
 
 }());
