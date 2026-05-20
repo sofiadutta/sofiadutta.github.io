@@ -149,14 +149,22 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
-		});
+		// Optimization: Use native scroll event with requestAnimationFrame and passive listener to avoid layout thrashing
+		var ticking = false;
+		window.addEventListener('scroll', function() {
+			if (!ticking) {
+				window.requestAnimationFrame(function() {
+					if (document.body.classList.contains('offcanvas')) {
+						document.body.classList.remove('offcanvas');
+						document.querySelectorAll('.js-colorlib-nav-toggle').forEach(function(el) {
+							el.classList.remove('active');
+						});
+					}
+					ticking = false;
+				});
+				ticking = true;
+			}
+		}, { passive: true });
 
 	};
 
