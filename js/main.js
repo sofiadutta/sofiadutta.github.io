@@ -150,7 +150,8 @@
 		});
 
 		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
+			// Optimization: Use native DOM API for highly frequent scroll events to prevent jQuery instantiation overhead
+			if ( document.body.classList.contains('offcanvas') ) {
 
     			$('body').removeClass('offcanvas');
     			$('.js-colorlib-nav-toggle').removeClass('active');
