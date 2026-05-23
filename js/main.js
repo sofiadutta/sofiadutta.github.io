@@ -320,6 +320,38 @@
 		}
 	};
 
+	var setupCopyEmail = function() {
+		var btn = document.getElementById('copy-email-btn');
+		var emailSpan = document.getElementById('obfuscated-email');
+		var feedback = document.getElementById('copy-email-feedback');
+
+		if (btn && emailSpan) {
+			btn.addEventListener('click', function() {
+				var obfuscatedText = emailSpan.textContent || emailSpan.innerText;
+				var realEmail = obfuscatedText.replace(/ DOT /g, '.').replace(' AT ', '@').replace(' 17', '17');
+
+				navigator.clipboard.writeText(realEmail).then(function() {
+					var originalHtml = btn.innerHTML;
+					btn.innerHTML = '<i class="icon-check" aria-hidden="true"></i>';
+					btn.setAttribute('title', 'Copied!');
+					btn.setAttribute('aria-label', 'Email copied');
+					btn.disabled = true;
+					if (feedback) feedback.textContent = 'Email copied to clipboard';
+
+					setTimeout(function() {
+						btn.innerHTML = originalHtml;
+						btn.setAttribute('title', 'Copy Email');
+						btn.setAttribute('aria-label', 'Copy Email');
+						btn.disabled = false;
+						if (feedback) feedback.textContent = '';
+					}, 2000);
+				}).catch(function(err) {
+					console.error('Failed to copy text: ', err);
+				});
+			});
+		}
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +371,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		setupCopyEmail();
 	});
 
 
