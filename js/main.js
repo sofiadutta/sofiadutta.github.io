@@ -149,14 +149,18 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
+		// Optimization: Refactored to native passive event listener to prevent scroll rendering blocking.
+		// Native DOM APIs used over jQuery to avoid overhead during frequent scroll events.
+		window.addEventListener('scroll', function() {
+			if ( document.body.classList.contains('offcanvas') ) {
 
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
+			document.body.classList.remove('offcanvas');
+			document.querySelectorAll('.js-colorlib-nav-toggle').forEach(function(el) {
+					el.classList.remove('active');
+				});
 			
 	    	}
-		});
+		}, { passive: true });
 
 	};
 
