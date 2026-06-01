@@ -339,6 +339,24 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+
+		// Copy email logic
+		var copyEmailBtn = document.getElementById('copy-email-btn');
+		if (copyEmailBtn) {
+			copyEmailBtn.addEventListener('click', function(e) {
+				e.preventDefault();
+				var emailTextEl = document.getElementById('email-text');
+				var rawText = emailTextEl.innerText || emailTextEl.textContent;
+				var realEmail = rawText.replace(' DOT ', '.').replace(' AT ', '@').replace(' DOT ', '.').replace(/ /g, '');
+				navigator.clipboard.writeText(realEmail).then(function() {
+					var icon = copyEmailBtn.querySelector('i');
+					icon.className = 'icon-check';
+					setTimeout(function() {
+						icon.className = 'icon-clipboard';
+					}, 2000);
+				});
+			});
+		}
 	});
 
 
