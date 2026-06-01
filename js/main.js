@@ -149,14 +149,16 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
-		});
+		// ⚡ Bolt Optimization: Use native passive event listener to prevent scroll blocking
+		// and avoid expensive jQuery selections on every scroll event
+		window.addEventListener('scroll', function() {
+			if ( document.body.classList.contains('offcanvas') ) {
+				document.body.classList.remove('offcanvas');
+				document.querySelectorAll('.js-colorlib-nav-toggle').forEach(function(el) {
+					el.classList.remove('active');
+				});
+			}
+		}, { passive: true });
 
 	};
 
