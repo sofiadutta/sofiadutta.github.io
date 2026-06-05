@@ -7,3 +7,6 @@
 ## 2025-01-08 - LCP Optimization for Background Images
 **Learning:** Background images defined in CSS (or inline styles) are often discovered late by the browser. Preloading them via `<link rel="preload">` significantly aids LCP.
 **Action:** Always check for critical background images in Hero sections and add preloads for them, especially when image optimization tools are unavailable to reduce their size.
+## 2026-06-05 - Native DOM passive event listener for scroll events
+**Learning:** The default jQuery scroll event listeners are not passive, which blocks the browser's main thread, potentially causing scroll jank. Transitioning to `window.addEventListener` native DOM API with `{ passive: true }` improves scroll performance.
+**Action:** Use native `window.addEventListener('scroll', ..., { passive: true })` instead of `$(window).scroll()` for global scroll listeners to ensure smooth scrolling behavior, especially on mobile devices.
