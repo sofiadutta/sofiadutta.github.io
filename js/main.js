@@ -149,14 +149,15 @@
 	    }
 		});
 
-		$(window).scroll(function(){
+		// ⚡ Bolt Optimization: Use native passive event listener for scroll to avoid blocking the main thread and improve scrolling performance over jQuery's non-passive default.
+		window.addEventListener('scroll', function() {
 			if ( $('body').hasClass('offcanvas') ) {
 
     			$('body').removeClass('offcanvas');
     			$('.js-colorlib-nav-toggle').removeClass('active');
 			
 	    	}
-		});
+		}, { passive: true });
 
 	};
 
