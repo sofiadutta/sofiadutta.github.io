@@ -149,14 +149,15 @@
 	    }
 		});
 
-		$(window).scroll(function(){
+		// ⚡ Bolt Optimization: Use native event listener with passive: true instead of jQuery scroll to prevent scroll blocking and improve scrolling performance
+		window.addEventListener('scroll', function() {
 			if ( $('body').hasClass('offcanvas') ) {
 
     			$('body').removeClass('offcanvas');
     			$('.js-colorlib-nav-toggle').removeClass('active');
 			
 	    	}
-		});
+		}, { passive: true });
 
 	};
 
