@@ -314,6 +314,25 @@
 		}
 	};
 
+	var handleEmailCopy = function() {
+		$('#copy-email-btn').on('click', function() {
+			var obfuscatedEmail = $('#contact-email').text();
+			var email = obfuscatedEmail.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/ /g, '');
+			var $btn = $(this);
+			var $icon = $btn.find('i');
+
+			navigator.clipboard.writeText(email).then(function() {
+				$icon.removeClass('icon-clipboard').addClass('icon-check');
+				$btn.attr('aria-label', 'Email address copied').attr('title', 'Email address copied');
+
+				setTimeout(function() {
+					$icon.removeClass('icon-check').addClass('icon-clipboard');
+					$btn.attr('aria-label', 'Copy email address').attr('title', 'Copy email address');
+				}, 2000);
+			});
+		});
+	};
+
 	var updateCopyrightYear = function() {
 		if ($('#copyright-year').length > 0) {
 			$('#copyright-year').text(new Date().getFullYear());
@@ -339,6 +358,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		handleEmailCopy();
 	});
 
 
