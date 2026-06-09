@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## 2024-05-23 - [Obfuscated Text Selectability]
+**Learning:** Found that an email address was cleverly obfuscated as `sofia DOT dutta 17 AT gmail DOT com` to prevent scraping. However, this is terrible for legitimate users who want to contact the person, as they have to manually transcribe or mentally parse it.
+**Action:** When encountering heavily obfuscated contact information, always provide a "copy to clipboard" button that handles the de-obfuscation internally (e.g., using `data-*` attributes) to improve usability while maintaining anti-scraping properties. Ensure proper `aria-label` and `title` attributes are included, and provide visual feedback upon successful copy.
