@@ -149,14 +149,15 @@
 	    }
 		});
 
-		$(window).scroll(function(){
+		// Optimization: Use passive event listener to improve scrolling performance
+		window.addEventListener('scroll', function() {
 			if ( $('body').hasClass('offcanvas') ) {
 
     			$('body').removeClass('offcanvas');
     			$('.js-colorlib-nav-toggle').removeClass('active');
 			
 	    	}
-		});
+		}, { passive: true });
 
 	};
 
