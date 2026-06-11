@@ -13,3 +13,6 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+## 2024-05-23 - [Obfuscated Text Copiability]
+**Learning:** Text obfuscation patterns designed to thwart scrapers (like `email DOT name AT domain DOT com`) actively harm legitimate users who need to copy the information. Sighted users often have to manually edit the pasted text, which is a frustrating friction point.
+**Action:** When identifying obfuscated information (like emails), implement a dedicated "Copy" button that programmatically reconstructs the real data and copies it to the clipboard, providing visual feedback (e.g., swapping a clipboard icon to a checkmark) upon success. Also make the obfuscated text an interactive link using the obfuscation parameters to reconstruct the href action.
