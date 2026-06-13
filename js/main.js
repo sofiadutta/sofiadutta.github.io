@@ -314,6 +314,31 @@
 		}
 	};
 
+	var initEmailProtect = function() {
+		$('.js-email-protect').on('click', function(e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var user = $btn.data('user');
+			var domain = $btn.data('domain');
+			var email = user + '@' + domain;
+
+			navigator.clipboard.writeText(email).then(function() {
+				var $text = $btn.find('.js-email-text');
+				var $icon = $btn.find('i');
+				var originalText = $text.text();
+				var originalIconClass = $icon.attr('class');
+
+				$text.text('Copied!');
+				$icon.removeClass().addClass('icon-check');
+
+				setTimeout(function() {
+					$text.text(originalText);
+					$icon.removeClass().addClass(originalIconClass);
+				}, 2000);
+			});
+		});
+	};
+
 	var updateCopyrightYear = function() {
 		if ($('#copyright-year').length > 0) {
 			$('#copyright-year').text(new Date().getFullYear());
@@ -339,6 +364,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		initEmailProtect();
 	});
 
 
