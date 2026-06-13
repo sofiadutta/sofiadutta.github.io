@@ -149,14 +149,16 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
-	    	}
-		});
+		// Bolt: Use native passive scroll listener for better scroll performance, preventing browser from blocking scroll rendering.
+		window.addEventListener('scroll', function() {
+			var body = document.querySelector('body');
+			if (body && body.classList.contains('offcanvas')) {
+				body.classList.remove('offcanvas');
+				document.querySelectorAll('.js-colorlib-nav-toggle').forEach(function(el) {
+					el.classList.remove('active');
+				});
+			}
+		}, { passive: true });
 
 	};
 
