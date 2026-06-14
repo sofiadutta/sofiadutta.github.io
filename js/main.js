@@ -314,6 +314,48 @@
 		}
 	};
 
+	var emailProtect = function() {
+		$('.js-email-protect').each(function() {
+			var $el = $(this);
+			var user = $el.data('user');
+			var domain = $el.data('domain');
+			if (user && domain) {
+				var email = user + '@' + domain;
+				if ($el.text().indexOf('DOT') > -1 || $el.text().indexOf('AT') > -1) {
+					$el.text(email);
+				}
+			}
+		});
+
+		$('.js-email-protect').on('click', function(e) {
+			e.preventDefault();
+			var user = $(this).data('user');
+			var domain = $(this).data('domain');
+			if (user && domain) {
+				window.location.href = 'mailto:' + user + '@' + domain;
+			}
+		});
+
+		$('.js-email-copy').on('click', function(e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var user = $btn.data('user');
+			var domain = $btn.data('domain');
+			if (user && domain) {
+				var email = user + '@' + domain;
+
+				navigator.clipboard.writeText(email).then(function() {
+					var $icon = $btn.find('i');
+					var originalClass = $icon.attr('class');
+					$icon.attr('class', 'icon-check');
+					setTimeout(function() {
+						$icon.attr('class', originalClass);
+					}, 2000);
+				});
+			}
+		});
+	};
+
 	var updateCopyrightYear = function() {
 		if ($('#copyright-year').length > 0) {
 			$('#copyright-year').text(new Date().getFullYear());
@@ -339,6 +381,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		emailProtect();
 	});
 
 
