@@ -7,3 +7,6 @@
 ## 2025-01-08 - LCP Optimization for Background Images
 **Learning:** Background images defined in CSS (or inline styles) are often discovered late by the browser. Preloading them via `<link rel="preload">` significantly aids LCP.
 **Action:** Always check for critical background images in Hero sections and add preloads for them, especially when image optimization tools are unavailable to reduce their size.
+## 2025-01-08 - Passive Scroll Listeners
+**Learning:** In `js/main.js`, the scroll event listener `$(window).scroll(function(){...})` for closing the mobile menu is blocking the main thread because jQuery binds scroll events without `{ passive: true }` by default. This degrades scroll performance, particularly on mobile devices.
+**Action:** Refactor scroll-bound listeners (like the offcanvas mobile menu toggle) to use the native DOM API `window.addEventListener('scroll', handler, { passive: true })` instead of jQuery to prevent scroll rendering blocks.
