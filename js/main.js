@@ -344,7 +344,7 @@
 			e.preventDefault();
 			var user = $(this).attr('data-user');
 			var domain = $(this).attr('data-domain');
-			window.location.href = 'mailto:' + user + '@' + domain;
+			window.location.href = 'mailto:' + encodeURIComponent(user) + '@' + encodeURIComponent(domain);
 		});
 
 		$('.js-copy-email').on('click', function(e) {
