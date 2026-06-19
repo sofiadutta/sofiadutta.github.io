@@ -339,6 +339,30 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+
+		$('.js-email-protect').on('click', function(e) {
+			e.preventDefault();
+			var user = $(this).attr('data-user');
+			var domain = $(this).attr('data-domain');
+			window.location.href = "mailto:" + encodeURIComponent(user + '@' + domain);
+		});
+
+		$('.js-copy-email').on('click', function(e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var user = $btn.attr('data-user');
+			var domain = $btn.attr('data-domain');
+			var email = user + '@' + domain;
+			navigator.clipboard.writeText(email).then(function() {
+				var originalText = $btn.text();
+				$btn.text('Copied!');
+				setTimeout(function() {
+					$btn.text(originalText);
+				}, 2000);
+			}).catch(function(err) {
+				console.error('Failed to copy: ', err);
+			});
+		});
 	});
 
 
