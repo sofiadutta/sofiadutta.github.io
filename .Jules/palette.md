@@ -13,3 +13,7 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+
+## $(date +%Y-%m-%d) - Accessible Email Obfuscation
+**Learning:** Obfuscating emails by replacing "." and "@" with "DOT" and "AT" in plaintext is terrible for accessibility and UX. Users have to manually reformat it. Data attributes provide basic bot protection while allowing us to construct a functional mailto link and copy button dynamically.
+**Action:** Use data-domain and data-user attributes to assemble emails on the client side, and attach interactive copy/email buttons with visual feedback to improve the contact experience.
