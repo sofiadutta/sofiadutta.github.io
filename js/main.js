@@ -320,6 +320,56 @@
 		}
 	};
 
+	var handleEmailProtection = function() {
+		$('.js-email-protect').on('click', function(e) {
+			e.preventDefault();
+			var user = $(this).data('user');
+			var domain = $(this).data('domain');
+			window.location.href = 'mailto:' + encodeURIComponent(user) + '@' + encodeURIComponent(domain);
+		});
+
+		$('.js-copy-email').on('click', function(e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var user = $btn.data('user');
+			var domain = $btn.data('domain');
+			var email = user + '@' + domain;
+
+			if (navigator.clipboard && window.isSecureContext) {
+				navigator.clipboard.writeText(email).then(function() {
+					var $icon = $btn.find('i');
+					$icon.removeClass('icon-clipboard3').addClass('icon-check');
+					setTimeout(function() {
+						$icon.removeClass('icon-check').addClass('icon-clipboard3');
+					}, 2000);
+				}).catch(function(err) {
+					console.error('Failed to copy text: ', err);
+				});
+			} else {
+				// Fallback
+				var textArea = document.createElement("textarea");
+				textArea.value = email;
+				textArea.style.position = "fixed";
+				textArea.style.left = "-999999px";
+				textArea.style.top = "-999999px";
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+				try {
+					document.execCommand('copy');
+					var $icon = $btn.find('i');
+					$icon.removeClass('icon-clipboard3').addClass('icon-check');
+					setTimeout(function() {
+						$icon.removeClass('icon-check').addClass('icon-clipboard3');
+					}, 2000);
+				} catch (err) {
+					console.error('Fallback: Oops, unable to copy', err);
+				}
+				document.body.removeChild(textArea);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +389,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		handleEmailProtection();
 	});
 
 
