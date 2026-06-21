@@ -7,3 +7,6 @@
 ## 2025-01-08 - LCP Optimization for Background Images
 **Learning:** Background images defined in CSS (or inline styles) are often discovered late by the browser. Preloading them via `<link rel="preload">` significantly aids LCP.
 **Action:** Always check for critical background images in Hero sections and add preloads for them, especially when image optimization tools are unavailable to reduce their size.
+## 2025-01-08 - Debounce Optimization on Scroll Events
+**Learning:** Attaching continuous layout or DOM queries to `window.scroll` handlers heavily blocks the main thread.
+**Action:** Always wrap `$(window).scroll` callbacks in a `debounce` (or `throttle`) to reduce execution frequency and cache DOM selectors (e.g. `$('body')`) outside the handler.
