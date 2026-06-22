@@ -87,7 +87,8 @@
 				$(this.element).addClass('item-animate');
 				setTimeout(function(){
 
-					$('body .animate-box.item-animate').each(function(k){
+					// Optimize: Use simpler class selector to avoid full DOM traversal
+					$('.item-animate').each(function(k){
 						var el = $(this);
 						setTimeout( function () {
 							var effect = el.data('animate-effect');
@@ -149,14 +150,16 @@
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
+		// Cache body selector and debounce scroll event to prevent layout thrashing
+		var $body = $('body');
+		$(window).scroll(debounce(function(){
+			if ( $body.hasClass('offcanvas') ) {
 
-    			$('body').removeClass('offcanvas');
+			$body.removeClass('offcanvas');
     			$('.js-colorlib-nav-toggle').removeClass('active');
 			
 	    	}
-		});
+		}, 100));
 
 	};
 
