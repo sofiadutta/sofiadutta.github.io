@@ -103,24 +103,24 @@
 			<section id="colorlib-hero" class="js-fullheight" data-section="home">
 				<div class="flexslider js-fullheight">
 					<ul class="slides">
-				   	<li style="background-image: url(images/img_bg_2.jpg);">
-				   		<div class="overlay"></div>
-				   		<div class="container-fluid">
-				   			<div class="row">
-					   			<div class="col-md-6 col-md-offset-3 col-md-pull-3 col-sm-12 col-xs-12 js-fullheight slider-text">
-					   				<div class="slider-text-inner js-fullheight">
-					   					<div class="desc">
-						   					<h1>Hi! <br>I'm Sofia</h1>
+					<li style="background-image: url(images/img_bg_2.jpg);">
+						<div class="overlay"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-6 col-md-offset-3 col-md-pull-3 col-sm-12 col-xs-12 js-fullheight slider-text">
+									<div class="slider-text-inner js-fullheight">
+										<div class="desc">
+											<h1>Hi! <br>I'm Sofia</h1>
 											<h2>A Software Engineer with Cisco Systems Inc., building models to identify apps for the Cisco Secure Firewall.</br>I am interested in working on challenging problems around data!</h2>
 												<p><a class="btn btn-primary btn-learn" href="assets/resume-sofia-dutta-102823.pdf" target="_blank" rel="noopener noreferrer" title="Download Resume (PDF)">Download Resume <i class="icon-download4" aria-hidden="true"></i></a></p>
 											</div>
-					   				</div>
-					   			</div>
-					   		</div>
-				   		</div>
-				   	</li>
-				  	</ul>
-			  	</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					</ul>
+				</div>
 			</section>
 
 			<section class="colorlib-about" data-section="about">
@@ -191,7 +191,7 @@
 									   <p>Software Engineer at <a href="https://www.cisco.com/site/us/en/index.html" target="_blank" rel="noopener noreferrer">Cisco Systems, Inc.</a>, Fulton, MD, USA</p>
 											<ul>
 												<li>I am building ways of identifying applications for <a href="https://www.cisco.com/site/us/en/products/security/firewalls/index.html" target="_blank" rel="noopener noreferrer">the firewall</a>.</li>
-								   			</ul>
+											</ul>
 					               </div>
 					            </div>
 					         </article>
@@ -224,7 +224,7 @@
 												<li>Built product feature lists with stakeholders, conducted system design sessions with other architects on the team and led code review meetings.</li>
 												<li>Investigated root causes for customer-found defects. Carried out several customer demonstrations to help sell the product and handled rapid prototyping and solution building for ad-hoc requirements and last-minute feature requests from the customer.</li>
 												<li>Advised management, business, and technical staff on the usage of specific technologies like Apache Airflow and Google Cloud Platform.</li>
-								   			</ul>
+											</ul>
 					               </div>
 					            </div>
 					         </article>
@@ -237,12 +237,12 @@
 					               <div class="timeline-label">
 							<h2><a href="https://newwave.io/" target="_blank" rel="noopener noreferrer">Data Scientist Intern</a> <span>2020 - 2020</span></h2>
 									   <p>Data Scientist Intern at <a href="https://newwave.io/" target="_blank" rel="noopener noreferrer">NewWave Telecom and Technologies, Inc.</a>, Woodlawn, MD, USA</p>
-									   		<ul>
+											<ul>
 												<li>Carried out data visualization tasks using LookML, Matplotlib, and Seaborn to present quality measures based on chosen computation metrics.</li>
 												<li>Successfully improved computation speed by 10-fold by deploying data analysis workflow in Google Cloud Platform (GCP) clusters and using Apache Spark for quality metrics computations.</li>
 												<li>Collaborated with the Product Owner and other engineers in creating mechanisms for generating fake training data using Python programming to test out the efficacy of machine learning algorithms used in the project.</li>
 												<li>Carried out necessary DevOps tasks for setting up Big Data Analytics environment by configuring GCP environment to execute Python programs and connected the cloud infrastructure with Looker's dashboards for delivering computed results to be presented to customers.</li>
-								   			</ul>
+											</ul>
 					               </div>
 					            </div>
 					         </article>
@@ -257,29 +257,29 @@
 					               <div class="timeline-label">
 					                  <h2><a href="https://ebiquity.umbc.edu" target="_blank" rel="noopener noreferrer">Researcher</a> <span>2020 - 2019</span></h2>
 									   <p>Researcher at <a href="https://ebiquity.umbc.edu" target="_blank" rel="noopener noreferrer">Ebiquity Group</a>, <a href="https://www.umbc.edu" target="_blank" rel="noopener noreferrer">UMBC</a>, USA</p>
-										   	<ul>
-									   			<li>Authored an <a href="https://ebiquity.umbc.edu/paper/owl/id/887/Context-Sensitive-Access-Control-in-Smart-Home-Environments">Ontology</a> for Smart Home Access Control by extending earlier research in Semantic Web.</li>
-									   			<li>Developed an <a href="https://github.com/sofiadutta/AndroidSmartLights">Android app</a> for handling context-sensitive access control in a Smart Home Environment.</li>
-									   			<li>Created <a href="https://www.youtube.com/watch?v=DZq-oZ_Cv1g&list=UUEB2cqBZTym9WxWvGu2UA0w">YouTube videos</a> for presentation to the National Institute of Standards and Technology.</li>
-									   			<li>Published a <a href="https://ebiquity.umbc.edu/paper/html/id/887/Context-Sensitive-Access-Control-in-Smart-Home-Environments">paper</a> at the IEEE Big Data Security 2020 conference.</li>
-									   		</ul>
+											<ul>
+												<li>Authored an <a href="https://ebiquity.umbc.edu/paper/owl/id/887/Context-Sensitive-Access-Control-in-Smart-Home-Environments">Ontology</a> for Smart Home Access Control by extending earlier research in Semantic Web.</li>
+												<li>Developed an <a href="https://github.com/sofiadutta/AndroidSmartLights">Android app</a> for handling context-sensitive access control in a Smart Home Environment.</li>
+												<li>Created <a href="https://www.youtube.com/watch?v=DZq-oZ_Cv1g&list=UUEB2cqBZTym9WxWvGu2UA0w">YouTube videos</a> for presentation to the National Institute of Standards and Technology.</li>
+												<li>Published a <a href="https://ebiquity.umbc.edu/paper/html/id/887/Context-Sensitive-Access-Control-in-Smart-Home-Environments">paper</a> at the IEEE Big Data Security 2020 conference.</li>
+											</ul>
 					               </div>
 					            </div>
 					         </article>
 
 					         <article class="timeline-entry animate-box" data-animate-effect="fadeInLeft">
 					            <div class="timeline-entry-inner">
-					               	<div class="timeline-icon color-2">
-					                  	<i class="icon-pen2"></i>
-					               	</div>
-					               	<div class="timeline-label">
+							<div class="timeline-icon color-2">
+								<i class="icon-pen2"></i>
+							</div>
+							<div class="timeline-label">
 							<h2><a href="https://www.tcs.com" target="_blank" rel="noopener noreferrer">Software Engineer, Technical Leader</a> <span>2018 - 2010</span></h2>
 										<p>Software Developer and Data Analyst at <a href="https://www.tcs.com" target="_blank" rel="noopener noreferrer">Tata Consultancy Services (TCS) Ltd.</a>, India</p>
 										<ul>
 											<li>Led the design, development, and delivery of API interfaces using PL/SQL stored procedures for several projects of TCS.</li>
 											<li>Carried out change based regression impact analysis, created software functional specifications, prepared test plans for several projects of TCS.</li>
 											<li>Performed system integration, user-acceptance and performance testing and ensured client systems had very high uptime even when carrying out data migration activities. Saved millions of dollars in potential revenue lost to the client and was awarded for said effort by clients.</li>
-									   	</ul>
+										</ul>
 					               </div>
 					            </div>
 					         </article>
@@ -309,10 +309,10 @@
 							<div class="progress-wrap">
 								<h3 id="skill-python">Python</h3>
 								<div class="progress">
-								 	<div class="progress-bar color-1" role="progressbar" aria-valuenow="95"
+									<div class="progress-bar color-1" role="progressbar" aria-valuenow="95"
 									aria-valuemin="0" aria-valuemax="100" style="width:95%" aria-labelledby="skill-python">
 								    <span>95%</span>
-								  	</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -331,10 +331,10 @@
 							<div class="progress-wrap">
 								<h3 id="skill-pytorch">PyTorch</h3>
 								<div class="progress">
-								 	<div class="progress-bar color-5" role="progressbar" aria-valuenow="90"
+									<div class="progress-bar color-5" role="progressbar" aria-valuenow="90"
 									aria-valuemin="0" aria-valuemax="100" style="width:90%" aria-labelledby="skill-pytorch">
 								    <span>90%</span>
-								  	</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -342,10 +342,10 @@
 							<div class="progress-wrap">
 								<h3 id="skill-scikit-learn">Sci-kit Learn, MLlib, OpenCV</h3>
 								<div class="progress">
-								 	<div class="progress-bar color-4" role="progressbar" aria-valuenow="85"
+									<div class="progress-bar color-4" role="progressbar" aria-valuenow="85"
 									aria-valuemin="0" aria-valuemax="100" style="width:85%" aria-labelledby="skill-scikit-learn">
 								    <span>85%</span>
-								  	</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -353,10 +353,10 @@
 							<div class="progress-wrap">
 								<h3 id="skill-keras">Keras</h3>
 								<div class="progress">
-								 	<div class="progress-bar color-3" role="progressbar" aria-valuenow="80"
+									<div class="progress-bar color-3" role="progressbar" aria-valuenow="80"
 									aria-valuemin="0" aria-valuemax="100" style="width:80%" aria-labelledby="skill-keras">
 								    <span>80%</span>
-								  	</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -375,10 +375,10 @@
 							<div class="progress-wrap">
 								<h3 id="skill-apache-airflow">Apache Airflow</h3>
 								<div class="progress">
-								 	<div class="progress-bar color-7" role="progressbar" aria-valuenow="80"
+									<div class="progress-bar color-7" role="progressbar" aria-valuenow="80"
 									aria-valuemin="0" aria-valuemax="100" style="width:80%" aria-labelledby="skill-apache-airflow">
 								    <span>80%</span>
-								  	</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -408,10 +408,10 @@
 							<div class="progress-wrap">
 								<h3 id="skill-oracle-apps">Oracle Apps, Oracle Fusion</h3>
 								<div class="progress">
-								 	<div class="progress-bar color-10" role="progressbar" aria-valuenow="90"
+									<div class="progress-bar color-10" role="progressbar" aria-valuenow="90"
 									aria-valuemin="0" aria-valuemax="100" style="width:90%" aria-labelledby="skill-oracle-apps">
 								    <span>90%</span>
-								  	</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -574,7 +574,7 @@
 									<p><a href="datascience-ipynbs/capstone/QABot_seq2seq_model_using_transformer.html" target="_blank" rel="noopener noreferrer">QABot using Transformer</a></p>
 								</div>
 							</div>
-						</div>	
+						</div>
 					</div>
 				</div>
 			</section>
@@ -862,7 +862,7 @@
 									<i class="icon-mail6"></i>
 								</div>
 								<div class="colorlib-text">
-									<p><a href="#" class="js-email-protect" data-user="sofia.dutta17" data-domain="gmail.com" aria-label="Email me">sofia DOT dutta 17 AT gmail DOT com</a> <a href="#" class="js-copy-email" data-user="sofia.dutta17" data-domain="gmail.com" aria-label="Copy email address" title="Copy email address"><i class="icon-clipboard" aria-hidden="true"></i></a></p>
+									<p>sofia DOT dutta 17 AT gmail DOT com</p>
 								</div>
 							</div>
 						</div>
