@@ -7,3 +7,7 @@
 ## 2025-01-08 - LCP Optimization for Background Images
 **Learning:** Background images defined in CSS (or inline styles) are often discovered late by the browser. Preloading them via `<link rel="preload">` significantly aids LCP.
 **Action:** Always check for critical background images in Hero sections and add preloads for them, especially when image optimization tools are unavailable to reduce their size.
+
+## 2025-01-08 - Vanilla JS in Hot Paths
+**Learning:** Using jQuery `$()` to repeatedly select the body element within a `$(window).scroll()` handler causes measurable memory allocation and performance overhead due to its ~60fps frequency.
+**Action:** Always replace jQuery selectors with cached variables, and use vanilla JS (like `document.body.classList.contains()`) inside high-frequency event handlers to avoid continuous DOM querying and object creation.
