@@ -135,28 +135,31 @@
 	// Click outside of offcanvass
 	var mobileMenuOutsideClick = function() {
 
+		var $body = $('body');
+		var $navToggle = $('.js-colorlib-nav-toggle');
+
 		$(document).click(function (e) {
 	    var container = $("#colorlib-aside, .js-colorlib-nav-toggle");
 	    if (!container.is(e.target) && container.has(e.target).length === 0) {
 
-	    	if ( $('body').hasClass('offcanvas') ) {
+		if ( $body.hasClass('offcanvas') ) {
 
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
+			$body.removeClass('offcanvas');
+			$navToggle.removeClass('active');
 			
 	    	}
 	    	
 	    }
 		});
 
-		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
+		$(window).scroll(debounce(function(){
+			if ( $body.hasClass('offcanvas') ) {
 
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
+			$body.removeClass('offcanvas');
+			$navToggle.removeClass('active');
 			
 	    	}
-		});
+		}, 100, true));
 
 	};
 
