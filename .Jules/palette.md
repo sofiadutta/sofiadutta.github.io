@@ -13,3 +13,6 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+## 2024-06-26 - [Interactive Email Obfuscation]
+**Learning:** Found plain text `mailto:` links which are prone to scraping, alongside unclear email texts like "sofia DOT dutta...". Users need an easy way to either click to send an email securely or copy the email to their clipboard for web clients. Implementing a JS-based `mailto` reconstruction combined with a dedicated "Copy to Clipboard" micro-interaction with immediate visual feedback greatly improves UX while protecting against basic scrapers.
+**Action:** When auditing contact sections, ensure email links are both protected from scraping via data attributes and provide explicit "Copy" buttons since many users rely on browser-based email clients where `mailto:` links fail or act unexpectedly. Always provide visual feedback (like a checkmark) upon successful copy to prevent rage-clicks.
