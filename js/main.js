@@ -320,8 +320,45 @@
 		}
 	};
 
+	var emailProtection = function() {
+		$('.js-email-protect').on('click', function(e) {
+			e.preventDefault();
+			var user = $(this).data('user');
+			var domain = $(this).data('domain');
+			if (user && domain) {
+				window.location.href = 'mailto:' + encodeURIComponent(user) + '@' + encodeURIComponent(domain);
+			}
+		});
+
+		$('.js-copy-email').on('click', function(e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var user = $btn.data('user');
+			var domain = $btn.data('domain');
+
+			if (user && domain) {
+				var email = user + '@' + domain;
+
+				navigator.clipboard.writeText(email).then(function() {
+					$btn.html('<i class="icon-check"></i>');
+					$btn.attr('aria-label', 'Copied!');
+					$btn.attr('title', 'Copied!');
+
+					setTimeout(function() {
+						$btn.html('<i class="icon-clipboard"></i>');
+						$btn.attr('aria-label', 'Copy email address');
+						$btn.attr('title', 'Copy email address');
+					}, 2000);
+				}).catch(function(err) {
+					console.error('Failed to copy email: ', err);
+				});
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
+		emailProtection();
 		fullHeight();
 		counter();
 		counterWayPoint();
