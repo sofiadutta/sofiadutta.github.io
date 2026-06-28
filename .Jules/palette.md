@@ -13,3 +13,6 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+## 2024-05-23 - [Email Obfuscation and Copy Button]
+**Learning:** Hardcoded `mailto:` links are prone to spam harvesting. Replacing them with data-attribute driven client-side reconstruction prevents simple scraping. Additionally, many users don't have default email clients set up correctly, so an interactive "Copy to Clipboard" button provides a much better UX than a raw link alone.
+**Action:** When implementing email contacts, use `data-user` and `data-domain` attributes to construct the email via JS, and always provide a dedicated copy button with visual feedback (`icon-check` + text change) to assure the user the action succeeded.
