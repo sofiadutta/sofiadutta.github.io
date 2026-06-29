@@ -13,3 +13,6 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+## 2024-05-18 - Accessible Email Contact
+**Learning:** Obfuscating emails to prevent spam breaks native screen reader semantics and interactive native link functionalities (like middle-click).
+**Action:** Use a mailto link alongside a dedicated 'Copy to Clipboard' button with visual feedback to preserve accessibility while offering a clear UX enhancement.
