@@ -13,3 +13,6 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+## 2024-05-23 - [Accessible Copy Buttons for Emails]
+**Learning:** Replacing native mailto: links with copy buttons breaks native behavior. The accessible approach is to retain the semantic mailto: link while placing a "Copy to Clipboard" button next to it for rapid sharing.
+**Action:** Always provide dedicated interactive 'Copy to Clipboard' buttons that provide visual feedback alongside reconstructed cleartext emails to preserve accessible native link semantics.
