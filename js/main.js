@@ -149,14 +149,15 @@
 	    }
 		});
 
-		$(window).scroll(function(){
+		// Optimization: Debounce scroll event to reduce performance cost on scroll
+		$(window).scroll(debounce(function(){
 			if ( $('body').hasClass('offcanvas') ) {
 
     			$('body').removeClass('offcanvas');
     			$('.js-colorlib-nav-toggle').removeClass('active');
 			
 	    	}
-		});
+		}, 100, true));
 
 	};
 
