@@ -349,11 +349,25 @@
 				var email = obfuscated.replace(' DOT ', '.').replace(' AT ', '@').replace(' DOT ', '.');
 				email = email.replace(/\s+/g, ''); // Ensure no spaces
 
-				// Create the new HTML structure
-				var html = '<a href="mailto:' + encodeURIComponent(email) + '" id="email-link">' + email + '</a> &nbsp;' +
-						   '<button id="copy-email-btn" class="btn btn-primary btn-sm" aria-label="Copy email address" title="Copy email address">' +
-						   '<i class="icon-clipboard"></i> Copy</button>';
-				p.innerHTML = html;
+				// Create the new HTML structure safely to prevent DOM XSS
+				p.innerHTML = '';
+				var a = document.createElement('a');
+				a.href = 'mailto:' + encodeURIComponent(email);
+				a.id = 'email-link';
+				a.textContent = email;
+
+				var nbsp = document.createTextNode(' \u00A0');
+
+				var btn = document.createElement('button');
+				btn.id = 'copy-email-btn';
+				btn.className = 'btn btn-primary btn-sm';
+				btn.setAttribute('aria-label', 'Copy email address');
+				btn.setAttribute('title', 'Copy email address');
+				btn.innerHTML = '<i class="icon-clipboard"></i> Copy';
+
+				p.appendChild(a);
+				p.appendChild(nbsp);
+				p.appendChild(btn);
 
 				// Add event listener to the new button
 				var copyBtn = document.getElementById('copy-email-btn');
