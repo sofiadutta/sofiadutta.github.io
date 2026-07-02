@@ -339,6 +339,55 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+
+		// Handle Email De-obfuscation and Copy Action
+		var emailContainer = document.getElementById('email-container');
+		if (emailContainer) {
+			var p = emailContainer.querySelector('p');
+			if (p && p.innerText.includes('DOT') && p.innerText.includes('AT')) {
+				var obfuscated = p.innerText;
+				var email = obfuscated.replace(' DOT ', '.').replace(' AT ', '@').replace(' DOT ', '.');
+				email = email.replace(/\s+/g, ''); // Ensure no spaces
+
+				// Create the new HTML structure safely to prevent DOM XSS
+				p.innerHTML = '';
+				var a = document.createElement('a');
+				a.href = 'mailto:' + encodeURIComponent(email);
+				a.id = 'email-link';
+				a.textContent = email;
+
+				var nbsp = document.createTextNode(' \u00A0');
+
+				var btn = document.createElement('button');
+				btn.id = 'copy-email-btn';
+				btn.className = 'btn btn-primary btn-sm';
+				btn.setAttribute('aria-label', 'Copy email address');
+				btn.setAttribute('title', 'Copy email address');
+				btn.innerHTML = '<i class="icon-clipboard"></i> Copy';
+
+				p.appendChild(a);
+				p.appendChild(nbsp);
+				p.appendChild(btn);
+
+				// Add event listener to the new button
+				var copyBtn = document.getElementById('copy-email-btn');
+				if (copyBtn) {
+					copyBtn.addEventListener('click', function(e) {
+						e.preventDefault();
+						if (navigator.clipboard && navigator.clipboard.writeText) {
+							navigator.clipboard.writeText(email).then(function() {
+								copyBtn.innerHTML = '<i class="icon-check"></i> Copied!';
+								setTimeout(function() {
+									copyBtn.innerHTML = '<i class="icon-clipboard"></i> Copy';
+								}, 2000);
+							}).catch(function(err) {
+								console.error('Failed to copy email: ', err);
+							});
+						}
+					});
+				}
+			}
+		}
 	});
 
 
