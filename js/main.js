@@ -149,14 +149,15 @@
 	    }
 		});
 
-		$(window).scroll(function(){
+		// Optimization: Debounce scroll event, but trigger immediately to prevent visual delay
+		$(window).scroll(debounce(function(){
 			if ( $('body').hasClass('offcanvas') ) {
 
     			$('body').removeClass('offcanvas');
     			$('.js-colorlib-nav-toggle').removeClass('active');
 			
 	    	}
-		});
+		}, 250, true));
 
 	};
 
