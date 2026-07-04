@@ -13,3 +13,6 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+## 2024-07-04 - [Enhancing Obfuscated Emails]
+**Learning:** Obfuscating email addresses (e.g., "DOT", "AT") is effective against simple bots but degrades UX by removing click-to-email functionality and requiring manual formatting. Replacing them statically removes the protection.
+**Action:** Use JavaScript to progressively enhance obfuscated emails by dynamically constructing native `mailto:` links and injecting "Copy to Clipboard" buttons, preserving both anti-spam measures and optimal UX.
