@@ -320,6 +320,44 @@
 		}
 	};
 
+	var enhanceEmail = function() {
+		var container = document.getElementById('obfuscated-email-container');
+		if (container) {
+			var obfuscated = container.textContent;
+			var email = obfuscated.replace(/ DOT /g, '.').replace(' AT ', '@').replace(/ /g, '');
+
+			container.innerHTML = '';
+
+			var link = document.createElement('a');
+			link.href = 'mailto:' + encodeURIComponent(email);
+			link.textContent = obfuscated;
+
+			var copyBtn = document.createElement('button');
+			copyBtn.className = 'btn btn-primary btn-sm';
+			copyBtn.setAttribute('aria-label', 'Copy email to clipboard');
+			copyBtn.setAttribute('title', 'Copy email to clipboard');
+
+			var icon = document.createElement('i');
+			icon.className = 'icon-clipboard';
+			copyBtn.appendChild(icon);
+
+			copyBtn.onclick = function() {
+				navigator.clipboard.writeText(email).then(function() {
+					icon.className = 'icon-check';
+					setTimeout(function() {
+						icon.className = 'icon-clipboard';
+					}, 2000);
+				}).catch(function(err) {
+					console.error('Could not copy text: ', err);
+				});
+			};
+
+			container.appendChild(link);
+			container.appendChild(document.createTextNode(' '));
+			container.appendChild(copyBtn);
+		}
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +377,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		enhanceEmail();
 	});
 
 
