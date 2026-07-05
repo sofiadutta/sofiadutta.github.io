@@ -320,6 +320,51 @@
 		}
 	};
 
+	var enhanceContactEmail = function() {
+		var container = document.getElementById('contact-email-container');
+		if (!container) return;
+		var pElement = container.querySelector('p');
+		if (!pElement) return;
+
+		var obfuscatedText = pElement.textContent || pElement.innerText;
+		var email = obfuscatedText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s+/g, '');
+
+		var a = document.createElement('a');
+		a.href = 'mailto:' + encodeURIComponent(email);
+		a.textContent = email;
+		a.style.marginRight = '10px';
+
+		var btn = document.createElement('button');
+		btn.setAttribute('aria-label', 'Copy email address to clipboard');
+		btn.className = 'btn btn-primary btn-sm btn-outline';
+		btn.innerHTML = '<i class="icon-clipboard"></i> Copy';
+		btn.style.padding = '2px 8px';
+		btn.style.fontSize = '12px';
+
+		btn.addEventListener('click', function(e) {
+			e.preventDefault();
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(email).then(function() {
+					var originalHtml = btn.innerHTML;
+					btn.innerHTML = '<i class="icon-check"></i> Copied!';
+					btn.classList.remove('btn-outline');
+					btn.classList.add('btn-success');
+					setTimeout(function() {
+						btn.innerHTML = '<i class="icon-clipboard"></i> Copy';
+						btn.classList.remove('btn-success');
+						btn.classList.add('btn-outline');
+					}, 2000);
+				}).catch(function(err) {
+					console.error('Failed to copy text: ', err);
+				});
+			}
+		});
+
+		pElement.innerHTML = '';
+		pElement.appendChild(a);
+		pElement.appendChild(btn);
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +384,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		enhanceContactEmail();
 	});
 
 

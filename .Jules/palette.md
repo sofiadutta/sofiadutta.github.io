@@ -13,3 +13,6 @@
 ## 2024-05-23 - [Tooltips for Icon-Only Buttons]
 **Learning:** Icon-only buttons (like social links) are ambiguous for mouse users. While `aria-label` helps screen readers, sighted users benefit significantly from a native browser tooltip via the `title` attribute.
 **Action:** Always add `title` attributes matching the `aria-label` for icon-only interactive elements.
+## 2024-05-18 - Accessible Interactive Elements for Obfuscated Emails
+**Learning:** Obfuscating emails in static HTML to deter spam (e.g., "name DOT domain AT example") severely degrades UX by preventing standard `mailto:` links and copy-paste functionality. Removing obfuscation re-introduces spam risks, while simply adding JavaScript click handlers breaks native browser functionality for screen readers and middle clicks.
+**Action:** Always maintain obfuscated cleartext in the static HTML payload, but use client-side JavaScript to dynamically de-obfuscate it, reconstruct an accessible native `mailto:` link, and inject a dedicated "Copy to Clipboard" button with temporary visual feedback.
