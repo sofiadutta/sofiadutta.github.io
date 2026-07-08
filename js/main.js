@@ -320,6 +320,47 @@
 		}
 	};
 
+	var enhanceContactEmail = function() {
+		var emailContainer = document.getElementById('contact-email');
+		if (emailContainer) {
+			var obfuscatedText = emailContainer.textContent || emailContainer.innerText;
+			var deobfuscatedEmail = obfuscatedText
+				.replace(/\s*DOT\s*/g, '.')
+				.replace(/\s*AT\s*/g, '@')
+				.replace(/\s+/g, '');
+
+			emailContainer.innerHTML = '';
+
+			var mailtoLink = document.createElement('a');
+			mailtoLink.href = 'mailto:' + encodeURIComponent(deobfuscatedEmail);
+			mailtoLink.textContent = deobfuscatedEmail;
+
+			var copyButton = document.createElement('button');
+			copyButton.className = 'btn btn-primary btn-sm';
+			copyButton.style.marginLeft = '10px';
+			copyButton.style.padding = '2px 8px';
+			copyButton.title = 'Copy email address';
+
+			var copyIcon = document.createElement('i');
+			copyIcon.className = 'icon-clipboard';
+			copyButton.appendChild(copyIcon);
+
+			copyButton.addEventListener('click', function() {
+				navigator.clipboard.writeText(deobfuscatedEmail).then(function() {
+					copyButton.innerHTML = '<i class="icon-check"></i>';
+					setTimeout(function() {
+						copyButton.innerHTML = '<i class="icon-clipboard"></i>';
+					}, 2000);
+				}).catch(function(err) {
+					console.error('Could not copy text: ', err);
+				});
+			});
+
+			emailContainer.appendChild(mailtoLink);
+			emailContainer.appendChild(copyButton);
+		}
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +380,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		enhanceContactEmail();
 	});
 
 
