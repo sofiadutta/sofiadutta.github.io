@@ -339,6 +339,40 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+
+		// UX Enhancement: De-obfuscate email and add copy button
+		var emailContainer = document.getElementById('contact-email');
+		if (emailContainer) {
+			var obfuscated = emailContainer.textContent;
+			var cleartext = obfuscated.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s+/g, '');
+
+			var mailtoLink = document.createElement('a');
+			mailtoLink.href = 'mailto:' + encodeURIComponent(cleartext);
+			mailtoLink.textContent = cleartext;
+
+			var copyBtn = document.createElement('button');
+			copyBtn.className = 'btn btn-primary btn-sm';
+			copyBtn.setAttribute('aria-label', 'Copy email to clipboard');
+			copyBtn.title = 'Copy to clipboard';
+			copyBtn.innerHTML = '<i class="icon-clipboard"></i> Copy';
+			copyBtn.style.marginLeft = '10px';
+
+			copyBtn.onclick = function() {
+				navigator.clipboard.writeText(cleartext).then(function() {
+					copyBtn.innerHTML = '<i class="icon-check"></i> Copied!';
+					setTimeout(function() {
+						copyBtn.innerHTML = '<i class="icon-clipboard"></i> Copy';
+					}, 2000);
+				}).catch(function(err) {
+					console.error('Could not copy text: ', err);
+				});
+			};
+
+			emailContainer.textContent = '';
+			emailContainer.appendChild(mailtoLink);
+			emailContainer.appendChild(document.createTextNode(' '));
+			emailContainer.appendChild(copyBtn);
+		}
 	});
 
 
