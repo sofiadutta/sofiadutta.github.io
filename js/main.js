@@ -320,6 +320,68 @@
 		}
 	};
 
+	var deobfuscateEmail = function() {
+		$('.js-obf-btn').each(function() {
+			var obf = $(this).attr('data-obf');
+			if (obf) {
+				var email = obf.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s+/g, '');
+				$(this).attr('href', 'mailto:' + encodeURIComponent(email));
+			}
+		});
+
+		var contactDiv = document.getElementById('obf-contact');
+		if (contactDiv) {
+			var p = contactDiv.querySelector('p');
+			if (p) {
+				var obfText = p.getAttribute('data-obf') || p.textContent;
+				var email = obfText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s+/g, '');
+
+				contactDiv.innerHTML = '';
+
+				var newP = document.createElement('p');
+
+				var a = document.createElement('a');
+				a.href = 'mailto:' + encodeURIComponent(email);
+				a.textContent = email;
+				newP.appendChild(a);
+
+				newP.appendChild(document.createTextNode(' '));
+
+				var btn = document.createElement('button');
+				btn.className = 'btn btn-primary btn-sm';
+
+				var icon = document.createElement('i');
+				icon.className = 'icon-clipboard';
+				btn.appendChild(icon);
+				btn.appendChild(document.createTextNode(' Copy to Clipboard'));
+
+				btn.addEventListener('click', function(e) {
+					e.preventDefault();
+					navigator.clipboard.writeText(email).catch(function(err) {
+						console.error('Could not copy text: ', err);
+					});
+
+					btn.innerHTML = '';
+					var checkIcon = document.createElement('i');
+					checkIcon.className = 'icon-check';
+					btn.appendChild(checkIcon);
+					btn.appendChild(document.createTextNode(' COPIED!'));
+
+					setTimeout(function() {
+						btn.innerHTML = '';
+						var origIcon = document.createElement('i');
+						origIcon.className = 'icon-clipboard';
+						btn.appendChild(origIcon);
+						btn.appendChild(document.createTextNode(' Copy to Clipboard'));
+					}, 2000);
+				});
+
+				newP.appendChild(btn);
+				contactDiv.appendChild(newP);
+			}
+		}
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +401,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		deobfuscateEmail();
 	});
 
 
