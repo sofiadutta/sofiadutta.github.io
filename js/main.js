@@ -335,15 +335,19 @@
 			copyBtn.setAttribute('aria-label', 'Copy email to clipboard');
 			copyBtn.title = 'Copy email to clipboard';
 			copyBtn.className = 'btn btn-primary btn-sm';
-			copyBtn.innerHTML = '<i class="icon-clipboard3" aria-hidden="true"></i>';
 			copyBtn.style.padding = '2px 8px';
+
+			var iconEl = document.createElement('i');
+			iconEl.className = 'icon-clipboard3';
+			iconEl.setAttribute('aria-hidden', 'true');
+			copyBtn.appendChild(iconEl);
 
 			copyBtn.addEventListener('click', function() {
 				if (navigator.clipboard) {
 					navigator.clipboard.writeText(clearText).then(function() {
-						copyBtn.innerHTML = '<i class="icon-check" aria-hidden="true"></i>';
+						iconEl.className = 'icon-check';
 						setTimeout(function() {
-							copyBtn.innerHTML = '<i class="icon-clipboard3" aria-hidden="true"></i>';
+							iconEl.className = 'icon-clipboard3';
 						}, 2000);
 					}).catch(function(err) {
 						console.error('Failed to copy text: ', err);
