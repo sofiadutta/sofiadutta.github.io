@@ -320,8 +320,50 @@
 		}
 	};
 
+	var setupEmail = function() {
+		var emailEl = document.getElementById('obfuscated-email');
+		var container = document.getElementById('contact-email-container');
+		if (emailEl && container) {
+			var rawText = emailEl.textContent;
+			var cleanEmail = rawText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/ /g, '');
+
+			container.innerHTML = '';
+			var emailLink = document.createElement('a');
+			emailLink.href = 'mailto:' + encodeURIComponent(cleanEmail);
+			emailLink.textContent = cleanEmail;
+
+			var p = document.createElement('p');
+			p.appendChild(emailLink);
+
+			p.appendChild(document.createTextNode(' '));
+
+			var copyBtn = document.createElement('button');
+			copyBtn.className = 'btn btn-primary btn-sm';
+			copyBtn.setAttribute('aria-label', 'Copy email to clipboard');
+			copyBtn.title = 'Copy email';
+			copyBtn.innerHTML = '<i class="icon-clipboard3" aria-hidden="true"></i>';
+
+			copyBtn.addEventListener('click', function() {
+				navigator.clipboard.writeText(cleanEmail).then(function() {
+					copyBtn.innerHTML = '<i class="icon-check" aria-hidden="true"></i>';
+					copyBtn.setAttribute('aria-label', 'Email copied');
+					setTimeout(function() {
+						copyBtn.innerHTML = '<i class="icon-clipboard3" aria-hidden="true"></i>';
+						copyBtn.setAttribute('aria-label', 'Copy email to clipboard');
+					}, 2000);
+				}).catch(function(err) {
+					console.error('Could not copy text: ', err);
+				});
+			});
+
+			p.appendChild(copyBtn);
+			container.appendChild(p);
+		}
+	};
+
 	// Document on load.
 	$(function(){
+		setupEmail();
 		fullHeight();
 		counter();
 		counterWayPoint();
