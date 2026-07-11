@@ -149,14 +149,15 @@
 	    }
 		});
 
-		$(window).scroll(function(){
+		// ⚡ Bolt: Debounce scroll event to reduce performance impact
+		$(window).scroll(debounce(function(){
 			if ( $('body').hasClass('offcanvas') ) {
 
     			$('body').removeClass('offcanvas');
     			$('.js-colorlib-nav-toggle').removeClass('active');
 			
 	    	}
-		});
+		}, 250, true));
 
 	};
 
