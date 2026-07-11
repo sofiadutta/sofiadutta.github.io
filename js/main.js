@@ -320,6 +320,56 @@
 		}
 	};
 
+	var deobfuscateEmails = function() {
+		// Fix for the Hire Me button
+		var hireLinks = document.querySelectorAll('.js-deobfuscate-link');
+		hireLinks.forEach(function(link) {
+			var obfuscated = link.getAttribute('data-email');
+			if (obfuscated) {
+				var clearEmail = obfuscated.replace(/ DOT /g, '.').replace(/ AT /g, '@');
+				link.setAttribute('href', 'mailto:' + encodeURIComponent(clearEmail));
+			}
+		});
+
+		// Fix for the Contact section
+		var contactContainers = document.querySelectorAll('.js-contact-email');
+		contactContainers.forEach(function(container) {
+			var obfuscated = container.getAttribute('data-email');
+			if (obfuscated) {
+				var clearEmail = obfuscated.replace(/ DOT /g, '.').replace(/ AT /g, '@');
+
+				// Clear existing content and reconstruct
+				container.innerHTML = '';
+
+				var a = document.createElement('a');
+				a.setAttribute('href', 'mailto:' + encodeURIComponent(clearEmail));
+				a.textContent = clearEmail;
+
+				// Add space
+				container.appendChild(a);
+				container.appendChild(document.createTextNode(' '));
+
+				// Add copy to clipboard button
+				var btn = document.createElement('button');
+				btn.className = 'btn btn-primary btn-sm';
+				btn.innerHTML = '<i class="icon-clipboard"></i> Copy';
+				btn.onclick = function(e) {
+					e.preventDefault();
+					var originalHtml = btn.innerHTML;
+					navigator.clipboard.writeText(clearEmail).then(function() {
+						btn.innerHTML = '<i class="icon-check"></i> Copied!';
+						setTimeout(function() {
+							btn.innerHTML = '<i class="icon-clipboard"></i> Copy';
+						}, 2000);
+					}).catch(function() {
+						// fallback or silent fail
+					});
+				};
+				container.appendChild(btn);
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +389,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		deobfuscateEmails();
 	});
 
 
