@@ -320,6 +320,57 @@
 		}
 	};
 
+	// Security: Dynamically hydrate email addresses to prevent scraping by spam bots
+	// Email data is stored in data-* attributes and assembled on the client side.
+	var enhanceEmailContact = function() {
+		var hireBtn = document.getElementById('hire-me-btn');
+		if (hireBtn) {
+			var user = hireBtn.getAttribute('data-user');
+			var domain = hireBtn.getAttribute('data-domain');
+			if (user && domain) {
+				var email = user + '@' + domain;
+				// Security: Use encodeURIComponent on the parts to prevent DOM XSS while preserving the @ symbol for legacy clients
+				hireBtn.href = 'mailto:' + encodeURIComponent(user) + '@' + encodeURIComponent(domain);
+			}
+		}
+
+		var contactEmail = document.getElementById('contact-email');
+		var copyBtn = document.getElementById('copy-email-btn');
+		if (contactEmail && copyBtn) {
+			var user = contactEmail.getAttribute('data-user');
+			var domain = contactEmail.getAttribute('data-domain');
+			if (user && domain) {
+				var email = user + '@' + domain;
+
+				// Security: Use document.createElement to safely inject dynamic text
+				var a = document.createElement('a');
+				a.href = 'mailto:' + encodeURIComponent(user) + '@' + encodeURIComponent(domain);
+				a.textContent = email;
+
+				contactEmail.textContent = '';
+				contactEmail.appendChild(a);
+
+				copyBtn.addEventListener('click', function(e) {
+					e.preventDefault();
+					if (navigator.clipboard) {
+						navigator.clipboard.writeText(email).then(function() {
+							var originalHTML = copyBtn.innerHTML;
+							copyBtn.innerHTML = '<i class="icon-check"></i> Copied!';
+							setTimeout(function() {
+								copyBtn.innerHTML = '<i class="icon-clipboard"></i> Copy Email';
+							}, 2000);
+						}).catch(function(err) {
+							console.error('Failed to copy email: ', err);
+						});
+					} else {
+						// Fallback if clipboard API is not available
+						console.error('Clipboard API not available');
+					}
+				});
+			}
+		}
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +390,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		enhanceEmailContact();
 	});
 
 
