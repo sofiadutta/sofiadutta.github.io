@@ -320,6 +320,55 @@
 		}
 	};
 
+	var setupContactEmail = function() {
+		var emailP = document.getElementById('contact-email');
+		if (emailP) {
+			var obfuscated = emailP.textContent;
+			var cleartext = obfuscated.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/ /g, '');
+
+			emailP.textContent = '';
+
+			var a = document.createElement('a');
+			a.href = 'mailto:' + encodeURIComponent(cleartext);
+			a.textContent = cleartext;
+
+			var btn = document.createElement('button');
+			btn.className = 'btn btn-primary btn-sm';
+			btn.title = 'Copy to Clipboard';
+
+			var icon = document.createElement('i');
+			icon.className = 'icon-clipboard';
+			btn.appendChild(icon);
+
+			btn.addEventListener('click', function(e) {
+				e.preventDefault();
+				if (navigator.clipboard) {
+					navigator.clipboard.writeText(cleartext).then(function() {
+						icon.className = 'icon-check';
+						setTimeout(function() {
+							icon.className = 'icon-clipboard';
+						}, 2000);
+					});
+				}
+			});
+
+			emailP.appendChild(a);
+			emailP.appendChild(document.createTextNode(' '));
+			emailP.appendChild(btn);
+		}
+	};
+
+	var setupHireMeButton = function() {
+		var btn = document.getElementById('hire-me-btn');
+		if (btn) {
+			var obfuscated = btn.getAttribute('data-email');
+			if (obfuscated) {
+				var cleartext = obfuscated.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/ /g, '');
+				btn.href = 'mailto:' + encodeURIComponent(cleartext);
+			}
+		}
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +388,8 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		setupContactEmail();
+		setupHireMeButton();
 	});
 
 
