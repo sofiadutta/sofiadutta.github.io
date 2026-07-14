@@ -7,3 +7,7 @@
 **Vulnerability:** Inline `document.write` script in `index.html` was blocked by the existing Content Security Policy (CSP) which correctly restricts `script-src` to `self` and specific domains, without allowing `unsafe-inline`.
 **Learning:** Even "harmless" inline scripts like printing the current year are security violations under strict CSPs. The existing code was actually broken (script blocked) because of the security policy.
 **Prevention:** Avoid inline JavaScript entirely. Move all logic to external `.js` files or use DOM manipulation from existing scripts.
+## 2024-07-14 - Fix Cleartext Emails
+**Vulnerability:** Cleartext email addresses in HTML
+**Learning:** Bots scrape cleartext emails, so dynamically reconstructing emails and utilizing the Clipboard API is much safer.
+**Prevention:** Avoid putting cleartext emails on the web. Instead, obfuscate and reconstruct them using JS.
