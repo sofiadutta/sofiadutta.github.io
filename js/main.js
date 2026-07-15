@@ -339,7 +339,40 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		initEmailCopy();
 	});
 
+	var initEmailCopy = function() {
+		var emailEl = document.getElementById('contact-email');
+		var copyBtn = document.getElementById('copy-email-btn');
+		if (emailEl && copyBtn) {
+			var obfuscatedText = emailEl.textContent;
+			var clearEmail = obfuscatedText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/ /g, '');
+
+			var mailtoLink = document.createElement('a');
+			mailtoLink.href = 'mailto:' + encodeURIComponent(clearEmail);
+			mailtoLink.textContent = clearEmail;
+
+			emailEl.textContent = '';
+			emailEl.appendChild(mailtoLink);
+
+			var originalHTML = copyBtn.innerHTML;
+			var resetTimeout;
+
+			copyBtn.addEventListener('click', function() {
+				if (navigator.clipboard && navigator.clipboard.writeText) {
+					navigator.clipboard.writeText(clearEmail).then(function() {
+						copyBtn.innerHTML = '<i class="icon-check"></i> Copied!';
+						clearTimeout(resetTimeout);
+						resetTimeout = setTimeout(function() {
+							copyBtn.innerHTML = originalHTML;
+						}, 2000);
+					}).catch(function(err) {
+						console.error('Could not copy text: ', err);
+					});
+				}
+			});
+		}
+	};
 
 }());
