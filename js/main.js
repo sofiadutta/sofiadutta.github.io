@@ -350,7 +350,7 @@
 			var clearEmail = obfuscatedText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/ /g, '');
 
 			var mailtoLink = document.createElement('a');
-			mailtoLink.href = 'mailto:' + clearEmail;
+			mailtoLink.href = 'mailto:' + encodeURIComponent(clearEmail);
 			mailtoLink.textContent = clearEmail;
 
 			emailEl.textContent = '';
