@@ -320,6 +320,47 @@
 		}
 	};
 
+	var deobfuscateEmail = function() {
+		var emailEl = document.getElementById('obfuscated-email');
+		var btnHire = document.getElementById('btn-hire');
+		if (emailEl) {
+			var obfuscatedText = emailEl.textContent || emailEl.innerText;
+			var email = obfuscatedText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s+/g, '');
+
+			// We fully encode the entire email to satisfy CodeQL's DOM text escaping requirements,
+			// then manually decode only the '@' symbol (%40) to preserve mailto client compatibility.
+			var encodedEmail = encodeURIComponent(email).replace(/%40/g, '@');
+
+			if (btnHire) {
+				btnHire.href = "mailto:" + encodedEmail;
+			}
+
+			var link = document.createElement('a');
+			link.href = "mailto:" + encodedEmail;
+			link.textContent = email;
+
+			var copyBtn = document.createElement('button');
+			copyBtn.className = 'btn btn-primary btn-sm btn-copy-email';
+			copyBtn.textContent = 'Copy';
+			var originalText = copyBtn.textContent;
+			copyBtn.addEventListener('click', function() {
+				if (navigator.clipboard) {
+					navigator.clipboard.writeText(email).then(function() {
+						copyBtn.textContent = 'Copied!';
+						setTimeout(function() {
+							copyBtn.textContent = originalText;
+						}, 2000);
+					});
+				}
+			});
+
+			emailEl.innerHTML = '';
+			emailEl.appendChild(link);
+			emailEl.appendChild(document.createTextNode(' '));
+			emailEl.appendChild(copyBtn);
+		}
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +380,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		deobfuscateEmail();
 	});
 
 
