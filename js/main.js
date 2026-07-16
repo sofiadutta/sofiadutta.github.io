@@ -149,14 +149,14 @@
 	    }
 		});
 
-		$(window).scroll(function(){
+		$(window).scroll(debounce(function(){
 			if ( $('body').hasClass('offcanvas') ) {
 
     			$('body').removeClass('offcanvas');
     			$('.js-colorlib-nav-toggle').removeClass('active');
 			
 	    	}
-		});
+		}, 100, true));
 
 	};
 
