@@ -343,3 +343,57 @@
 
 
 }());
+document.addEventListener('DOMContentLoaded', function() {
+	var emailSpan = document.querySelector('.js-obfuscated-email');
+	var copyBtn = document.querySelector('.js-copy-email-btn');
+
+	if (emailSpan) {
+		var obfuscatedText = emailSpan.textContent;
+		var clearEmail = obfuscatedText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/ /g, '');
+
+		// Create mailto link securely
+		var safeEmail = clearEmail.split('@').map(function(part) { return encodeURIComponent(part); }).join('@');
+		var mailtoLink = document.createElement('a');
+		mailtoLink.href = 'mailto:' + safeEmail;
+		mailtoLink.textContent = clearEmail;
+
+		emailSpan.textContent = '';
+		emailSpan.appendChild(mailtoLink);
+
+		// Copy functionality
+		if (copyBtn) {
+			var originalHTML = copyBtn.innerHTML;
+			copyBtn.addEventListener('click', function(e) {
+				e.preventDefault();
+				if (navigator.clipboard && window.isSecureContext) {
+					navigator.clipboard.writeText(clearEmail).then(function() {
+						copyBtn.innerHTML = '<i class="icon-check" aria-hidden="true"></i>';
+						copyBtn.title = 'Copied!';
+						setTimeout(function() {
+							copyBtn.innerHTML = originalHTML;
+							copyBtn.title = 'Copy email address';
+						}, 2000);
+					});
+				} else {
+					// Fallback for non-secure contexts (e.g. older browsers)
+					var textArea = document.createElement("textarea");
+					textArea.value = clearEmail;
+					textArea.style.position = "fixed";
+					document.body.appendChild(textArea);
+					textArea.focus();
+					textArea.select();
+					try {
+						document.execCommand('copy');
+						copyBtn.innerHTML = '<i class="icon-check" aria-hidden="true"></i>';
+						copyBtn.title = 'Copied!';
+						setTimeout(function() {
+							copyBtn.innerHTML = originalHTML;
+							copyBtn.title = 'Copy email address';
+						}, 2000);
+					} catch (err) {}
+					document.body.removeChild(textArea);
+				}
+			});
+		}
+	}
+});
