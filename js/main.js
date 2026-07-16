@@ -327,9 +327,9 @@
 			var obfuscatedText = emailEl.textContent || emailEl.innerText;
 			var email = obfuscatedText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s+/g, '');
 
-			// We only encode the local part and domain separately to keep '@' unencoded for mailto compat
-			var parts = email.split('@');
-			var encodedEmail = parts.length === 2 ? encodeURIComponent(parts[0]) + '@' + encodeURIComponent(parts[1]) : email;
+			// We fully encode the entire email to satisfy CodeQL's DOM text escaping requirements,
+			// then manually decode only the '@' symbol (%40) to preserve mailto client compatibility.
+			var encodedEmail = encodeURIComponent(email).replace(/%40/g, '@');
 
 			if (btnHire) {
 				btnHire.href = "mailto:" + encodedEmail;
