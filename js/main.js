@@ -149,14 +149,15 @@
 	    }
 		});
 
-		$(window).scroll(function(){
+		// Optimization: Debounce scroll event on the leading edge to prevent UX lag while reducing layout thrashing
+		$(window).scroll(debounce(function(){
 			if ( $('body').hasClass('offcanvas') ) {
 
     			$('body').removeClass('offcanvas');
     			$('.js-colorlib-nav-toggle').removeClass('active');
 			
 	    	}
-		});
+		}, 200, true));
 
 	};
 
