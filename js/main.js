@@ -339,7 +339,54 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		enhanceObfuscatedEmails();
 	});
 
+	function enhanceObfuscatedEmails() {
+		// Handle obfuscated email in data attribute
+		var emailLinks = document.querySelectorAll('.js-obfuscated-email');
+		emailLinks.forEach(function(link) {
+			var obfuscated = link.getAttribute('data-email');
+			if (obfuscated) {
+				var clearEmail = obfuscated.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s/g, '');
+				var encodedEmail = encodeURIComponent(clearEmail).replace(/%40/g, '@');
+				link.href = 'mailto:' + encodedEmail;
+			}
+		});
+
+		// Handle obfuscated text element
+		var textElements = document.querySelectorAll('.js-obfuscated-text');
+		textElements.forEach(function(el) {
+			var obfuscated = el.textContent;
+			var clearEmail = obfuscated.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s/g, '');
+			var encodedEmail = encodeURIComponent(clearEmail).replace(/%40/g, '@');
+
+			el.textContent = '';
+
+			var mailtoLink = document.createElement('a');
+			mailtoLink.href = 'mailto:' + encodedEmail;
+			mailtoLink.textContent = clearEmail;
+			el.appendChild(mailtoLink);
+
+			el.appendChild(document.createTextNode(' '));
+
+			var copyBtn = document.createElement('button');
+			copyBtn.textContent = 'Copy to Clipboard';
+			copyBtn.className = 'btn btn-primary';
+
+			var originalText = copyBtn.textContent;
+			copyBtn.onclick = function() {
+				if (navigator.clipboard && window.isSecureContext) {
+					navigator.clipboard.writeText(clearEmail).then(function() {
+						copyBtn.textContent = 'Copied!';
+						setTimeout(function() {
+							copyBtn.textContent = originalText;
+						}, 2000);
+					});
+				}
+			};
+			el.appendChild(copyBtn);
+		});
+	};
 
 }());
