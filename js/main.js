@@ -320,9 +320,50 @@
 		}
 	};
 
+	var setupEmail = function() {
+		var p = document.getElementById('contact-email');
+		if (!p) return;
+		var text = p.textContent;
+		var email = text.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/ /g, '');
+
+		p.innerHTML = '';
+
+		var link = document.createElement('a');
+		link.href = 'mailto:' + encodeURIComponent(email).replace(/%40/g, '@');
+		link.textContent = email;
+		p.appendChild(link);
+
+		p.appendChild(document.createTextNode(' '));
+
+		var btn = document.createElement('button');
+		btn.setAttribute('aria-label', 'Copy email address');
+		btn.className = 'btn btn-primary';
+
+		var icon = document.createElement('i');
+		icon.className = 'icon-clipboard3';
+		icon.setAttribute('aria-hidden', 'true');
+		btn.appendChild(icon);
+
+		var originalHtml = btn.innerHTML;
+
+		btn.addEventListener('click', function(e) {
+			e.preventDefault();
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(email).then(function() {
+					btn.innerHTML = 'Copied!';
+					setTimeout(function() {
+						btn.innerHTML = originalHtml;
+					}, 2000);
+				});
+			}
+		});
+		p.appendChild(btn);
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
+		setupEmail();
 		counter();
 		counterWayPoint();
 		contentWayPoint();
