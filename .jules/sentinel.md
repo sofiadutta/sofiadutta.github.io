@@ -7,3 +7,7 @@
 **Vulnerability:** Inline `document.write` script in `index.html` was blocked by the existing Content Security Policy (CSP) which correctly restricts `script-src` to `self` and specific domains, without allowing `unsafe-inline`.
 **Learning:** Even "harmless" inline scripts like printing the current year are security violations under strict CSPs. The existing code was actually broken (script blocked) because of the security policy.
 **Prevention:** Avoid inline JavaScript entirely. Move all logic to external `.js` files or use DOM manipulation from existing scripts.
+## 2024-05-23 - Prevent DOM XSS in Dynamic Mailto Links
+**Vulnerability:** DOM XSS via unescaped dynamic text in `href` attribute.
+**Learning:** When using JavaScript to convert untrusted text into a `mailto:` link, assigning the text directly to the `href` attribute triggers CodeQL DOM XSS alerts, because the text is reinterpreted as HTML without escaping meta-characters.
+**Prevention:** To resolve this, the untrusted text must be fully encoded using `encodeURIComponent()`. However, for `mailto:` links, the `@` symbol should remain unencoded for email client compatibility. The correct pattern is `encodeURIComponent(emailStr).replace(/%40/g, '@')`.
