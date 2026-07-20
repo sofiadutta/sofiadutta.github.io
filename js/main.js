@@ -320,6 +320,42 @@
 		}
 	};
 
+	var enhanceEmail = function() {
+		var emailEl = document.getElementById('obfuscated-email');
+		if (emailEl) {
+			var rawText = emailEl.textContent || emailEl.innerText;
+			var clearEmail = rawText.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s+/g, '');
+
+			// Securely encode the email for href to avoid DOM XSS, preserving '@' for email clients
+			var safeEmail = encodeURIComponent(clearEmail).replace(/%40/g, '@');
+
+			var link = document.createElement('a');
+			link.href = 'mailto:' + safeEmail;
+			link.textContent = clearEmail;
+
+			var copyBtn = document.createElement('button');
+			copyBtn.className = 'btn btn-primary btn-sm';
+			copyBtn.textContent = 'Copy';
+
+			emailEl.textContent = '';
+			emailEl.appendChild(link);
+			emailEl.appendChild(document.createTextNode(' '));
+			emailEl.appendChild(copyBtn);
+
+			var originalBtnHtml = copyBtn.innerHTML;
+			copyBtn.addEventListener('click', function() {
+				if (navigator.clipboard) {
+					navigator.clipboard.writeText(clearEmail).then(function() {
+						copyBtn.innerHTML = 'Copied!';
+						setTimeout(function() {
+							copyBtn.innerHTML = originalBtnHtml;
+						}, 2000);
+					});
+				}
+			});
+		}
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +375,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		enhanceEmail();
 	});
 
 
