@@ -7,3 +7,8 @@
 **Vulnerability:** Inline `document.write` script in `index.html` was blocked by the existing Content Security Policy (CSP) which correctly restricts `script-src` to `self` and specific domains, without allowing `unsafe-inline`.
 **Learning:** Even "harmless" inline scripts like printing the current year are security violations under strict CSPs. The existing code was actually broken (script blocked) because of the security policy.
 **Prevention:** Avoid inline JavaScript entirely. Move all logic to external `.js` files or use DOM manipulation from existing scripts.
+
+## 2024-05-23 - Secure Email De-obfuscation Implementation
+**Vulnerability:** Implementing dynamic email de-obfuscation by assigning DOM text directly to `href` attributes can introduce DOM XSS vulnerabilities (flagged by CodeQL) if the text is tampered with.
+**Learning:** Fully encoding the de-obfuscated string using `encodeURIComponent()` prevents XSS, but encoding the `@` symbol breaks `mailto:` compatibility in some email clients.
+**Prevention:** Fully encode the untrusted input and then manually replace `%40` back to `@` to ensure both security against DOM XSS and functional compatibility.
