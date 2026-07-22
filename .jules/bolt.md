@@ -7,3 +7,6 @@
 ## 2025-01-08 - LCP Optimization for Background Images
 **Learning:** Background images defined in CSS (or inline styles) are often discovered late by the browser. Preloading them via `<link rel="preload">` significantly aids LCP.
 **Action:** Always check for critical background images in Hero sections and add preloads for them, especially when image optimization tools are unavailable to reduce their size.
+## 2025-01-09 - High-Frequency Event Optimization
+**Learning:** High-frequency events like `window.scroll` bound in standard UI initialization scripts (like `js/main.js`) often perform expensive repeated DOM queries inside their callbacks.
+**Action:** When debouncing these events, also always extract and cache static DOM selectors outside the callback scope to maximize the performance gain and prevent unnecessary DOM tree traversals.
