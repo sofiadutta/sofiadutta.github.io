@@ -320,6 +320,43 @@
 		}
 	};
 
+	var enhanceObfuscatedEmails = function() {
+		var els = document.querySelectorAll('.obfuscated-email');
+		for (let i = 0; i < els.length; i++) {
+			let el = els[i];
+			let text = el.textContent || el.innerText;
+			let email = text.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/ /g, '');
+
+			el.innerHTML = '';
+			let link = document.createElement('a');
+			link.href = 'mailto:' + encodeURIComponent(email).replace(/%40/g, '@');
+			link.textContent = email;
+			el.appendChild(link);
+
+			el.appendChild(document.createTextNode(' '));
+
+			let btn = document.createElement('button');
+			btn.className = 'btn btn-primary btn-sm';
+			btn.textContent = 'Copy';
+
+			let originalText = btn.textContent;
+			btn.addEventListener('click', function(e) {
+				e.preventDefault();
+				if (navigator.clipboard && navigator.clipboard.writeText) {
+					navigator.clipboard.writeText(email).then(function() {
+						var target = e.target;
+						target.textContent = 'Copied!';
+						setTimeout(function() {
+							target.textContent = originalText;
+						}, 2000);
+					});
+				}
+			});
+
+			el.appendChild(btn);
+		}
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +376,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		enhanceObfuscatedEmails();
 	});
 
 
