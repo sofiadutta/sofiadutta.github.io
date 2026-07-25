@@ -7,3 +7,7 @@
 **Vulnerability:** Inline `document.write` script in `index.html` was blocked by the existing Content Security Policy (CSP) which correctly restricts `script-src` to `self` and specific domains, without allowing `unsafe-inline`.
 **Learning:** Even "harmless" inline scripts like printing the current year are security violations under strict CSPs. The existing code was actually broken (script blocked) because of the security policy.
 **Prevention:** Avoid inline JavaScript entirely. Move all logic to external `.js` files or use DOM manipulation from existing scripts.
+## 2025-02-19 - Email Exposure Prevention
+**Vulnerability:** Cleartext email addresses in HTML source are vulnerable to scraping by spam bots.
+**Learning:** Obfuscation strategies like spelling out "DOT" and "AT" in text must be paired with JavaScript reconstruction of functional native links (`mailto:`) and utilities (Copy to Clipboard) to maintain usability without compromising security.
+**Prevention:** Avoid hardcoding `mailto:` links directly in HTML templates. Use JS to dynamically construct them from obfuscated parts on the client side.
