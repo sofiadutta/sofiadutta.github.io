@@ -314,6 +314,46 @@
 		}
 	};
 
+	var enhanceEmail = function() {
+		var emailEl = document.getElementById('contact-email');
+		if (emailEl) {
+			var obfuscated = emailEl.textContent;
+			var cleartext = obfuscated.replace(/ DOT /g, '.').replace(/ AT /g, '@').trim();
+			var safeEmail = encodeURIComponent(cleartext).replace(/%40/g, '@');
+
+			emailEl.innerHTML = '';
+
+			var link = document.createElement('a');
+			link.href = 'mailto:' + safeEmail;
+			link.textContent = cleartext;
+			emailEl.appendChild(link);
+
+			emailEl.appendChild(document.createTextNode(' '));
+
+			var btn = document.createElement('button');
+			btn.className = 'btn btn-primary btn-xs';
+			btn.setAttribute('aria-label', 'Copy email to clipboard');
+			btn.setAttribute('title', 'Copy email to clipboard');
+			btn.innerHTML = '<i class="icon-clipboard"></i>';
+
+			var originalHTML = btn.innerHTML;
+
+			btn.addEventListener('click', function(e) {
+				e.preventDefault();
+				if (navigator.clipboard) {
+					navigator.clipboard.writeText(cleartext).then(function() {
+						btn.innerHTML = 'Copied!';
+						setTimeout(function() {
+							btn.innerHTML = originalHTML;
+						}, 2000);
+					});
+				}
+			});
+
+			emailEl.appendChild(btn);
+		}
+	};
+
 	var updateCopyrightYear = function() {
 		if ($('#copyright-year').length > 0) {
 			$('#copyright-year').text(new Date().getFullYear());
@@ -339,6 +379,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		enhanceEmail();
 	});
 
 
