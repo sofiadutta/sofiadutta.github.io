@@ -320,8 +320,36 @@
 		}
 	};
 
+	var setupSecureEmail = function() {
+		var obfuscatedEmail = "sofia DOT dutta 17 AT gmail DOT com";
+		var deobfuscatedEmail = obfuscatedEmail.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/ /g, '');
+
+		var hireBtn = document.getElementById('contact-hire-btn');
+		if (hireBtn) {
+			hireBtn.href = "mailto:" + encodeURIComponent(deobfuscatedEmail).replace(/%40/g, '@');
+		}
+
+		var copyBtn = document.getElementById('copy-email-btn');
+		if (copyBtn) {
+			copyBtn.parentNode.insertBefore(document.createTextNode(' '), copyBtn);
+			var originalHTML = copyBtn.innerHTML;
+			copyBtn.addEventListener('click', function(e) {
+				e.preventDefault();
+				if (navigator.clipboard && window.isSecureContext) {
+					navigator.clipboard.writeText(deobfuscatedEmail).then(function() {
+						copyBtn.innerHTML = "Copied!";
+						setTimeout(function() {
+							copyBtn.innerHTML = originalHTML;
+						}, 2000);
+					});
+				}
+			});
+		}
+	};
+
 	// Document on load.
 	$(function(){
+		setupSecureEmail();
 		fullHeight();
 		counter();
 		counterWayPoint();
