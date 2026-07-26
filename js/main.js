@@ -114,17 +114,19 @@
 
 
 	var burgerMenu = function() {
+		// Optimization: Cache DOM selector
+		var $body = $('body');
 
 		$('.js-colorlib-nav-toggle').on('click', function(event){
 			event.preventDefault();
 			var $this = $(this);
 
-			if ($('body').hasClass('offcanvas')) {
+			if ($body.hasClass('offcanvas')) {
 				$this.removeClass('active');
-				$('body').removeClass('offcanvas');	
+				$body.removeClass('offcanvas');
 			} else {
 				$this.addClass('active');
-				$('body').addClass('offcanvas');	
+				$body.addClass('offcanvas');
 			}
 		});
 
@@ -134,15 +136,18 @@
 
 	// Click outside of offcanvass
 	var mobileMenuOutsideClick = function() {
+		// Optimization: Cache DOM selectors outside high-frequency event
+		var $body = $('body');
+		var $navToggle = $('.js-colorlib-nav-toggle');
 
 		$(document).click(function (e) {
 	    var container = $("#colorlib-aside, .js-colorlib-nav-toggle");
 	    if (!container.is(e.target) && container.has(e.target).length === 0) {
 
-	    	if ( $('body').hasClass('offcanvas') ) {
+		if ( $body.hasClass('offcanvas') ) {
 
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
+			$body.removeClass('offcanvas');
+			$navToggle.removeClass('active');
 			
 	    	}
 	    	
@@ -150,10 +155,10 @@
 		});
 
 		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
+			if ( $body.hasClass('offcanvas') ) {
 
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
+			$body.removeClass('offcanvas');
+			$navToggle.removeClass('active');
 			
 	    	}
 		});
