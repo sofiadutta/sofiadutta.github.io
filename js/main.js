@@ -149,12 +149,13 @@
 	    }
 		});
 
+		// ⚡ Bolt: Cache DOM selectors outside scroll event listener
+		var $body = $('body');
+		var $navToggle = $('.js-colorlib-nav-toggle');
 		$(window).scroll(function(){
-			if ( $('body').hasClass('offcanvas') ) {
-
-    			$('body').removeClass('offcanvas');
-    			$('.js-colorlib-nav-toggle').removeClass('active');
-			
+			if ( $body.hasClass('offcanvas') ) {
+			$body.removeClass('offcanvas');
+			$navToggle.removeClass('active');
 	    	}
 		});
 
