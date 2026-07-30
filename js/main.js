@@ -320,6 +320,17 @@
 		}
 	};
 
+	var setupSecureEmailLinks = function() {
+		var emailLinks = document.querySelectorAll('a[data-raw-email]');
+		emailLinks.forEach(function(link) {
+			var rawEmail = link.getAttribute('data-raw-email');
+			if (rawEmail) {
+				var cleanEmail = rawEmail.replace(/ DOT /g, '.').replace(/ AT /g, '@').replace(/\s+/g, '');
+				link.href = 'mailto:' + encodeURIComponent(cleanEmail).replace(/%40/g, '@');
+			}
+		});
+	};
+
 	// Document on load.
 	$(function(){
 		fullHeight();
@@ -339,6 +350,7 @@
 		stickyFunction();
 		lazyLoadBackgrounds();
 		updateCopyrightYear();
+		setupSecureEmailLinks();
 	});
 
 
